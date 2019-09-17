@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>853858535538-eh7e8hvn0rogmfer6263a56tab0e7sm3.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.853858535538-eh7e8hvn0rogmfer6263a56tab0e7sm3</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA3ANNFMuJ2SWLVhnkWJEJ6ligPnH41rJ0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>853858535538</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>edu.sjsu.favis.jasperbenedict.ProjectSurvey</string>
+	<key>PROJECT_ID</key>
+	<string>projectsurvey-5175f</string>
+	<key>STORAGE_BUCKET</key>
+	<string>projectsurvey-5175f.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:853858535538:ios:dc51cb44f3030ea59a5aeb</string>
+	<key>DATABASE_URL</key>
+	<string>https://projectsurvey-5175f.firebaseio.com</string>
+</dict>
+</plist>
