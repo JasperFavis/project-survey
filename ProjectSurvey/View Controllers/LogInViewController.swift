@@ -23,6 +23,10 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var backButton: UIButton!
+    @IBAction func backButtonTapped(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     
     @IBAction func loginTapped(_ sender: Any) {
         
@@ -35,10 +39,11 @@ class LogInViewController: UIViewController {
             showError(error!)
         }
         else {
-            // Create cleaned versions of the textfields
+            // Omit spacing and newlines from the textfields
             let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
             
+            // Sign user in
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
                     // Couldn't sign in
@@ -49,8 +54,6 @@ class LogInViewController: UIViewController {
                 }
             }
         }
-        
-        // Signing in the user
     }
     
     func setUpElements() {

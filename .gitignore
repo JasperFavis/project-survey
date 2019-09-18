@@ -1,0 +1,4 @@
+# Ignore GUI state of editor (ex. window positioning, sizing, opened tabs, etc)
+*/UserInterfaceState.xcuserstate
+ProjectSurvey.xcodeproj/project.xcworkspace/xcuserdata/
+ProjectSurvey.xcworkspace/xcuserdata/
