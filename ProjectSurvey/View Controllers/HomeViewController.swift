@@ -10,7 +10,11 @@ import UIKit
 import FirebaseAuth
 
 class HomeViewController: UIViewController {
-
+    
+    
+    @IBOutlet weak var newSurveyButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,9 +22,6 @@ class HomeViewController: UIViewController {
         
         setUpElements()
     }
-    
-
-    @IBOutlet weak var logoutButton: UIButton!
     
     
     @IBAction func logoutTapped(_ sender: UIButton) {
@@ -40,6 +41,7 @@ class HomeViewController: UIViewController {
     
     func setUpElements() {
         Utilities.styleHollowButton(logoutButton)
+        Utilities.styleFilledButton(newSurveyButton)
     }
     
 }
