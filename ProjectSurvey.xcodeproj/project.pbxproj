@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */; };
 		5A7986EF237B4F300048CC51 /* SurveyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7986EE237B4F300048CC51 /* SurveyData.swift */; };
 		5AEAEBC2237A1A8F00A7D2C7 /* CreateSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEAEBC1237A1A8F00A7D2C7 /* CreateSurveyViewController.swift */; };
 		9383D612CAC8C019238E9735 /* Pods_ProjectSurvey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */; };
@@ -25,6 +26,7 @@
 
 /* Begin PBXFileReference section */
 		43FFD0404FE13151DEB6301A /* Pods-ProjectSurvey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectSurvey.debug.xcconfig"; path = "Target Support Files/Pods-ProjectSurvey/Pods-ProjectSurvey.debug.xcconfig"; sourceTree = "<group>"; };
+		5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeSurveyViewController.swift; sourceTree = "<group>"; };
 		5A7986EE237B4F300048CC51 /* SurveyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyData.swift; sourceTree = "<group>"; };
 		5AEAEBC1237A1A8F00A7D2C7 /* CreateSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSurveyViewController.swift; sourceTree = "<group>"; };
 		9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectSurvey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				B901F2B1233081E0004ADE9E /* LogInViewController.swift */,
 				B901F2B3233081EE004ADE9E /* HomeViewController.swift */,
 				5AEAEBC1237A1A8F00A7D2C7 /* CreateSurveyViewController.swift */,
+				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */,
 				5AEAEBC2237A1A8F00A7D2C7 /* CreateSurveyViewController.swift in Sources */,
 				B93F2CC923308F0900B4D7F7 /* Utilities.swift in Sources */,
 				B901F2B4233081EE004ADE9E /* HomeViewController.swift in Sources */,

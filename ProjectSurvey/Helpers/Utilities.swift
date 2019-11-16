@@ -15,6 +15,7 @@ class Utilities {
         
         // Remove border on text field
         textfield.borderStyle = .bezel
+        textfield.backgroundColor = UIColor.white
     }
     
     static func styleFilledButton(_ button:UIButton) {

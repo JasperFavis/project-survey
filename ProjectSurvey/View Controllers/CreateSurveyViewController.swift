@@ -8,6 +8,9 @@
 
 import UIKit
 import Firebase
+import DLRadioButton
+
+
 
 class CreateSurveyViewController: UIViewController {
 
@@ -20,16 +23,43 @@ class CreateSurveyViewController: UIViewController {
     @IBOutlet weak var questionNumLabel: UILabel!
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
+
+    @IBOutlet weak var textEntryButton: DLRadioButton!
+    @IBOutlet weak var multChoiceButton: DLRadioButton!
     
-    var questionArray: [String] = []
-    var questionIndex = 0;
+    @IBOutlet weak var answerTextField: UITextField!
+    @IBOutlet weak var addAnswerButton: UIButton!
+    @IBOutlet weak var deleteAnswerButton: UIButton!
+    @IBOutlet weak var prevAnswerButton: UIButton!
+    @IBOutlet weak var nextAnswerButton: UIButton!
+    
+    
+    @IBOutlet weak var answerDoneButton: UIButton!
     
     let db = Firestore.firestore()
+    var questionArray: [String] = []
+    var qAndA: [String : [String]?] = [:]
+    var questionIndex = 0
+    var isMultipleChoice = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpElements()
+        disableAButtons()
+        disableMC()
+        grayOutRadioButtons()
+        enterQuestionTextField.addTarget(self, action: #selector(questionFieldDidChange), for: .editingChanged)
+    }
+    
+    @objc func questionFieldDidChange() {
+        if enterQuestionTextField.text == "" {
+
+            // test print
+            // print("No question\n")
+        } else {
+            // print("\(enterQuestionTextField.text!)")
+        }
     }
     
     // Set up custom look for buttons, labels, textfields
@@ -39,7 +69,9 @@ class CreateSurveyViewController: UIViewController {
         Utilities.styleTextField(surveyTitleTextField)
         Utilities.styleTextField(enterQuestionTextField)
         Utilities.styleFilledButton(createButton)
+        Utilities.styleFilledButton(answerDoneButton)
     }
+    
 
     // Saves survey information to firestore
     @IBAction func createTapped(_ sender: Any) {
@@ -63,7 +95,8 @@ class CreateSurveyViewController: UIViewController {
             if let currUID = Auth.auth().currentUser?.uid {
                 let docRef = db.collection("surveys").addDocument(data: [
                     "title" : surveyTitle,
-                    "questions" : questionArray])
+                    "questions" : questionArray,
+                    "questionsAndanswers" : qAndA])
                 db.collection("users").document(currUID).setData([surveyTitle : docRef], merge: true)
             } else {
                 print("No user signed in\n")
@@ -100,13 +133,19 @@ class CreateSurveyViewController: UIViewController {
                 enterQuestionTextField.text = questionArray[questionIndex]
                 questionNumLabel.text = "Question \(questionIndex + 1)"
             }
+            
+            // disable all question buttons until answer provided
+            disableQButtons()
+            // enable radio buttons for answer type
+            enableAButtons()
         }
     }
     
     // Delete currently selected question if it exists
     @IBAction func deleteQTapped(_ sender: Any) {
         let isIndexValid = questionArray.indices.contains(questionIndex)
-        if !questionArray.isEmpty && isIndexValid {
+        //if !questionArray.isEmpty && isIndexValid {
+        if isIndexValid {
             questionArray.remove(at: questionIndex)
             if !questionArray.indices.contains(questionIndex) {
                 enterQuestionTextField.placeholder = "Enter Question"
@@ -127,7 +166,6 @@ class CreateSurveyViewController: UIViewController {
         if !questionArray.isEmpty && questionIndex > 0 {
             questionIndex -= 1
             enterQuestionTextField.text = questionArray[questionIndex]
-            questionNumLabel.text = "Question \(questionIndex + 1)"
             hideError()
         } else {
             showError("Cannot move back")
@@ -140,17 +178,109 @@ class CreateSurveyViewController: UIViewController {
             questionIndex += 1
             if questionArray.indices.contains(questionIndex) {
                 enterQuestionTextField.text = questionArray[questionIndex]
-                questionNumLabel.text = "Question \(questionIndex + 1)"
             } else {
                 enterQuestionTextField.placeholder = "Enter Question"
                 enterQuestionTextField.text = ""
-                questionNumLabel.text = ""
             }
             hideError()
         } else {
             showError("Cannot move forward")
         }
     }
+    
+    
+    
+    @IBAction func textRadioClicked(_ sender: Any) {
+        isMultipleChoice = false
+        disableMC()
+        answerDoneButton.isEnabled = true
+    }
+    
+    @IBAction func multChoiceRadioClicked(_ sender: Any) {
+        isMultipleChoice = true
+        enableMC()
+        answerDoneButton.isEnabled = false
+    }
+    
+    
+    @IBAction func addAnswerClicked(_ sender: Any) {
+    }
+    
+    
+    @IBAction func deleteAnswerClicked(_ sender: Any) {
+    }
+    
+    
+    @IBAction func prevAnswerClicked(_ sender: Any) {
+    }
+    
+    
+    @IBAction func nextAnswerClicked(_ sender: Any) {
+    }
+    
+    
+    @IBAction func answerDoneClicked(_ sender: Any) {
+        // Enable all question buttons
+        enableQButtons()
+        // Disable all answer buttons
+        disableAButtons()
+        // Disable MC TextField and buttons
+        disableMC()
+        // Gray out all radio buttons
+        grayOutRadioButtons()
+    }
+    
+    // Enable question buttons
+    func enableQButtons() {
+        addQuestionButton.isEnabled = true
+        deleteQuestionButton.isEnabled = true
+        prevQuestionButton.isEnabled = true
+        nextQuestionButton.isEnabled = true
+    }
+    
+    // Disable question buttons
+    func disableQButtons() {
+        addQuestionButton.isEnabled = false
+        deleteQuestionButton.isEnabled = false
+        prevQuestionButton.isEnabled = false
+        nextQuestionButton.isEnabled = false
+    }
+    
+    // Enable answer buttons
+    func enableAButtons() {
+        textEntryButton.isEnabled = true
+        multChoiceButton.isEnabled = true
+    }
+    
+    // Disable answer buttons
+    func disableAButtons() {
+        textEntryButton.isEnabled = false
+        multChoiceButton.isEnabled = false
+        answerDoneButton.isEnabled = false
+    }
+    
+    // Enable TextField, multiple choice buttons
+    func enableMC() {
+        addAnswerButton.isEnabled = true
+        deleteAnswerButton.isEnabled = true
+        prevAnswerButton.isEnabled = true
+        nextAnswerButton.isEnabled = true
+    }
+    
+    // Disable TextField, multiple choice buttons
+    func disableMC(){
+        addAnswerButton.isEnabled = false
+        deleteAnswerButton.isEnabled = false
+        prevAnswerButton.isEnabled = false
+        nextAnswerButton.isEnabled = false
+    }
+    
+    // Gray out disabled radio buttons
+    func grayOutRadioButtons() {
+        textEntryButton.setTitleColor(UIColor.gray, for: .disabled)
+        multChoiceButton.setTitleColor(UIColor.gray, for: .disabled)
+    }
+    
     
     // Check for blank fields
     func validateFields() -> String? {
