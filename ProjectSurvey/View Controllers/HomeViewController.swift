@@ -41,7 +41,7 @@ class HomeViewController: UIViewController {
     
     func setUpElements() {
         Utilities.styleHollowButton(logoutButton)
-        Utilities.styleFilledButton(newSurveyButton)
+        Utilities.styleFilledButtonGreen(newSurveyButton)
     }
     
 }

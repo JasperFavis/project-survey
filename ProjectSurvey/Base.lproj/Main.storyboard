@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -110,10 +109,16 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqI-ea-Qei">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                        <color key="backgroundColor" red="0.31372549019607843" green="0.45882352941176469" blue="0.41568627450980389" alpha="0.88757491438356162" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="cob-hk-qHh"/>
                                         </constraints>
-                                        <state key="normal" title="New Survey"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="27"/>
+                                        <size key="titleShadowOffset" width="6" height="0.0"/>
+                                        <state key="normal" title="CREATE NEW SURVEY">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <segue destination="60J-oP-6GR" kind="show" id="aMb-8o-8Qr"/>
                                         </connections>
@@ -121,7 +126,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" red="0.21176470588235294" green="0.46666666666666667" blue="0.43529411764705883" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.31372549019607843" green="0.45882352941176469" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="7ge-wW-u1z" firstAttribute="top" secondItem="fPk-Z7-gbt" secondAttribute="top" constant="20" id="CmW-XS-44l"/>
                             <constraint firstItem="fn7-Hc-RGN" firstAttribute="top" secondItem="fPk-Z7-gbt" secondAttribute="top" constant="150" id="DiQ-KK-K6w"/>
@@ -140,280 +145,6 @@
             </objects>
             <point key="canvasLocation" x="2045" y="738"/>
         </scene>
-        <!--Create Survey View Controller-->
-        <scene sceneID="6IN-jz-CNx">
-            <objects>
-                <viewController id="1jI-pm-JEz" customClass="CreateSurveyViewController" customModule="ProjectSurvey" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ygf-Nx-Ref">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lxt-fi-rbE">
-                                <rect key="frame" x="40" y="144" width="334" height="648"/>
-                                <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Survey Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nwE-o0-gfa">
-                                        <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="A0v-Eo-FhR"/>
-                                            <constraint firstAttribute="height" constant="50" id="qQE-mU-cwx"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="8ba-XQ-1iC">
-                                        <rect key="frame" x="0.0" y="70" width="334" height="438"/>
-                                        <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Question" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ySk-Un-K0Q">
-                                                <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="50" id="GtY-ed-W6c"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="8j6-vP-73Y" userLabel="questionButtonsSV">
-                                                <rect key="frame" x="0.0" y="77" width="334" height="54"/>
-                                                <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vbh-qV-XPE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="164.5" height="54"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vgR-nZ-eGC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="54"/>
-                                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                <state key="normal" title="+"/>
-                                                                <connections>
-                                                                    <action selector="AddQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="1jF-Zj-YeG"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dbH-y4-Scy">
-                                                                <rect key="frame" x="82.5" y="0.0" width="82" height="54"/>
-                                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                <state key="normal" title="-"/>
-                                                                <connections>
-                                                                    <action selector="deleteQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="pBG-aU-2g9"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="xDq-gZ-qsm">
-                                                        <rect key="frame" x="169.5" y="0.0" width="164.5" height="54"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LiT-fb-4dd">
-                                                                <rect key="frame" x="0.0" y="0.0" width="82.5" height="54"/>
-                                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                <state key="normal" title="&lt;"/>
-                                                                <connections>
-                                                                    <action selector="prevQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="P2Y-iJ-ubK"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aKj-IU-KFt">
-                                                                <rect key="frame" x="82.5" y="0.0" width="82" height="54"/>
-                                                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                <state key="normal" title="&gt;"/>
-                                                                <connections>
-                                                                    <action selector="nextQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="LJK-O4-UOH"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="1s9-du-0Db">
-                                                <rect key="frame" x="0.0" y="158" width="334" height="223"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Answer Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="02P-ok-ZOI">
-                                                        <rect key="frame" x="0.0" y="0.0" width="334" height="40"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="40" id="tLb-g8-0x2"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="P0z-uF-llB">
-                                                        <rect key="frame" x="0.0" y="55" width="334" height="34"/>
-                                                        <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YFE-J5-Cp0" customClass="DLRadioButton">
-                                                                <rect key="frame" x="0.0" y="0.0" width="167" height="34"/>
-                                                                <state key="normal" title="Text Entry">
-                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
-                                                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="indicatorColor">
-                                                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="iconSize">
-                                                                        <real key="value" value="16"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="indicatorSize">
-                                                                        <real key="value" value="12"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <action selector="textRadioClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="R2j-6g-HM5"/>
-                                                                    <outletCollection property="otherButtons" destination="IC0-vl-ivb" id="A0k-MI-XEf"/>
-                                                                </connections>
-                                                            </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IC0-vl-ivb" customClass="DLRadioButton">
-                                                                <rect key="frame" x="167" y="0.0" width="167" height="34"/>
-                                                                <state key="normal" title="Multiple Choice">
-                                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                </state>
-                                                                <userDefinedRuntimeAttributes>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="iconColor">
-                                                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="color" keyPath="indicatorColor">
-                                                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="iconSize">
-                                                                        <real key="value" value="16"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                    <userDefinedRuntimeAttribute type="number" keyPath="indicatorSize">
-                                                                        <real key="value" value="12"/>
-                                                                    </userDefinedRuntimeAttribute>
-                                                                </userDefinedRuntimeAttributes>
-                                                                <connections>
-                                                                    <action selector="multChoiceRadioClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="m3u-iE-aGD"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                    </stackView>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q1v-R7-cIt">
-                                                        <rect key="frame" x="0.0" y="104" width="334" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="50" id="qUG-Vs-Cxm"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits"/>
-                                                    </textField>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cMg-e4-LEw" userLabel="answerButtonsSV">
-                                                        <rect key="frame" x="0.0" y="169" width="334" height="54"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="td0-f2-wZB">
-                                                                <rect key="frame" x="0.0" y="0.0" width="164.5" height="54"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESr-9A-XYv">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="54"/>
-                                                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                        <state key="normal" title="+"/>
-                                                                        <connections>
-                                                                            <action selector="AddQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="bgM-th-HX4"/>
-                                                                            <action selector="addAnswerClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="Gnb-BW-SLw"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I4P-ra-ORY">
-                                                                        <rect key="frame" x="82.5" y="0.0" width="82" height="54"/>
-                                                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                        <state key="normal" title="-"/>
-                                                                        <connections>
-                                                                            <action selector="deleteAnswerClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="VLG-rh-gKZ"/>
-                                                                            <action selector="deleteQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="4Fa-iP-mby"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3GQ-bk-ZV1">
-                                                                <rect key="frame" x="169.5" y="0.0" width="164.5" height="54"/>
-                                                                <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GRn-hT-MZT">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="82.5" height="54"/>
-                                                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                        <state key="normal" title="&lt;"/>
-                                                                        <connections>
-                                                                            <action selector="prevAnswerClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="O09-8r-7Fm"/>
-                                                                            <action selector="prevQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="Dag-Af-wgP"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzl-Bo-QV3">
-                                                                        <rect key="frame" x="82.5" y="0.0" width="82" height="54"/>
-                                                                        <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                                        <state key="normal" title="&gt;"/>
-                                                                        <connections>
-                                                                            <action selector="nextAnswerClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="Cjv-oT-PUo"/>
-                                                                            <action selector="nextQTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="Bkx-2j-uge"/>
-                                                                        </connections>
-                                                                    </button>
-                                                                </subviews>
-                                                            </stackView>
-                                                        </subviews>
-                                                    </stackView>
-                                                </subviews>
-                                            </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Fl-4T-fmO">
-                                                <rect key="frame" x="0.0" y="408" width="334" height="30"/>
-                                                <state key="normal" title="Done"/>
-                                                <connections>
-                                                    <action selector="answerDoneClicked:" destination="1jI-pm-JEz" eventType="touchUpInside" id="SIa-it-q0T"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                        <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C0K-he-P3b">
-                                        <rect key="frame" x="0.0" y="528" width="334" height="50"/>
-                                        <state key="normal" title="Save Survey"/>
-                                        <connections>
-                                            <action selector="createTapped:" destination="1jI-pm-JEz" eventType="touchUpInside" id="Lsn-Nz-tTn"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dAk-YX-RIn">
-                                        <rect key="frame" x="0.0" y="598" width="334" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="dAk-YX-RIn" firstAttribute="height" secondItem="nwE-o0-gfa" secondAttribute="height" id="frW-mg-ZgL"/>
-                                    <constraint firstItem="C0K-he-P3b" firstAttribute="height" secondItem="nwE-o0-gfa" secondAttribute="height" id="z7K-Ud-zPp"/>
-                                </constraints>
-                            </stackView>
-                        </subviews>
-                        <color key="backgroundColor" red="0.65490196078431373" green="0.65098039215686276" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="lxt-fi-rbE" firstAttribute="leading" secondItem="Kt1-PM-fUm" secondAttribute="leading" constant="40" id="N8R-q1-RcD"/>
-                            <constraint firstItem="Kt1-PM-fUm" firstAttribute="bottom" secondItem="lxt-fi-rbE" secondAttribute="bottom" constant="70" id="VK8-uB-5jT"/>
-                            <constraint firstItem="lxt-fi-rbE" firstAttribute="top" secondItem="Kt1-PM-fUm" secondAttribute="top" constant="100" id="bWD-ns-6p1"/>
-                            <constraint firstItem="Kt1-PM-fUm" firstAttribute="trailing" secondItem="lxt-fi-rbE" secondAttribute="trailing" constant="40" id="o4b-PO-Wdw"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Kt1-PM-fUm"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="tjZ-8y-zZf"/>
-                    <connections>
-                        <outlet property="addAnswerButton" destination="ESr-9A-XYv" id="a6U-ls-O0F"/>
-                        <outlet property="addQuestionButton" destination="vgR-nZ-eGC" id="15w-Y3-Hve"/>
-                        <outlet property="answerDoneButton" destination="7Fl-4T-fmO" id="C6g-Pq-WAm"/>
-                        <outlet property="answerTextField" destination="q1v-R7-cIt" id="bLY-s8-Dqj"/>
-                        <outlet property="createButton" destination="C0K-he-P3b" id="Ux6-O6-O1L"/>
-                        <outlet property="deleteAnswerButton" destination="I4P-ra-ORY" id="Lld-Cv-UJi"/>
-                        <outlet property="deleteQuestionButton" destination="dbH-y4-Scy" id="xar-N0-3cm"/>
-                        <outlet property="enterQuestionTextField" destination="ySk-Un-K0Q" id="hJV-dS-LHr"/>
-                        <outlet property="errorLabel" destination="dAk-YX-RIn" id="6yf-9P-7SN"/>
-                        <outlet property="multChoiceButton" destination="IC0-vl-ivb" id="OIx-9z-K0r"/>
-                        <outlet property="nextAnswerButton" destination="xzl-Bo-QV3" id="SMq-nQ-9HR"/>
-                        <outlet property="nextQuestionButton" destination="aKj-IU-KFt" id="p5S-aX-9rR"/>
-                        <outlet property="prevAnswerButton" destination="GRn-hT-MZT" id="piA-j8-Pqh"/>
-                        <outlet property="prevQuestionButton" destination="LiT-fb-4dd" id="8TV-91-9b1"/>
-                        <outlet property="surveyTitleTextField" destination="nwE-o0-gfa" id="0c2-Iw-ePE"/>
-                        <outlet property="textEntryButton" destination="YFE-J5-Cp0" id="7LP-7a-jMd"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VUt-th-hv9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3504" y="738"/>
-        </scene>
         <!--Customize Survey View Controller-->
         <scene sceneID="8Zu-yq-MPt">
             <objects>
@@ -422,8 +153,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NEW SURVEY" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C9n-oK-lcr">
+                                <rect key="frame" x="119.5" y="60" width="175" height="38.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="28"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gTK-L7-LY4" userLabel="QuestionStackView">
-                                <rect key="frame" x="40" y="80" width="334" height="190"/>
+                                <rect key="frame" x="40" y="148.5" width="334" height="190"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Survey Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4hA-O9-rwX">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
@@ -475,7 +212,7 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="xEK-Mm-V0c" userLabel="AnswerStackView">
-                                <rect key="frame" x="40" y="375" width="334" height="230"/>
+                                <rect key="frame" x="40" y="443.5" width="334" height="160"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Answer" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gvw-A9-XB3">
                                         <rect key="frame" x="20" y="20" width="294" height="50"/>
@@ -516,20 +253,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8p-v0-Kke">
-                                        <rect key="frame" x="20" y="160" width="294" height="50"/>
-                                        <color key="backgroundColor" red="0.35686274509803922" green="0.27058823529411763" blue="0.35686274509803922" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="DONE">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="doneClicked:" destination="60J-oP-6GR" eventType="touchUpInside" id="adK-Lo-h9r"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstItem="a8p-v0-Kke" firstAttribute="height" secondItem="Gvw-A9-XB3" secondAttribute="height" id="r49-84-EKl"/>
-                                </constraints>
                                 <directionalEdgeInsets key="directionalLayoutMargins" top="20" leading="20" bottom="20" trailing="20"/>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EgC-nA-cff">
@@ -553,11 +277,12 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="eNK-Th-qMl" userLabel="RadioButtonsStackView">
-                                <rect key="frame" x="40" y="295" width="334" height="50"/>
+                                <rect key="frame" x="40" y="363.5" width="334" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tAK-hU-v0z" customClass="DLRadioButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="tAK-hU-v0z" customClass="DLRadioButton">
                                         <rect key="frame" x="0.0" y="0.0" width="167" height="50"/>
-                                        <state key="normal" title="Text Box">
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <state key="normal" title="TEXT BOX">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -570,9 +295,10 @@
                                             <outletCollection property="otherButtons" destination="AEF-oT-ulE" id="QtD-16-2DR"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEF-oT-ulE" customClass="DLRadioButton">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="AEF-oT-ulE" customClass="DLRadioButton">
                                         <rect key="frame" x="167" y="0.0" width="167" height="50"/>
-                                        <state key="normal" title="Multiple Choice">
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <state key="normal" title="MULTIPLE CHOICE">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <userDefinedRuntimeAttributes>
@@ -597,14 +323,16 @@
                             <constraint firstItem="NsN-Dg-XhZ" firstAttribute="centerX" secondItem="pfA-sL-ySB" secondAttribute="centerX" id="7pN-C6-Wrd"/>
                             <constraint firstItem="pfA-sL-ySB" firstAttribute="trailing" secondItem="xEK-Mm-V0c" secondAttribute="trailing" constant="40" id="9T0-vR-457"/>
                             <constraint firstItem="gTK-L7-LY4" firstAttribute="leading" secondItem="pfA-sL-ySB" secondAttribute="leading" constant="40" id="Ejt-70-79g"/>
-                            <constraint firstItem="gTK-L7-LY4" firstAttribute="top" secondItem="pfA-sL-ySB" secondAttribute="top" constant="80" id="JgQ-Jb-zAD"/>
                             <constraint firstItem="EgC-nA-cff" firstAttribute="top" secondItem="NsN-Dg-XhZ" secondAttribute="bottom" constant="35" id="Nik-Ls-a3e"/>
                             <constraint firstItem="eNK-Th-qMl" firstAttribute="leading" secondItem="pfA-sL-ySB" secondAttribute="leading" constant="40" id="P6g-Gc-Lgt"/>
+                            <constraint firstItem="C9n-oK-lcr" firstAttribute="centerX" secondItem="pfA-sL-ySB" secondAttribute="centerX" id="TPb-BU-Rqy"/>
                             <constraint firstItem="pfA-sL-ySB" firstAttribute="bottom" secondItem="EgC-nA-cff" secondAttribute="bottom" constant="60" id="VPf-mY-CqP"/>
                             <constraint firstItem="xEK-Mm-V0c" firstAttribute="leading" secondItem="pfA-sL-ySB" secondAttribute="leading" constant="40" id="ZMo-vr-hE3"/>
                             <constraint firstItem="pfA-sL-ySB" firstAttribute="trailing" secondItem="eNK-Th-qMl" secondAttribute="trailing" constant="40" id="aMN-ay-yLx"/>
+                            <constraint firstItem="C9n-oK-lcr" firstAttribute="top" secondItem="pfA-sL-ySB" secondAttribute="top" constant="60" id="ao0-pK-mkV"/>
                             <constraint firstItem="eNK-Th-qMl" firstAttribute="top" secondItem="gTK-L7-LY4" secondAttribute="bottom" constant="25" id="cck-eI-kDp"/>
                             <constraint firstItem="EgC-nA-cff" firstAttribute="leading" secondItem="pfA-sL-ySB" secondAttribute="leading" constant="82" id="lWb-sr-acW"/>
+                            <constraint firstItem="gTK-L7-LY4" firstAttribute="top" secondItem="C9n-oK-lcr" secondAttribute="bottom" constant="50" id="pO0-uH-Gsd"/>
                             <constraint firstItem="EgC-nA-cff" firstAttribute="centerX" secondItem="xEK-Mm-V0c" secondAttribute="centerX" id="xML-8z-Y5k"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="pfA-sL-ySB"/>
@@ -612,7 +340,6 @@
                     <navigationItem key="navigationItem" id="fcI-Db-Gcy"/>
                     <connections>
                         <outlet property="AnswerStackView" destination="xEK-Mm-V0c" id="EpK-TK-CT2"/>
-                        <outlet property="doneButton" destination="a8p-v0-Kke" id="6VE-uz-Mgq"/>
                         <outlet property="enterAnswerTextfield" destination="Gvw-A9-XB3" id="poi-px-LLE"/>
                         <outlet property="enterQuestionTextfield" destination="E5N-zb-qsl" id="zcI-cQ-e17"/>
                         <outlet property="errorLabel" destination="NsN-Dg-XhZ" id="Eli-AB-gSS"/>

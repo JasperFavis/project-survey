@@ -25,7 +25,6 @@ class CustomizeSurveyViewController: UIViewController {
     @IBOutlet weak var nextQuestionButton: UIButton!
     @IBOutlet weak var prevAnswerButton: UIButton!
     @IBOutlet weak var nextAnswerButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
     @IBOutlet weak var saveChangesButton: UIButton!
     @IBOutlet weak var textBoxRadioButton: DLRadioButton!
     @IBOutlet weak var multipleChoiceRadioButton: DLRadioButton!
@@ -100,7 +99,6 @@ class CustomizeSurveyViewController: UIViewController {
     
     @IBAction func multipleChoiceClicked(_ sender: Any) {
         AnswerStackView.isHidden = false
-        disableDoneButtonIfNoAnswers()
         
         answers.removeAll()
         answerIndex = 0
@@ -210,6 +208,15 @@ class CustomizeSurveyViewController: UIViewController {
         // Display multiple choice answers for current question if it exists
         populateEnterAnswer()
         
+        if multipleChoiceRadioButton.isSelected {
+            if answers.count < 2 {
+                prevQuestionButton.isEnabled = false
+                nextQuestionButton.isEnabled = false
+                grayOutButton(for: prevQuestionButton, ifNot: prevQuestionButton.isEnabled)
+                grayOutButton(for: nextQuestionButton, ifNot: nextQuestionButton.isEnabled)
+            }
+        }
+        
     } // updateQuestionsAndAnswers
     
     func updateMultipleChoiceAnswers(andMoveBackIf prevIsSelected: Bool) {
@@ -242,9 +249,6 @@ class CustomizeSurveyViewController: UIViewController {
             grayOutButton(for: nextQuestionButton, ifNot: nextQuestionButton.isEnabled)
         }
 
-        // Keep doneButton disabled when
-        disableDoneButtonIfNoAnswers()
-
         // Increment or decrement answerIndex or do nothing
         if prevIsSelected {
            moveToPreviousItem(startingAt: &answerIndex, in: answers)
@@ -271,11 +275,6 @@ class CustomizeSurveyViewController: UIViewController {
     func disableSaveButtonIfSurveyPartiallyFilled() {
         saveChangesButton.isEnabled = (questions.isEmpty || surveyTitleIsEmpty) ? false : true
         grayOutButton(for: saveChangesButton, ifNot: saveChangesButton.isEnabled)
-    }
-    
-    func disableDoneButtonIfNoAnswers() {
-        doneButton.isEnabled = (answers.count > 1)
-        grayOutButton(for: doneButton, ifNot: doneButton.isEnabled)
     }
     
     func disableQuestionPrevAndNext(on value: Bool) {
