@@ -182,6 +182,10 @@ class CustomizeSurveyViewController: UIViewController {
             if isItemStored(at: questionIndex, for: questions) {
                 if question != questions[questionIndex] {
                     addQandA(for: question)
+                } else if multipleChoiceRadioButton.isSelected && questionsAndAnswers[question] == nil {
+                    questionsAndAnswers[question] = answers
+                } else if textBoxRadioButton.isSelected && questionsAndAnswers[question] != nil {
+                    questionsAndAnswers[question] = nil
                 }
             } else {
                 addQandA(for: question)
