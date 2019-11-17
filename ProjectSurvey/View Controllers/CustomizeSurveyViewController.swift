@@ -35,9 +35,30 @@ class CustomizeSurveyViewController: UIViewController {
     
     let db = Firestore.firestore()
     var questions: [String] = []
-    var questionsAndAnswers: [String : [String]?] = [:]
+    var answers: [String] = []
     var questionIndex = 0
+    var answerIndex = 0
+    var questionsAndAnswers: [String : [String]?] = [:]
     var surveyTitleIsEmpty = true
+    var surveyTitle = ""
+    var surveyTitleExists = false {
+        didSet {
+            if !surveyTitleExists {
+                if let currUID = Auth.auth().currentUser?.uid {
+                    let userDocRef = db.collection("users").document(currUID)
+                    let surveyDocRef = db.collection("surveys").addDocument(data: [
+                        "title" : surveyTitle,
+                        "questions" : questions,
+                        "questionsAndanswers" : questionsAndAnswers])
+                    userDocRef.setData([surveyTitle : surveyDocRef], merge: true)
+                } else {
+                    print("No user signed in\n")
+                }
+            } else {
+                showError("Survey title already exists")
+            }
+        }
+    }
     
     
     
@@ -61,19 +82,44 @@ class CustomizeSurveyViewController: UIViewController {
     }
     
     @IBAction func prevAnswerClicked(_ sender: Any) {
-        updateMultipleChoiceAnswers(andMoveBack: true)
+        updateMultipleChoiceAnswers(andMoveBackIf: true)
     }
     
     @IBAction func nextAnswerClicked(_ sender: Any) {
-        updateMultipleChoiceAnswers(andMoveBack: false)
+        updateMultipleChoiceAnswers(andMoveBackIf: false)
     }
     
     @IBAction func textBoxClicked(_ sender: Any) {
-        print("Text Box Selected\n")
+        AnswerStackView.isHidden = true
+        
+        prevQuestionButton.isEnabled = true
+        nextQuestionButton.isEnabled = true
+        grayOutButton(for: prevQuestionButton, ifNot: prevQuestionButton.isEnabled)
+        grayOutButton(for: nextQuestionButton, ifNot: nextQuestionButton.isEnabled)
     }
     
     @IBAction func multipleChoiceClicked(_ sender: Any) {
-        print("Multiple Choice Selected\n")
+        AnswerStackView.isHidden = false
+        disableDoneButtonIfNoAnswers()
+        
+        answers.removeAll()
+        answerIndex = 0
+        if !isTextfieldEmpty(for: enterQuestionTextfield) {
+            let question = enterQuestionTextfield.text!
+            if let storedAnswers = questionsAndAnswers[question] {
+                for answer in storedAnswers! {
+                    answers.append(answer)
+                }
+            }
+        }
+        displayText(in: &enterAnswerTextfield, fromItemIn: answers, at: answerIndex, or: "Enter Answer")
+        
+        if answers.count < 2 {
+            prevQuestionButton.isEnabled = false
+            nextQuestionButton.isEnabled = false
+            grayOutButton(for: prevQuestionButton, ifNot: prevQuestionButton.isEnabled)
+            grayOutButton(for: nextQuestionButton, ifNot: nextQuestionButton.isEnabled)
+        }
     }
     
     @IBAction func doneClicked(_ sender: Any) {
@@ -81,33 +127,23 @@ class CustomizeSurveyViewController: UIViewController {
     
     // Save survey information to firestore
     @IBAction func saveChangesClicked(_ sender: Any) {
-        print("saved button clicked")
-//        // Validate the fields
-//        let error = validateFields(for: enterQuestionTextfield)
-//
-//        if error != nil {
-//            // There's something wrong with the fields, show error message
-//            showError(error!)
-//        } else if questions.isEmpty {
-//            showError("Please fill in all fields")
-//        } else {
-//            // Create cleaned versions of the data
-//            let surveyTitle = surveyTitleTextfield.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-//
-//            // Create survey data object
-//            // let newSurvey = SurveyData(title: surveyTitle, questions: questionArray)
-//
-//            // Save survey data to firestore under docRef (surveys->doc). Save docRef to user's document under unique survey title
-//            if let currUID = Auth.auth().currentUser?.uid {
-//                let docRef = db.collection("surveys").addDocument(data: [
-//                    "title" : surveyTitle,
-//                    "questions" : questions,
-//                    "questionsAndanswers" : questionsAndAnswers])
-//                db.collection("users").document(currUID).setData([surveyTitle : docRef], merge: true)
-//            } else {
-//                print("No user signed in\n")
-//            }
-//        }
+        
+        // Create cleaned versions of the data
+        surveyTitle = surveyTitleTextfield.text!
+
+        // Save survey data to firestore under docRef (surveys->doc). Save docRef to user's document under unique survey title
+        if let currUID = Auth.auth().currentUser?.uid {
+            let userDocRef = db.collection("users").document(currUID)
+            userDocRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let userDocData = document.data().map(String.init(describing:)) ?? "nil"
+                    self.surveyTitleExists = (userDocData.contains(self.surveyTitle)) ? true : false
+                }
+            }
+        } else {
+            print("No user signed in\n")
+        }
+
     } // SaveChangesClicked
     
     
@@ -122,6 +158,10 @@ class CustomizeSurveyViewController: UIViewController {
         hideError()
         AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.7357930223, green: 0.4392925942, blue: 0.3062928082, alpha: 1))
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        
+        Utilities.styleTextField(surveyTitleTextfield)
+        Utilities.styleTextField(enterQuestionTextfield)
+        Utilities.styleTextField(enterAnswerTextfield)
     }
     
     // Store questions and answers to data structures
@@ -161,12 +201,57 @@ class CustomizeSurveyViewController: UIViewController {
         }
 
         // If question exists at current index, display in textfield
-        displayText(in: &enterQuestionTextfield, fromItemIn: questions, at: questionIndex)
+        displayText(in: &enterQuestionTextfield, fromItemIn: questions, at: questionIndex, or: "Enter Question")
+        
+        // Display multiple choice answers for current question if it exists
+        populateEnterAnswer()
         
     } // updateQuestionsAndAnswers
     
-    func updateMultipleChoiceAnswers(andMoveBack Prev: Bool) {
+    func updateMultipleChoiceAnswers(andMoveBackIf prevIsSelected: Bool) {
         
+        var didDelete = false
+               
+        // Add or delete answer
+        if isTextfieldEmpty(for: enterAnswerTextfield) {
+           // Delete
+            if isItemStored(at: answerIndex, for: answers) {
+                answers.remove(at: answerIndex)
+                didDelete = true
+            }
+        } else {
+           // Add
+           let answer = enterAnswerTextfield.text!
+           if isItemStored(at: answerIndex, for: answers) {
+                if answer != answers[answerIndex] {
+                    answers.insert(answer, at: answerIndex)
+                }
+           } else {
+                answers.insert(answer, at: answerIndex)
+            }
+        }
+        
+        if answers.count > 1 {
+            prevQuestionButton.isEnabled = true
+            nextQuestionButton.isEnabled = true
+            grayOutButton(for: prevQuestionButton, ifNot: prevQuestionButton.isEnabled)
+            grayOutButton(for: nextQuestionButton, ifNot: nextQuestionButton.isEnabled)
+        }
+
+        // Keep doneButton disabled when
+        disableDoneButtonIfNoAnswers()
+
+        // Increment or decrement answerIndex or do nothing
+        if prevIsSelected {
+           moveToPreviousItem(startingAt: &answerIndex, in: answers)
+        } else {
+           if !didDelete {
+               moveToNextItem(startingAt: &answerIndex, in: answers)
+           }
+        }
+
+        // If answer exists at current index, display in textfield
+        displayText(in: &enterAnswerTextfield, fromItemIn: answers, at: answerIndex, or: "Enter Answer")
     }
     
     func enableQuestionButtons(if value: Bool) {
@@ -184,18 +269,30 @@ class CustomizeSurveyViewController: UIViewController {
         grayOutButton(for: saveChangesButton, ifNot: saveChangesButton.isEnabled)
     }
     
+    func disableDoneButtonIfNoAnswers() {
+        doneButton.isEnabled = (answers.count > 1)
+        grayOutButton(for: doneButton, ifNot: doneButton.isEnabled)
+    }
+    
+    func disableQuestionPrevAndNext(on value: Bool) {
+        prevQuestionButton.isEnabled = value
+        nextQuestionButton.isEnabled = value
+        grayOutButton(for: prevQuestionButton, ifNot: value)
+        grayOutButton(for: nextQuestionButton, ifNot: value)
+    }
+    
     @objc func textFieldDidChange() {
         surveyTitleIsEmpty = (surveyTitleTextfield.text == "") ? true : false
         disableSaveButtonIfSurveyPartiallyFilled()
     }
     
+    // Add questions and answers to dictionary
     func addQandA(for question: String) {
         questions.insert(question, at: questionIndex)
         if textBoxRadioButton.isSelected {
             questionsAndAnswers[questions[questionIndex]] = nil
         } else {
-            // TODO: add answer choices
-            questionsAndAnswers[questions[questionIndex]] = ["answer1", "answer2", "answer3"]
+            questionsAndAnswers[questions[questionIndex]] = answers
         }
     }
     
@@ -222,12 +319,33 @@ class CustomizeSurveyViewController: UIViewController {
         }
     }
     
-    func displayText(in textfield: inout UITextField, fromItemIn array: [String], at index: Int) {
+    func populateEnterAnswer() {
+        // Display multiple choice answers for current question if it exists
+        answers.removeAll()
+        answerIndex = 0
+        if !isTextfieldEmpty(for: enterQuestionTextfield) {
+            let question = enterQuestionTextfield.text!
+            if let storedAnswers = questionsAndAnswers[question] {
+                textBoxRadioButton.isSelected = false
+                multipleChoiceRadioButton.isSelected = true
+                for answer in storedAnswers! {
+                    answers.append(answer)
+                }
+            } else {
+                textBoxRadioButton.isSelected = true
+                multipleChoiceRadioButton.isSelected = false
+            }
+        }
+        displayText(in: &enterAnswerTextfield, fromItemIn: answers, at: answerIndex, or: "Enter Answer")
+        AnswerStackView.isHidden = textBoxRadioButton.isSelected
+    }
+    
+    func displayText(in textfield: inout UITextField, fromItemIn array: [String], at index: Int, or placeholder: String) {
         if array.indices.contains(index) {
             textfield.text = array[index]
         } else {
             textfield.text = ""
-            textfield.placeholder = "Enter Question"
+            textfield.placeholder = placeholder
         }
     }
     
