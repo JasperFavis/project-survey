@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 import FirebaseAuth
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -16,6 +17,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var surveyTitleLabel: UILabel!
     
     @IBOutlet weak var surveySelectionCollectionView: UICollectionView!
+    
+    let db = Firestore.firestore()
+    var surveyTitles: [String] = [] {
+        didSet {
+            if !surveyTitles.isEmpty {
+                for item in surveyTitles {
+                    print(item)
+                }
+            }
+            surveySelectionCollectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,27 +53,49 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     func setUpElements() {
+        
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
         Utilities.styleHollowButton(logoutButton)
-        Utilities.styleFilledButtonGreen(newSurveyButton)
+        Utilities.styleFilledButton(newSurveyButton)
+
         
         surveySelectionCollectionView.delegate = self
         surveySelectionCollectionView.dataSource = self
         
-
+        // test
+        retrieveSurveyTitles()
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: collectionView.frame.width, height: collectionView.frame.width/2)
-//    }
+    
+    func retrieveSurveyTitles() {
+        
+        if let currUID = Auth.auth().currentUser?.uid {
+            let surveyTitlesDocRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
+            surveyTitlesDocRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    guard let surveyTitlesDict = document.data() else {
+                        return
+                    }
+                    self.surveyTitles = Array(surveyTitlesDict.keys)
+                } else {
+                    print("document doesn't exist")
+                }
+            }
+        } else {
+            print("No user signed in\n")
+        }
+    }
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return surveyTitles.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
         
-        cell.setGradientBackground(colorOne: #colorLiteral(red: 0.05882352963, green: 0.180392161, blue: 0.2470588237, alpha: 1), colorTwo: #colorLiteral(red: 0.1490196078, green: 0.2705882353, blue: 0.3568627451, alpha: 1))
+        cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3725271624, green: 0.490415505, blue: 0.5328553082, alpha: 1), colorTwo: #colorLiteral(red: 0.2439439026, green: 0.3211413401, blue: 0.3489324176, alpha: 1))
+        cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
         
         return cell
     }
@@ -68,6 +103,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("cell selected")
     }
+    
 } // HomeViewControllers
 
 
@@ -80,6 +116,16 @@ extension UIView {
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
         gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+    func setHorizontalGradient(colorOne: UIColor, colorTwo: UIColor) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
         layer.insertSublayer(gradientLayer, at: 0)
     }
     

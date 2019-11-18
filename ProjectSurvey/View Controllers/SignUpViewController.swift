@@ -29,7 +29,9 @@ class SignUpViewController: UIViewController {
     
     @IBOutlet weak var backButton: UIButton!
     @IBAction func backButtonTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        if navigationController?.popViewController(animated: true) == nil {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func signUpTapped(_ sender: Any) {

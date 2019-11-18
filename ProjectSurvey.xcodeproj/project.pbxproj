@@ -66,6 +66,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5AAAFCCA23828036003305A9 /* CollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CollectionViewCells;
+			sourceTree = "<group>";
+		};
 		AFA0AACB9C69E7E16FB8B68F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +107,7 @@
 				B901F29D23307D2E004ADE9E /* AppDelegate.swift */,
 				B93F2CCA23308F1400B4D7F7 /* Helpers */,
 				5A7986F0237B4F3D0048CC51 /* Model */,
+				5AAAFCCA23828036003305A9 /* CollectionViewCells */,
 				B901F2B5233081F5004ADE9E /* View Controllers */,
 				B901F2A123307D2E004ADE9E /* Main.storyboard */,
 				B901F2A423307D30004ADE9E /* Assets.xcassets */,
@@ -112,8 +120,8 @@
 		B901F2B5233081F5004ADE9E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B901F2AF233081D3004ADE9E /* SignUpViewController.swift */,
 				B901F29F23307D2E004ADE9E /* ViewController.swift */,
+				B901F2AF233081D3004ADE9E /* SignUpViewController.swift */,
 				B901F2B1233081E0004ADE9E /* LogInViewController.swift */,
 				B901F2B3233081EE004ADE9E /* HomeViewController.swift */,
 				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,

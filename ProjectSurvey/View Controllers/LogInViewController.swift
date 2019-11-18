@@ -24,8 +24,12 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
+    
+    
     @IBAction func backButtonTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        if navigationController?.popViewController(animated: true) == nil {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func loginTapped(_ sender: Any) {

@@ -21,6 +21,7 @@ class CustomizeSurveyViewController: UIViewController {
     @IBOutlet weak var enterAnswerTextfield: UITextField!
     
     /********Buttons********/
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var prevQuestionButton: UIButton!
     @IBOutlet weak var nextQuestionButton: UIButton!
     @IBOutlet weak var prevAnswerButton: UIButton!
@@ -74,6 +75,11 @@ class CustomizeSurveyViewController: UIViewController {
     
     
     /**************** IBAction ********************/
+    
+    
+    @IBAction func backButtonClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func prevQuestionClicked(_ sender: Any) {
         updateQuestionsAndAnswers(andMoveBackIf: true)
@@ -153,6 +159,8 @@ class CustomizeSurveyViewController: UIViewController {
     
     // Set up custom look for buttons, labels, textfields
     func setUpElements() {
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.2683538441, green: 0.5913723602, blue: 0.5536868666, alpha: 1), colorTwo: #colorLiteral(red: 0.1695626367, green: 0.3736658105, blue: 0.3498537736, alpha: 1))
+        
         textBoxRadioButton.isSelected = true
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
