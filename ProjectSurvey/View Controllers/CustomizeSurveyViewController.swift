@@ -44,12 +44,15 @@ class CustomizeSurveyViewController: UIViewController {
         didSet {
             if !surveyTitleExists {
                 if let currUID = Auth.auth().currentUser?.uid {
-                    let userDocRef = db.collection("users").document(currUID)
+//                    let userDocRef = db.collection("users").document(currUID)
+                    let userSIDstorageRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
                     let surveyDocRef = db.collection("surveys").addDocument(data: [
                         "title" : surveyTitle,
                         "questions" : questions,
                         "questionsAndanswers" : questionsAndAnswers])
-                    userDocRef.setData([surveyTitle : surveyDocRef], merge: true)
+                    userSIDstorageRef.setData([surveyTitle : surveyDocRef], merge: true)
+                    let userInfoRef = db.collection("users").document(currUID)
+                    userInfoRef.setData(["SIDstorageRef" : userSIDstorageRef], merge: true)
                 } else {
                     print("No user signed in\n")
                 }
@@ -120,9 +123,6 @@ class CustomizeSurveyViewController: UIViewController {
         }
     }
     
-    @IBAction func doneClicked(_ sender: Any) {
-    }
-    
     // Save survey information to firestore
     @IBAction func saveChangesClicked(_ sender: Any) {
         
@@ -131,11 +131,14 @@ class CustomizeSurveyViewController: UIViewController {
 
         // Save survey data to firestore under docRef (surveys->doc). Save docRef to user's document under unique survey title
         if let currUID = Auth.auth().currentUser?.uid {
-            let userDocRef = db.collection("users").document(currUID)
+            let userDocRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
             userDocRef.getDocument { (document, error) in
                 if let document = document, document.exists {
                     let userDocData = document.data().map(String.init(describing:)) ?? "nil"
                     self.surveyTitleExists = (userDocData.contains(self.surveyTitle)) ? true : false
+                } else {
+                    print("document doesn't exist")
+                    self.surveyTitleExists = false
                 }
             }
         } else {

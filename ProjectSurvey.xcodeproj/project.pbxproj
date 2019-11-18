@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */; };
+		5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */; };
 		5A7986EF237B4F300048CC51 /* SurveyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7986EE237B4F300048CC51 /* SurveyData.swift */; };
 		9383D612CAC8C019238E9735 /* Pods_ProjectSurvey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */; };
 		B901F29E23307D2E004ADE9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901F29D23307D2E004ADE9E /* AppDelegate.swift */; };
@@ -26,6 +27,7 @@
 /* Begin PBXFileReference section */
 		43FFD0404FE13151DEB6301A /* Pods-ProjectSurvey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectSurvey.debug.xcconfig"; path = "Target Support Files/Pods-ProjectSurvey/Pods-ProjectSurvey.debug.xcconfig"; sourceTree = "<group>"; };
 		5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeSurveyViewController.swift; sourceTree = "<group>"; };
+		5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		5A7986EE237B4F300048CC51 /* SurveyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyData.swift; sourceTree = "<group>"; };
 		9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectSurvey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901F29A23307D2E004ADE9E /* ProjectSurvey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectSurvey.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				B901F2B1233081E0004ADE9E /* LogInViewController.swift */,
 				B901F2B3233081EE004ADE9E /* HomeViewController.swift */,
 				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,
+				5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */,
+				5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */,
 				B93F2CC923308F0900B4D7F7 /* Utilities.swift in Sources */,
 				B901F2B4233081EE004ADE9E /* HomeViewController.swift in Sources */,
 				B901F2B2233081E0004ADE9E /* LogInViewController.swift in Sources */,
