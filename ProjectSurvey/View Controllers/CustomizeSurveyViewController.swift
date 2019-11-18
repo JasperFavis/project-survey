@@ -159,13 +159,13 @@ class CustomizeSurveyViewController: UIViewController {
     
     // Set up custom look for buttons, labels, textfields
     func setUpElements() {
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.2683538441, green: 0.5913723602, blue: 0.5536868666, alpha: 1), colorTwo: #colorLiteral(red: 0.1695626367, green: 0.3736658105, blue: 0.3498537736, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.4577064103, green: 0.7679830195, blue: 0.7317840817, alpha: 1), colorTwo: #colorLiteral(red: 0.1992263278, green: 0.3564087471, blue: 0.3380707983, alpha: 1))
         
         textBoxRadioButton.isSelected = true
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
         hideError()
-        AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.7357930223, green: 0.4392925942, blue: 0.3062928082, alpha: 1))
+        AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.1755965177, green: 0.2536111532, blue: 0.2846746575, alpha: 1))
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         Utilities.styleTextField(surveyTitleTextfield)
