@@ -9,60 +9,97 @@
 import UIKit
 import DLRadioButton
 
-class TestViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
-    //let testRadioButton = DLRadioButton()
+class TestViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    let sampleText = [
-"what do you want to do on this nice hot sunny day. would you liketo go the beach and play in the cool water? would you like to go to the local ice cream shop? eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffffgggggggggggggggggggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiii",
-"this is just some sample text. nothing special. don'tpay any mind to my rambling."]
-    
-    @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout! {
-        didSet {
-            if let testCollectionView = testCollectionView {
-                collectionLayout.estimatedItemSize = CGSize(width: testCollectionView.frame.width, height: 92)
-            }
-        }
-    }
     @IBOutlet weak var testCollectionView: UICollectionView!
+    @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
+    
+    var sampleQuestions: [String] = []
+    var sampleAnswers = [
+        ["a","b","c","d"],
+        ["e","f","g","h"],
+        ["i","j","k","l"],
+        ["m","n","o","p"],
+        ["q","r","s","t"],
+        ["u","v","w","x"],
+        ["y","z","-2","-1","0","1"],
+        ["2","3","4","5"],
+        ["6","7","8","9"],
+        ["10","11","12","13"]]
+    
+    
+    
+    
+    // MARK: - viewDidLoad
     
     override func viewDidLoad() {
         super.viewDidLoad()
         testCollectionView.delegate = self
         testCollectionView.dataSource = self
+        
+        // fill up sampleText
+        for _ in 0...9 {
+            sampleQuestions.append(randomStringGenerator())
+        }
+        SurveyAnswers(to: sampleQuestions.count)
     }
-
     
-    // MARK: Protocol Methods
+    
+    // MARK: - Protocol Methods
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 400, height: 400)
+    }
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleText.count
+        return sampleQuestions.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "testCell", for: indexPath) as? testCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.testLabel.text = sampleText[indexPath.row]
+        cell.testLabel.text = sampleQuestions[indexPath.row]
         cell.testView.layer.borderColor = UIColor.black.cgColor
         cell.testView.layer.borderWidth = 3.0
-        cell.addButtons()
+
+        cell.questionNumber = indexPath.row
+        cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
+        cell.addButtons(answers: sampleAnswers[indexPath.row])
+        
+        if let qnum = cell.questionNumber {
+            if SurveyAnswers.answers[qnum] != nil {
+                cell.allButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
+                print("Question: \(qnum) Answer: \(SurveyAnswers.answers[qnum] as! Int)")
+            }
+        }
+
         return cell
     }
     
     
+    // MARK: - Functions
     
-    
-    // MARK: Functions
-    
-
-    
-
+    func randomStringGenerator() -> String {
+        let substring = "hello"
+        let randomNumber = Int.random(in: 10...60)
+        var i = 0
+        var string: String = ""
+        while i < randomNumber {
+            string += substring
+            i += 1
+        }
+        return string
+    }
 
 } // TestViewController
 
 
 
+
+
+
+// MARK: - class testCollectionViewCell
 
 class testCollectionViewCell: UICollectionViewCell {
     
@@ -70,49 +107,37 @@ class testCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var testView: UIView!
     @IBOutlet weak var answerView: UIView!
     
-    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
-        setNeedsLayout()
-        layoutIfNeeded()
-        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
-        var frame = layoutAttributes.frame
-        frame.size.height = ceil(size.height)
-        layoutAttributes.frame = frame
-        return layoutAttributes
-    }
+    var allButtons : [DLRadioButton] = []
+    var questionNumber: Int?
+    var selectedButton: DLRadioButton?
     
     // Programmatically add buttons
-    func addButtons() {
+    func addButtons(answers answerArray: [String]) {
+        
+        allButtons.removeAll()
          
          //first button
         let frame = CGRect(x: 50, y: 20, width: 262, height: 17);
-        let firstRadioButton = createRadioButton(frame: frame, title: "Red Button", color: UIColor.red, currentView: answerView);
-        //firstRadioButton.topAnchor.constraint(equalTo: answerView.topAnchor, constant: 50).isActive = true
+        let firstRadioButton = createRadioButton(frame: frame, title: answerArray[0], color: UIColor.black, currentView: answerView);
 
         //other buttons
-        let colorNames = ["Brown", "Orange", "Green", "Blue", "Purple"]
-        let colors = [UIColor.brown, UIColor.orange, UIColor.green, UIColor.blue, UIColor.purple]
-        var i = 0
-        var otherButtons : [DLRadioButton] = []
-        for color in colors {
-            if i == 0 {
+        var otherButtons: [DLRadioButton] = []
+        for i in 1..<answerArray.count {
+            if i == 1 {
                 let frame = CGRect(x: 50, y: 20 + firstRadioButton.frame.size.height + 13, width: 262, height: 17)
-                let radioButton = createRadioButton(frame: frame, title: colorNames[i] + " Button", color: color, currentView: self.answerView)
+                let radioButton = createRadioButton(frame: frame, title: answerArray[i], color: UIColor.black, currentView: self.answerView)
                     otherButtons.append(radioButton)
             } else {
-                let frame = CGRect(x: 50, y: 20 + firstRadioButton.frame.size.height + 13 + 30 * CGFloat(i), width: 262, height: 17)
-                let radioButton = createRadioButton(frame: frame, title: colorNames[i] + " Button", color: color, currentView: self.answerView)
+                let frame = CGRect(x: 50, y: 20 + 30 * CGFloat(i), width: 262, height: 17)
+                let radioButton = createRadioButton(frame: frame, title: answerArray[i], color: UIColor.black, currentView: self.answerView)
                 otherButtons.append(radioButton)
             }
-
-            i += 1
-        }
-        if otherButtons.count > 0 {
-            otherButtons[otherButtons.count - 1].bottomAnchor.constraint(equalTo: answerView.bottomAnchor, constant: -20).isActive = true
         }
         // set other buttons for first radio button
-        firstRadioButton.otherButtons = otherButtons;
-        // set selection state programmatically
-        firstRadioButton.otherButtons[1].isSelected = true;
+        firstRadioButton.otherButtons = otherButtons
+        
+        allButtons.append(firstRadioButton)
+        allButtons += otherButtons
     }
 
 
@@ -129,6 +154,7 @@ class testCollectionViewCell: UICollectionViewCell {
 
         return radioButton;
     }
+    
 
     @objc @IBAction private func logSelectedButton(radioButton : DLRadioButton) {
         if (radioButton.isMultipleSelectionEnabled) {
@@ -138,7 +164,35 @@ class testCollectionViewCell: UICollectionViewCell {
         } else {
             print(String(format: "%@ is selected.\n", radioButton.selected()!.titleLabel!.text!));
         }
+        for index in 0..<allButtons.count {
+            if allButtons[index].isSelected {
+                SurveyAnswers.answers[questionNumber!] = index
+                break
+            }
+        }
     }
 
 
 } // TestCollectionViewCell
+
+
+
+
+//    @IBOutlet weak var collectionLayout: UICollectionViewFlowLayout!
+//        {
+//        didSet {
+//            if let testCollectionView = testCollectionView {
+//                collectionLayout.estimatedItemSize = CGSize(width: testCollectionView.frame.width, height: 92)
+//            }
+//        }
+//    }
+
+    //    override func preferredLayoutAttributesFitting(_ layoutAttributes: UICollectionViewLayoutAttributes) -> UICollectionViewLayoutAttributes {
+//        setNeedsLayout()
+//        layoutIfNeeded()
+//        let size = contentView.systemLayoutSizeFitting(layoutAttributes.size)
+//        var frame = layoutAttributes.frame
+//        frame.size.height = ceil(size.height)
+//        layoutAttributes.frame = frame
+//        return layoutAttributes
+//    }

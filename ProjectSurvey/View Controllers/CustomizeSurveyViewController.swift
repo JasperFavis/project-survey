@@ -12,6 +12,8 @@ import DLRadioButton
 
 class CustomizeSurveyViewController: UIViewController {
     
+    // MARK: - IBOutlets
+    
     /********Labels********/
     @IBOutlet weak var errorLabel: UILabel!
     
@@ -32,6 +34,8 @@ class CustomizeSurveyViewController: UIViewController {
     
     /********StackViews******/
     @IBOutlet weak var AnswerStackView: UIStackView!
+    
+    // MARK: - Properties
     
     let db = Firestore.firestore()
     var questions: [String] = []
@@ -65,17 +69,15 @@ class CustomizeSurveyViewController: UIViewController {
     
     
     
-    /**************** viewDidLoad ******************/
+    // MARK: - viewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUpElements()
     }
-    /*********************************************/
     
-    
-    /**************** IBAction ********************/
-    
+    // MARK: - IBActions
     
     @IBAction func backButtonClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -155,7 +157,7 @@ class CustomizeSurveyViewController: UIViewController {
     
     
     
-    /**************** Functions ******************/
+    // MARK: - Functions
     
     // Set up custom look for buttons, labels, textfields
     func setUpElements() {
