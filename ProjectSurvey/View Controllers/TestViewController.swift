@@ -17,11 +17,11 @@ class TestViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var sampleQuestions: [String] = []
     var sampleAnswers = [
         ["a","b","c","d"],
-        ["e","f","g","h"],
-        ["i","j","k","l"],
+        ["e","f","g","h","e","f","g","h","e","f","g","h"],
+["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
         ["m","n","o","p"],
-        ["q","r","s","t"],
-        ["u","v","w","x"],
+        ["q","r","s","sdfasdf","wefefsfs","wef","t"],
+        ["u","x"],
         ["y","z","-2","-1","0","1"],
         ["2","3","4","5"],
         ["6","7","8","9"],
@@ -45,10 +45,22 @@ class TestViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
+    
+    
     // MARK: - Protocol Methods
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 400, height: 400)
+        
+        let font = UIFont.systemFont(ofSize: 17)
+        let questionLabelHeight = DynamicLabelSize.height(text: sampleQuestions[indexPath.row], font: font, width: 380)
+        
+        let answerHeight = answerViewHeight(for: sampleAnswers[indexPath.row])
+        
+        let totalCellHeight = questionLabelHeight + answerHeight
+
+        return CGSize(width: 400, height: totalCellHeight)
+        
+        //return CGSize(width: 400, height: 400)
     }
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -91,6 +103,18 @@ class TestViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         return string
     }
+    
+
+    func answerViewHeight(for answers: [String]) -> CGFloat {
+        
+        var totalHeight = CGFloat(0)
+        
+        for answer in answers {
+            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 14), width: 245)
+        }
+        
+        return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
+    }
 
 } // TestViewController
 
@@ -117,20 +141,25 @@ class testCollectionViewCell: UICollectionViewCell {
         allButtons.removeAll()
          
          //first button
-        let frame = CGRect(x: 50, y: 20, width: 262, height: 17);
+        let frame = CGRect(x: 50, y: 30, width: 262, height: 17);
         let firstRadioButton = createRadioButton(frame: frame, title: answerArray[0], color: UIColor.black, currentView: answerView);
+        var previousHeight = DynamicLabelSize.height(text: answerArray[0], font: UIFont.systemFont(ofSize: 14), width: 245)
 
         //other buttons
         var otherButtons: [DLRadioButton] = []
         for i in 1..<answerArray.count {
             if i == 1 {
-                let frame = CGRect(x: 50, y: 20 + firstRadioButton.frame.size.height + 13, width: 262, height: 17)
+                let frame = CGRect(x: 50, y: 30 + previousHeight + 13, width: 262, height: 17)
                 let radioButton = createRadioButton(frame: frame, title: answerArray[i], color: UIColor.black, currentView: self.answerView)
                     otherButtons.append(radioButton)
+                
+                previousHeight += DynamicLabelSize.height(text: answerArray[i], font: UIFont.systemFont(ofSize: 14), width: 245)
             } else {
-                let frame = CGRect(x: 50, y: 20 + 30 * CGFloat(i), width: 262, height: 17)
+                let frame = CGRect(x: 50, y: 30 + 13 * CGFloat(i) + previousHeight, width: 262, height: 17)
                 let radioButton = createRadioButton(frame: frame, title: answerArray[i], color: UIColor.black, currentView: self.answerView)
                 otherButtons.append(radioButton)
+                
+                previousHeight += DynamicLabelSize.height(text: answerArray[i], font: UIFont.systemFont(ofSize: 14), width: 245)
             }
         }
         // set other buttons for first radio button
@@ -144,6 +173,8 @@ class testCollectionViewCell: UICollectionViewCell {
     func createRadioButton(frame : CGRect, title : String, color : UIColor, currentView: UIView) -> DLRadioButton {
         let radioButton = DLRadioButton(frame: frame);
         radioButton.titleLabel!.font = UIFont.systemFont(ofSize: 14);
+        radioButton.titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
+        radioButton.contentVerticalAlignment = UIControl.ContentVerticalAlignment.top
         radioButton.setTitle(title, for: []);
         radioButton.setTitleColor(color, for: []);
         radioButton.iconColor = color;

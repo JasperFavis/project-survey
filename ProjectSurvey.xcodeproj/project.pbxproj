@@ -14,6 +14,7 @@
 		5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */; };
 		5AE3815B2383C9C300F38025 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3815A2383C9C300F38025 /* TestViewController.swift */; };
 		5AE429742384D10B0009CA4E /* SurveyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE429732384D10B0009CA4E /* SurveyCollectionViewCell.swift */; };
+		5AEF63332388C64000B060F4 /* DynamicLabelSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */; };
 		9383D612CAC8C019238E9735 /* Pods_ProjectSurvey.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */; };
 		B901F29E23307D2E004ADE9E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901F29D23307D2E004ADE9E /* AppDelegate.swift */; };
 		B901F2A023307D2E004ADE9E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B901F29F23307D2E004ADE9E /* ViewController.swift */; };
@@ -37,6 +38,7 @@
 		5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		5AE3815A2383C9C300F38025 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		5AE429732384D10B0009CA4E /* SurveyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCollectionViewCell.swift; sourceTree = "<group>"; };
+		5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabelSize.swift; sourceTree = "<group>"; };
 		9DCE3966CB99FF4B2605D149 /* Pods_ProjectSurvey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectSurvey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901F29A23307D2E004ADE9E /* ProjectSurvey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectSurvey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B901F29D23307D2E004ADE9E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			children = (
 				B93F2CC823308F0900B4D7F7 /* Utilities.swift */,
 				B93F2CCD2330B70200B4D7F7 /* Constants.swift */,
+				5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5AEF63332388C64000B060F4 /* DynamicLabelSize.swift in Sources */,
 				5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */,
 				5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */,
 				5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */,

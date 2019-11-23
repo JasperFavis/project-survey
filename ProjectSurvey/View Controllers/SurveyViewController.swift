@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import DLRadioButton
 
-class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     // MARK: - IBOutlets
 
@@ -25,37 +25,52 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
     }
     
+    
     // MARK: - Properties
     
-//    let sampleText = [
-//    "what do you want to do on this nice hot sunny day. would you liketo go the beach and play in the cool water? would you like to go to the local ice cream shop? eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffffffffffffffffffgggggggggggggggggggggghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhiiiiiiiiiiiiiiiiiiiiii",
-//    "this is just some sample text. nothing special. don'tpay any mind to my rambling."]
     
-    var sampleText: [String] = []
+    var sampleQuestions: [String] = []
+    var sampleAnswers = [
+    ["a","b","c","d"],
+    ["e","f","g","h","e","f","g","h","e","f","g","h"],
+["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
+    ["m","n","o","p"],
+    ["q","r","s","sdfasdf","wefefsfs","wef","t"],
+    ["u","x"],
+    ["y","z","-2","-1","0","1"],
+    ["2","3","4","5"],
+    ["6","7","8","9"],
+    ["10","11","12","13"]]
     
     
     // MARK: - ViewDidLoad
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpElements()
 
         // fill up sampleText
-        for _ in 0...12 {
-            sampleText.append(randomStringGenerator())
+        for _ in 0...9 {
+            sampleQuestions.append(randomStringGenerator())
         }
-        //surveyCollectionView.reloadData()
-
-        setUpElements()
+        sampleQuestions[0] = "What is your name?"
+        sampleQuestions[1] = "If you were a bear, what kind of dolphin would you sleep with?"
+        SurveyAnswers(to: sampleQuestions.count)
     }
     
     
     // MARK: - IBActions
     
+    
     @IBAction func backButtonClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    
     // MARK: - Helper Functions
+    
     
     func setUpElements() {
         surveyCollectionView.delegate = self
@@ -64,7 +79,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     }
     
     func randomStringGenerator() -> String {
-        let substring = "hello"
+        let substring = "hello "
         let randomNumber = Int.random(in: 10...60)
         var i = 0
         var string: String = ""
@@ -72,28 +87,58 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
             string += substring
             i += 1
         }
-        
         return string
     }
 
+    func answerViewHeight(for answers: [String]) -> CGFloat {
+        var totalHeight = CGFloat(0)
+        for answer in answers {
+            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 14), width: 245)
+        }
+        return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
+    }
     
     // MARK: - Protocol Methods
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleText.count
+    // Size for each cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let font = UIFont.systemFont(ofSize: 17)
+        let questionLabelHeight = DynamicLabelSize.height(text: sampleQuestions[indexPath.row], font: font, width: 380)
+          
+        let answerHeight = answerViewHeight(for: sampleAnswers[indexPath.row])
+          
+        let totalCellHeight = questionLabelHeight + answerHeight
+
+        return CGSize(width: 400, height: totalCellHeight)
     }
     
+    // Number of cells
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return sampleQuestions.count
+    }
+    
+    // Display for each cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "surveyCell", for: indexPath) as? SurveyCollectionViewCell else {
             return UICollectionViewCell()
         }
         
-        cell.questionLabel.text = sampleText[indexPath.row]
-        cell.questionLabel.backgroundColor = (indexPath.row % 2 == 0) ? #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1) : #colorLiteral(red: 0.3495575222, green: 0.4601769912, blue: 0.5, alpha: 1)
-        cell.answerView.backgroundColor = (indexPath.row % 2 == 0) ? #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1) : #colorLiteral(red: 0.3495575222, green: 0.4601769912, blue: 0.5, alpha: 1)
-        cell.addButtons(times: Int.random(in: 2...5))
+        cell.questionNumber = indexPath.row
+        cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
+        cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
+        cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
+        cell.addButtons(for: sampleAnswers[indexPath.row])
+        
+        if let qnum = cell.questionNumber {
+            if SurveyAnswers.answers[qnum] != nil {
+                cell.radioButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
+                print("Question: \(qnum) Answer: \(SurveyAnswers.answers[qnum] as! Int)")
+            }
+        }
         
         return cell
     }
 
+    
 } // SurveyViewController
