@@ -34,11 +34,11 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     ["a","b","c","d"],
     ["e","f","g","h","e","f","g","h","e","f","g","h"],
 ["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
-    ["m","n","o","p"],
+    nil,
     ["q","r","s","sdfasdf","wefefsfs","wef","t"],
     ["u","x"],
     ["y","z","-2","-1","0","1"],
-    ["2","3","4","5"],
+    nil,
     ["6","7","8","9"],
     ["10","11","12","13"]]
     
@@ -98,18 +98,22 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
     }
     
+    
     // MARK: - Protocol Methods
     
     // Size for each cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
+        var answerHeight = CGFloat(1)
         let font = UIFont.systemFont(ofSize: 17)
         let questionLabelHeight = DynamicLabelSize.height(text: sampleQuestions[indexPath.row], font: font, width: 380)
-          
-        let answerHeight = answerViewHeight(for: sampleAnswers[indexPath.row])
-          
+        
+        if let answers = sampleAnswers[indexPath.row] {
+            answerHeight = answerViewHeight(for: answers)
+        } else {
+            answerHeight = 100
+        }
         let totalCellHeight = questionLabelHeight + answerHeight
-
         return CGSize(width: 400, height: totalCellHeight)
     }
     
@@ -120,25 +124,55 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Display for each cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "surveyCell", for: indexPath) as? SurveyCollectionViewCell else {
-            return UICollectionViewCell()
-        }
         
-        cell.questionNumber = indexPath.row
-        cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
-        cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
-        cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
-        cell.addButtons(for: sampleAnswers[indexPath.row])
-        
-        if let qnum = cell.questionNumber {
-            if SurveyAnswers.answers[qnum] != nil {
-                cell.radioButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
-                print("Question: \(qnum) Answer: \(SurveyAnswers.answers[qnum] as! Int)")
+        if let answers = sampleAnswers[indexPath.row] {
+            // Multiple Choice
+            guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "multipleChoiceCell", for: indexPath) as? MultipleChoiceCollectionViewCell else {
+                return UICollectionViewCell()
             }
+            
+            cell.questionNumber = indexPath.row
+            cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
+            cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
+            cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
+            
+            //cell.addButtons(for: sampleAnswers[indexPath.row])
+            cell.addButtons(for: answers)
+            if let qnum = cell.questionNumber {
+                if SurveyAnswers.answers[qnum] != nil {
+                    cell.radioButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
+                    print("Question: \(qnum + 1) Answer: \((SurveyAnswers.answers[qnum] as! Int) + 1)")
+                }
+            }
+            return cell
+        } else {
+            // Answer Box
+            guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "answerBoxCell", for: indexPath) as? AnswerBoxCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
+            return cell
         }
-        
-        return cell
     }
 
     
 } // SurveyViewController
+
+
+extension UIView {
+    
+    func addTopBorderWithColor(color: UIColor, width: CGFloat) {
+         let border = CALayer()
+         border.backgroundColor = color.cgColor
+         border.frame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: width)
+         self.layer.addSublayer(border)
+     }
+    
+    func addBottomBorderWithColor(color: UIColor, width: CGFloat) {
+        let border = CALayer()
+        border.backgroundColor = color.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width: self.frame.size.width, height: width)
+        self.layer.addSublayer(border)
+    }
+}

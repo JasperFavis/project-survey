@@ -9,7 +9,7 @@
 import UIKit
 import DLRadioButton
 
-class SurveyCollectionViewCell: UICollectionViewCell {
+class MultipleChoiceCollectionViewCell: UICollectionViewCell {
     
     // MARK: - IBOutlets
     
@@ -18,13 +18,16 @@ class SurveyCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var answerView: UIView!
     
+    
     // MARK: - Properties
     
     
     var radioButtons : [DLRadioButton] = []
     var questionNumber: Int?
     
+    
     // MARK: - IBActions
+    
     
     @objc @IBAction private func logSelectedButton(radioButton : DLRadioButton) {
         if (radioButton.isMultipleSelectionEnabled) {
@@ -91,10 +94,10 @@ class SurveyCollectionViewCell: UICollectionViewCell {
         radioButton.iconColor = color
         radioButton.indicatorColor = color
         radioButton.contentHorizontalAlignment = UIControl.ContentHorizontalAlignment.left;
-        radioButton.addTarget(self, action: #selector(SurveyCollectionViewCell.logSelectedButton), for: UIControl.Event.touchUpInside)
+        radioButton.addTarget(self, action: #selector(MultipleChoiceCollectionViewCell.logSelectedButton), for: UIControl.Event.touchUpInside)
         currentView.addSubview(radioButton)
 
-        return radioButton;
+        return radioButton
     }
 
 }
