@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="RV2-Ix-fGa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="EPU-en-O58">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -18,23 +18,25 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="NTb-Ko-aZm">
-                                <rect key="frame" x="40" y="214" width="334" height="230.5"/>
+                                <rect key="frame" x="40" y="214" width="334" height="234"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nk3-Db-O4X">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9fV-Hj-uuP">
                                         <rect key="frame" x="0.0" y="70" width="334" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMD-gk-Sb5">
                                         <rect key="frame" x="0.0" y="140" width="334" height="50"/>
+                                        <color key="backgroundColor" red="0.14901960784313725" green="0.27058823529411763" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="4lB-n8-Asd"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Login">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -43,9 +45,9 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UjS-j3-cLo">
-                                        <rect key="frame" x="0.0" y="210" width="334" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="210" width="334" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -86,7 +88,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cvr-1X-h0X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1361" y="1073"/>
+            <point key="canvasLocation" x="1361" y="848"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="Yuw-fh-asm">
@@ -253,12 +255,12 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="baK-vU-pMX"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Question" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="E5N-zb-qsl">
                                         <rect key="frame" x="0.0" y="70" width="334" height="50"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="JQE-JW-mH8" userLabel="QuestionButtonsStackView">
@@ -305,7 +307,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="iAv-Mc-DbJ"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="avt-yO-nBc" userLabel="AnswerButtonsStackView">
@@ -446,16 +448,92 @@
             </objects>
             <point key="canvasLocation" x="2980" y="411"/>
         </scene>
+        <!--Take Survey View Controller-->
+        <scene sceneID="E5D-O4-5Jc">
+            <objects>
+                <viewController id="OJ0-fA-8S3" customClass="TakeSurveyViewController" customModule="ProjectSurvey" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CYN-B1-oBz">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="swZ-fy-trZ">
+                                <rect key="frame" x="40" y="64" width="42" height="66"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                <state key="normal" title="←">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="OJ0-fA-8S3" eventType="touchUpInside" id="Gup-jW-PMt"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ggl-vQ-cqg">
+                                <rect key="frame" x="40" y="244" width="334" height="190"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4uL-J8-2Ts">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="nTjnHhgM6ZpyQ1ZxLk9r" borderStyle="roundedRect" placeholder="Enter Survey Code" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7rE-d3-n7f">
+                                        <rect key="frame" x="0.0" y="70" width="334" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0nx-WI-2Gb">
+                                        <rect key="frame" x="0.0" y="140" width="334" height="50"/>
+                                        <color key="backgroundColor" red="0.14901960784313725" green="0.27058823529411763" blue="0.35686274509803922" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="FG0-9T-pHc"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Take Survey">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="takeSurveyButtonTapped:" destination="OJ0-fA-8S3" eventType="touchUpInside" id="pou-Dr-XUn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="0nx-WI-2Gb" firstAttribute="height" secondItem="4uL-J8-2Ts" secondAttribute="height" id="0mW-Zm-P1f"/>
+                                    <constraint firstItem="0nx-WI-2Gb" firstAttribute="height" secondItem="7rE-d3-n7f" secondAttribute="height" id="nEU-pS-4GO"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.45490196078431372" green="0.59607843137254901" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ggl-vQ-cqg" firstAttribute="leading" secondItem="lvh-7v-UFT" secondAttribute="leading" constant="40" id="11h-ye-LH5"/>
+                            <constraint firstItem="swZ-fy-trZ" firstAttribute="leading" secondItem="lvh-7v-UFT" secondAttribute="leading" constant="40" id="8Fx-EN-tP2"/>
+                            <constraint firstItem="swZ-fy-trZ" firstAttribute="top" secondItem="lvh-7v-UFT" secondAttribute="top" constant="20" id="G18-j5-Jp8"/>
+                            <constraint firstItem="ggl-vQ-cqg" firstAttribute="top" secondItem="lvh-7v-UFT" secondAttribute="top" constant="200" id="L4Q-Xz-4r1"/>
+                            <constraint firstItem="lvh-7v-UFT" firstAttribute="trailing" secondItem="ggl-vQ-cqg" secondAttribute="trailing" constant="40" id="f5W-iJ-n5h"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="lvh-7v-UFT"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="LuU-Zz-oYl"/>
+                    <connections>
+                        <outlet property="backButton" destination="swZ-fy-trZ" id="PJb-iz-nEx"/>
+                        <outlet property="enterSurveyCodeTextField" destination="7rE-d3-n7f" id="YUv-mI-UNu"/>
+                        <outlet property="errorLabel" destination="4uL-J8-2Ts" id="AqH-Cd-xJn"/>
+                        <outlet property="takeSurveyButton" destination="0nx-WI-2Gb" id="hr6-ib-jiu"/>
+                        <segue destination="RV2-Ix-fGa" kind="presentation" identifier="displaySurveySegue" id="fgm-wf-srM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wsK-QT-lBi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1360.8695652173915" y="1577.6785714285713"/>
+        </scene>
         <!--Survey View Controller-->
         <scene sceneID="Spj-Nq-ubd">
             <objects>
                 <viewController id="RV2-Ix-fGa" customClass="SurveyViewController" customModule="ProjectSurvey" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RFG-uc-f9Y">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu2-mw-WZM">
-                                <rect key="frame" x="40" y="64" width="42" height="66"/>
+                                <rect key="frame" x="40" y="20" width="42" height="66"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="45"/>
                                 <state key="normal" title="←">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -465,7 +543,7 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ycd-9J-OwQ">
-                                <rect key="frame" x="-20" y="160" width="454" height="702"/>
+                                <rect key="frame" x="-20" y="116" width="454" height="692"/>
                                 <color key="backgroundColor" red="0.45490196078431372" green="0.59607843137254901" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="F8P-tR-99M">
                                     <size key="itemSize" width="414" height="105"/>
@@ -586,7 +664,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0N-Pr-MI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-207.24637681159422" y="2122.0982142857142"/>
+            <point key="canvasLocation" x="2097" y="1578"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="Ilb-0b-KIq">
@@ -678,7 +756,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4sn-yj-Dwi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1361" y="410"/>
+            <point key="canvasLocation" x="1361" y="175"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -689,13 +767,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ZlC-Jo-XBj">
-                                <rect key="frame" x="40" y="542" width="334" height="120"/>
+                                <rect key="frame" x="40" y="472" width="334" height="190"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TLd-9Z-s6r">
                                         <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                        <color key="backgroundColor" red="0.14901960780000001" green="0.27058823529999998" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="8Ij-7z-FlP"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Sign Up">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -705,6 +785,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S3f-iH-cIo">
                                         <rect key="frame" x="0.0" y="70" width="334" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Login">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -712,8 +793,20 @@
                                             <segue destination="H8Y-IG-JYA" kind="show" id="abD-UG-iEL"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U59-Eh-7Qt">
+                                        <rect key="frame" x="0.0" y="140" width="334" height="50"/>
+                                        <color key="backgroundColor" red="0.1764705882352941" green="0.46666666666666667" blue="0.41568627450980389" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Take a survey">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="OJ0-fA-8S3" kind="show" id="2fM-65-FSy"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="U59-Eh-7Qt" firstAttribute="height" secondItem="TLd-9Z-s6r" secondAttribute="height" id="5xa-yc-5i7"/>
                                     <constraint firstItem="S3f-iH-cIo" firstAttribute="height" secondItem="TLd-9Z-s6r" secondAttribute="height" id="q5l-Fr-SnP"/>
                                 </constraints>
                             </stackView>
@@ -748,6 +841,7 @@
                     <connections>
                         <outlet property="loginButton" destination="S3f-iH-cIo" id="t9z-zT-SJa"/>
                         <outlet property="signUpButton" destination="TLd-9Z-s6r" id="UIU-Xj-Hfy"/>
+                        <outlet property="takeASurvey" destination="U59-Eh-7Qt" id="Caq-v3-jiv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -863,7 +957,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ron-Fm-LCr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-207.24637681159422" y="1447.7678571428571"/>
+            <point key="canvasLocation" x="3428" y="1578"/>
         </scene>
     </scenes>
     <resources>

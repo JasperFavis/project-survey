@@ -19,6 +19,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var takeASurvey: UIButton!
     
     func setUpElements() {
         
@@ -26,6 +27,7 @@ class ViewController: UIViewController {
         
         Utilities.styleFilledButton(signUpButton)
         Utilities.styleHollowButton(loginButton)
+        Utilities.styleFilledButton(takeASurvey, with: #colorLiteral(red: 0.1764705882, green: 0.4666666667, blue: 0.4156862745, alpha: 1))
     }
 
     

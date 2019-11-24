@@ -28,19 +28,36 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Properties
     
+//    var questions: [String] = []
+//    var answers: [[String]?] = []
     
-    var sampleQuestions: [String] = []
-    var sampleAnswers = [
-    ["a","b","c","d"],
-    ["e","f","g","h","e","f","g","h","e","f","g","h"],
-["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
-    nil,
-    ["q","r","s","sdfasdf","wefefsfs","wef","t"],
-    ["u","x"],
-    ["y","z","-2","-1","0","1"],
-    nil,
-    ["6","7","8","9"],
-    ["10","11","12","13"]]
+    var test = ""
+    
+    var questions: [String] = []
+    var answers: [[String]?] = [
+        ["a","b","c","d"],
+        ["e","f","g","h","e","f","g","h","e","f","g","h"],
+    ["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
+        nil,
+        ["q","r","s","sdfasdf","wefefsfs","wef","t"],
+        ["u","x"],
+        ["y","z","-2","-1","0","1"],
+        nil,
+        ["6","7","8","9"],
+        ["10","11","12","13"]]
+    // For test data structures
+//    var sampleQuestions: [String] = []
+//    var sampleAnswers = [
+//    ["a","b","c","d"],
+//    ["e","f","g","h","e","f","g","h","e","f","g","h"],
+//["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
+//    nil,
+//    ["q","r","s","sdfasdf","wefefsfs","wef","t"],
+//    ["u","x"],
+//    ["y","z","-2","-1","0","1"],
+//    nil,
+//    ["6","7","8","9"],
+//    ["10","11","12","13"]]
     
     
     // MARK: - ViewDidLoad
@@ -51,13 +68,17 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         setUpElements()
 
-        // fill up sampleText
-        for _ in 0...9 {
-            sampleQuestions.append(randomStringGenerator())
+        
+        for _ in 0..<questions.count {
+            answers.append(randomAnswerArrayGenerator(forMultipleChoice: false))
         }
-        sampleQuestions[0] = "What is your name?"
-        sampleQuestions[1] = "If you were a bear, what kind of dolphin would you sleep with?"
-        SurveyAnswers(to: sampleQuestions.count)
+        // fill up sampleText
+//        for _ in 0...9 {
+//            questions.append(randomStringGenerator())
+//        }
+//        questions[0] = "What is your name?"
+//        questions[1] = "If you were a bear, what kind of dolphin would you sleep with?"
+        SurveyAnswers(to: questions.count)
     }
     
     
@@ -78,9 +99,9 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
     }
     
-    func randomStringGenerator() -> String {
+    func randomStringGenerator(from min: Int, to max: Int) -> String {
         let substring = "hello "
-        let randomNumber = Int.random(in: 10...60)
+        let randomNumber = Int.random(in: min...max)
         var i = 0
         var string: String = ""
         while i < randomNumber {
@@ -88,6 +109,18 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
             i += 1
         }
         return string
+    }
+    
+    func randomAnswerArrayGenerator(forMultipleChoice value: Bool) -> [String]? {
+        if value {
+            var answers: [String] = []
+            for index in 0...Int.random(in: 2...6) {
+                answers.append("answer \(index)")
+            }
+            return answers
+        } else {
+            return nil
+        }
     }
 
     func answerViewHeight(for answers: [String]) -> CGFloat {
@@ -106,9 +139,9 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         
         var answerHeight = CGFloat(1)
         let font = UIFont.systemFont(ofSize: 17)
-        let questionLabelHeight = DynamicLabelSize.height(text: sampleQuestions[indexPath.row], font: font, width: 380)
+        let questionLabelHeight = DynamicLabelSize.height(text: questions[indexPath.row], font: font, width: 380)
         
-        if let answers = sampleAnswers[indexPath.row] {
+        if let answers = answers[indexPath.row] {
             answerHeight = answerViewHeight(for: answers)
         } else {
             answerHeight = 100
@@ -119,13 +152,13 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return sampleQuestions.count
+        return questions.count
     }
     
     // Display for each cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if let answers = sampleAnswers[indexPath.row] {
+        if let answers = answers[indexPath.row] {
             // Multiple Choice
             guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "multipleChoiceCell", for: indexPath) as? MultipleChoiceCollectionViewCell else {
                 return UICollectionViewCell()
@@ -133,7 +166,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             cell.questionNumber = indexPath.row
             cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
-            cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
+            cell.questionLabel.text = "\(indexPath.row + 1). \(questions[indexPath.row])"
             cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
             
             //cell.addButtons(for: sampleAnswers[indexPath.row])
@@ -151,7 +184,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
                 return UICollectionViewCell()
             }
             
-            cell.questionLabel.text = "\(indexPath.row + 1). \(sampleQuestions[indexPath.row])"
+            cell.questionLabel.text = "\(indexPath.row + 1). \(questions[indexPath.row])"
             return cell
         }
     }

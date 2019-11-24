@@ -9,11 +9,8 @@
 import Foundation
 
 struct SurveyData {
-    var title: String
-    var questions: [String] = []
+    static var questions: [String] = []
+    static var answers: [[String]?] = []
     
-    init(title t: String, questions q: [String]) {
-        title = t
-        questions = q
-    }
+    static var test = ""
 }
