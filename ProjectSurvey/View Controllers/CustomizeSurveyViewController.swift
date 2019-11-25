@@ -232,6 +232,9 @@ class CustomizeSurveyViewController: UIViewController {
         
     } // updateQuestionsAndAnswers
     
+    
+    // Update multiple choice answers when left/right buttons are tapped:
+    // If text field is empty, delete otherwise save answer
     func updateMultipleChoiceAnswers(andMoveBackIf prevIsSelected: Bool) {
         
         var didDelete = false

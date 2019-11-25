@@ -24,7 +24,6 @@ class TakeSurveyViewController: UIViewController {
     
     let db = Firestore.firestore()
     var questions: [String] = []
-    //var answers1: [[String]?] = []
     var answers: [[String]?] = [] {
         didSet {
             if answers.count == questions.count {
@@ -32,6 +31,7 @@ class TakeSurveyViewController: UIViewController {
             }
         }
     }
+    var surveyTitle = ""
     
     var exit = false {
         didSet {
@@ -59,6 +59,7 @@ class TakeSurveyViewController: UIViewController {
             
             surveyVC.questions = questions
             surveyVC.answers = answers
+            surveyVC.surveyTitle = surveyTitle
         }
     }
     
@@ -114,6 +115,8 @@ class TakeSurveyViewController: UIViewController {
             
                     surveyDocRef.getDocument { (document, error) in
                         if let document = document, document.exists {
+                            
+                            self.surveyTitle = document.get("title") as! String
             
                             self.questions = document.get("questions") as! [String]
                             let questionsAndanswers = document.get("questionsAndanswers") as! [String: [String]?]

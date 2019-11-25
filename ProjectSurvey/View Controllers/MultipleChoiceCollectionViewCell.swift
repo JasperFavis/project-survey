@@ -28,7 +28,7 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
     
     // MARK: - IBActions
     
-    
+    // When radio button is selected, store the selected the answer to SurveyAnswers
     @objc @IBAction private func logSelectedButton(radioButton : DLRadioButton) {
         if (radioButton.isMultipleSelectionEnabled) {
             for button in radioButton.selectedButtons() {
@@ -39,14 +39,15 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
         }
         for index in 0..<radioButtons.count {
              if radioButtons[index].isSelected {
-                 SurveyAnswers.answers[questionNumber!] = index
-                 break
+                SurveyAnswers.answers[questionNumber!] = index
+                SurveyAnswers.takerAnswers[questionNumber!] = radioButtons[index].titleLabel!.text
+                break
              }
          }
     }
     
     
-    // MARK: - Functions
+    // MARK: - FUNCTIONS
     
     
     // Programmatically add buttons

@@ -532,18 +532,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu2-mw-WZM">
-                                <rect key="frame" x="40" y="20" width="42" height="66"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="45"/>
-                                <state key="normal" title="←">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="backButtonClicked:" destination="RV2-Ix-fGa" eventType="touchUpInside" id="mtL-Wv-8ot"/>
-                                </connections>
-                            </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ycd-9J-OwQ">
-                                <rect key="frame" x="-20" y="116" width="454" height="692"/>
+                                <rect key="frame" x="-20" y="0.0" width="454" height="842"/>
                                 <color key="backgroundColor" red="0.45490196078431372" green="0.59607843137254901" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="F8P-tR-99M">
                                     <size key="itemSize" width="414" height="105"/>
@@ -552,8 +542,51 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="surveyTitleCell" id="pxg-dg-V7Q" customClass="SurveyTitleCollectionViewCell" customModule="ProjectSurvey" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="0.0" width="414" height="154"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Sew-Mh-Eqf">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="154"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bu2-mw-WZM">
+                                                    <rect key="frame" x="40" y="0.5" width="42" height="66"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="45"/>
+                                                    <state key="normal" title="←">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="backButtonTapped:" destination="pxg-dg-V7Q" eventType="touchUpInside" id="wj3-22-QmK"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Survey Title" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ds6-Y7-8Qz">
+                                                    <rect key="frame" x="40" y="91.5" width="334" height="41"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="8UV-e1-u0S"/>
+                                                        <constraint firstAttribute="height" constant="41" id="nyV-oz-rbc"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="30"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Bu2-mw-WZM" firstAttribute="leading" secondItem="Sew-Mh-Eqf" secondAttribute="leading" constant="40" id="8ZW-Qb-CrJ"/>
+                                                <constraint firstItem="ds6-Y7-8Qz" firstAttribute="top" secondItem="Bu2-mw-WZM" secondAttribute="bottom" constant="25" id="G24-bR-SuD"/>
+                                                <constraint firstAttribute="bottom" secondItem="ds6-Y7-8Qz" secondAttribute="bottom" constant="21.5" id="WaP-Aj-RHk"/>
+                                                <constraint firstItem="Bu2-mw-WZM" firstAttribute="top" secondItem="Sew-Mh-Eqf" secondAttribute="top" constant="0.29999999999999999" id="gI4-va-kg0"/>
+                                                <constraint firstItem="ds6-Y7-8Qz" firstAttribute="leading" secondItem="Bu2-mw-WZM" secondAttribute="leading" id="ptp-bV-ki4"/>
+                                                <constraint firstItem="ds6-Y7-8Qz" firstAttribute="centerX" secondItem="Sew-Mh-Eqf" secondAttribute="centerX" id="qqo-To-tCZ"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="154"/>
+                                        <connections>
+                                            <outlet property="backButton" destination="Bu2-mw-WZM" id="K4U-Gw-8NU"/>
+                                            <outlet property="surveyTitleLabel" destination="ds6-Y7-8Qz" id="yUu-HE-ihg"/>
+                                        </connections>
+                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="multipleChoiceCell" id="p32-zr-Zdp" customClass="MultipleChoiceCollectionViewCell" customModule="ProjectSurvey" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="0.0" width="414" height="50"/>
+                                        <rect key="frame" x="20" y="154" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="luD-d0-DJl">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -602,7 +635,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="answerBoxCell" id="6Dc-uQ-gR5" customClass="AnswerBoxCollectionViewCell" customModule="ProjectSurvey" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="50" width="414" height="50"/>
+                                        <rect key="frame" x="20" y="204" width="414" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YdY-zN-yFu">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
@@ -641,30 +674,76 @@
                                             <outlet property="questionLabel" destination="o5R-WJ-q5J" id="x8c-k3-TXc"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="submitCell" id="kJ8-4U-Y03" customClass="SubmitCollectionViewCell" customModule="ProjectSurvey" customModuleProvider="target">
+                                        <rect key="frame" x="20" y="254" width="414" height="226"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="N9p-iF-ICm">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="226"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="hSf-j4-bvi">
+                                                    <rect key="frame" x="40" y="60" width="334" height="115"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSB-6l-N2y">
+                                                            <rect key="frame" x="0.0" y="0.0" width="334" height="50"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYT-ni-vOU">
+                                                            <rect key="frame" x="0.0" y="65" width="334" height="50"/>
+                                                            <color key="backgroundColor" red="0.14901960780000001" green="0.27058823529999998" blue="0.35686274509999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="50" id="eCM-NJ-Mcp"/>
+                                                                <constraint firstAttribute="width" constant="300" id="tI2-4u-PrB"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                                            <state key="normal" title="Submit">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="submitButtonTapped:" destination="kJ8-4U-Y03" eventType="touchUpInside" id="JMd-3A-nlm"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="gYT-ni-vOU" firstAttribute="height" secondItem="LSB-6l-N2y" secondAttribute="height" id="45H-XX-7Ns"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="hSf-j4-bvi" secondAttribute="trailing" constant="40" id="BYK-Ss-Lgd"/>
+                                                <constraint firstItem="hSf-j4-bvi" firstAttribute="leading" secondItem="N9p-iF-ICm" secondAttribute="leading" constant="40" id="dnC-uO-SCM"/>
+                                                <constraint firstItem="hSf-j4-bvi" firstAttribute="top" secondItem="N9p-iF-ICm" secondAttribute="top" constant="60" id="f4r-UX-4PS"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="414" height="226"/>
+                                        <connections>
+                                            <outlet property="errorLabel" destination="LSB-6l-N2y" id="J5e-8h-A2D"/>
+                                            <outlet property="submitButton" destination="gYT-ni-vOU" id="FR4-tl-aHb"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.45490196078431372" green="0.59607843137254901" blue="0.6470588235294118" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ycd-9J-OwQ" firstAttribute="leading" secondItem="CZ2-U4-2Xz" secondAttribute="leading" constant="-20" id="0Kw-94-Xjr"/>
-                            <constraint firstItem="Bu2-mw-WZM" firstAttribute="top" secondItem="RFG-uc-f9Y" secondAttribute="topMargin" constant="20" id="9HH-4Z-vyE"/>
+                            <constraint firstItem="ycd-9J-OwQ" firstAttribute="top" secondItem="CZ2-U4-2Xz" secondAttribute="top" id="6eM-Ub-rkG"/>
                             <constraint firstItem="ycd-9J-OwQ" firstAttribute="trailing" secondItem="CZ2-U4-2Xz" secondAttribute="trailing" constant="20" id="ChX-XS-Sdc"/>
-                            <constraint firstItem="CZ2-U4-2Xz" firstAttribute="bottom" secondItem="ycd-9J-OwQ" secondAttribute="bottom" id="ZoU-69-lM0"/>
-                            <constraint firstItem="ycd-9J-OwQ" firstAttribute="top" secondItem="Bu2-mw-WZM" secondAttribute="bottom" constant="30" id="ipj-0d-ya1"/>
-                            <constraint firstItem="Bu2-mw-WZM" firstAttribute="leading" secondItem="CZ2-U4-2Xz" secondAttribute="leading" constant="40" id="riN-Sp-nER"/>
+                            <constraint firstAttribute="bottom" secondItem="ycd-9J-OwQ" secondAttribute="bottom" id="Zop-Qg-jMh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="CZ2-U4-2Xz"/>
                     </view>
                     <navigationItem key="navigationItem" id="Hqd-30-fYj"/>
                     <connections>
-                        <outlet property="backButton" destination="Bu2-mw-WZM" id="co4-PT-fNz"/>
                         <outlet property="surveyCollectionView" destination="ycd-9J-OwQ" id="5pS-E4-lmA"/>
                         <outlet property="surveyFlowLayout" destination="F8P-tR-99M" id="Sh7-Nz-wlG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p0N-Pr-MI0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2097" y="1578"/>
+            <point key="canvasLocation" x="2095.6521739130435" y="1577.6785714285713"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="Ilb-0b-KIq">

@@ -12,6 +12,8 @@
 		5A76267E23888CCD00E0CBB8 /* SurveyAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A76267D23888CCD00E0CBB8 /* SurveyAnswers.swift */; };
 		5A7986EF237B4F300048CC51 /* SurveyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7986EE237B4F300048CC51 /* SurveyData.swift */; };
 		5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */; };
+		5AB31B36238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */; };
+		5AB31B38238B25BC00D612EA /* SubmitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */; };
 		5AE3815B2383C9C300F38025 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3815A2383C9C300F38025 /* TestViewController.swift */; };
 		5AE429742384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */; };
 		5AEF63332388C64000B060F4 /* DynamicLabelSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */; };
@@ -38,6 +40,8 @@
 		5A76267D23888CCD00E0CBB8 /* SurveyAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyAnswers.swift; sourceTree = "<group>"; };
 		5A7986EE237B4F300048CC51 /* SurveyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyData.swift; sourceTree = "<group>"; };
 		5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
+		5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitCollectionViewCell.swift; sourceTree = "<group>"; };
 		5AE3815A2383C9C300F38025 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabelSize.swift; sourceTree = "<group>"; };
@@ -136,6 +140,10 @@
 			isa = PBXGroup;
 			children = (
 				5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */,
+				5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */,
+				5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */,
+				5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */,
+				5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */,
 				B901F29F23307D2E004ADE9E /* ViewController.swift */,
 				B901F2AF233081D3004ADE9E /* SignUpViewController.swift */,
 				B901F2B1233081E0004ADE9E /* LogInViewController.swift */,
@@ -143,8 +151,6 @@
 				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,
 				5AEF63362389E4FA00B060F4 /* TakeSurveyViewController.swift */,
 				5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */,
-				5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */,
-				5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */,
 				5AE3815A2383C9C300F38025 /* TestViewController.swift */,
 			);
 			path = "View Controllers";
@@ -286,9 +292,11 @@
 			files = (
 				5AEF63332388C64000B060F4 /* DynamicLabelSize.swift in Sources */,
 				5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */,
+				5AB31B38238B25BC00D612EA /* SubmitCollectionViewCell.swift in Sources */,
 				5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */,
 				5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */,
 				5AEF63352388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift in Sources */,
+				5AB31B36238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift in Sources */,
 				5AEF63372389E4FA00B060F4 /* TakeSurveyViewController.swift in Sources */,
 				B93F2CC923308F0900B4D7F7 /* Utilities.swift in Sources */,
 				B901F2B4233081EE004ADE9E /* HomeViewController.swift in Sources */,

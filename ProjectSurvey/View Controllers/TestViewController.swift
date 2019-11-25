@@ -59,8 +59,6 @@ class TestViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let totalCellHeight = questionLabelHeight + answerHeight
 
         return CGSize(width: 400, height: totalCellHeight)
-        
-        //return CGSize(width: 400, height: 400)
     }
    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

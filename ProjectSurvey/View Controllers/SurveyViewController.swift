@@ -10,11 +10,9 @@ import UIKit
 import Firebase
 import DLRadioButton
 
-class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    
+class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, EnableSubmitDelegate, saveSurveyAnswersDelegate {
+        
     // MARK: - IBOutlets
-
-    @IBOutlet weak var backButton: UIButton!
     
     @IBOutlet weak var surveyCollectionView: UICollectionView!
     @IBOutlet weak var surveyFlowLayout: UICollectionViewFlowLayout! {
@@ -28,36 +26,9 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Properties
     
-//    var questions: [String] = []
-//    var answers: [[String]?] = []
-    
-    var test = ""
-    
     var questions: [String] = []
-    var answers: [[String]?] = [
-        ["a","b","c","d"],
-        ["e","f","g","h","e","f","g","h","e","f","g","h"],
-    ["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
-        nil,
-        ["q","r","s","sdfasdf","wefefsfs","wef","t"],
-        ["u","x"],
-        ["y","z","-2","-1","0","1"],
-        nil,
-        ["6","7","8","9"],
-        ["10","11","12","13"]]
-    // For test data structures
-//    var sampleQuestions: [String] = []
-//    var sampleAnswers = [
-//    ["a","b","c","d"],
-//    ["e","f","g","h","e","f","g","h","e","f","g","h"],
-//["i","j","kiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii","l"],
-//    nil,
-//    ["q","r","s","sdfasdf","wefefsfs","wef","t"],
-//    ["u","x"],
-//    ["y","z","-2","-1","0","1"],
-//    nil,
-//    ["6","7","8","9"],
-//    ["10","11","12","13"]]
+    var answers: [[String]?] = []
+    var surveyTitle = ""
     
     
     // MARK: - ViewDidLoad
@@ -67,38 +38,39 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         super.viewDidLoad()
         
         setUpElements()
-
-        
-        for _ in 0..<questions.count {
-            answers.append(randomAnswerArrayGenerator(forMultipleChoice: false))
-        }
-        // fill up sampleText
-//        for _ in 0...9 {
-//            questions.append(randomStringGenerator())
-//        }
-//        questions[0] = "What is your name?"
-//        questions[1] = "If you were a bear, what kind of dolphin would you sleep with?"
-        SurveyAnswers(to: questions.count)
     }
     
     
     // MARK: - IBActions
     
-    
-    @IBAction func backButtonClicked(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
+
     
     
-    // MARK: - Helper Functions
+    // MARK: - HELPER FUNCTIONS
     
     
     func setUpElements() {
         surveyCollectionView.delegate = self
         surveyCollectionView.dataSource = self
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
+        SurveyAnswers.submitDelegate = self
+        SurveyAnswers(to: questions.count)
     }
     
+    
+    func answerViewHeight(for answers: [String]) -> CGFloat {
+        var totalHeight = CGFloat(0)
+        for answer in answers {
+            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 14), width: 245)
+        }
+        return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
+    }
+    
+    func grayOutButton(for button: UIButton, ifNot enabled: Bool) {
+        button.alpha = (enabled) ? 1 : 0.5
+    }
+    
+    // Testing Purposes
     func randomStringGenerator(from min: Int, to max: Int) -> String {
         let substring = "hello "
         let randomNumber = Int.random(in: min...max)
@@ -111,6 +83,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         return string
     }
     
+    // Testing Purposes
     func randomAnswerArrayGenerator(forMultipleChoice value: Bool) -> [String]? {
         if value {
             var answers: [String] = []
@@ -122,76 +95,158 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
             return nil
         }
     }
-
-    func answerViewHeight(for answers: [String]) -> CGFloat {
-        var totalHeight = CGFloat(0)
-        for answer in answers {
-            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 14), width: 245)
-        }
-        return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
-    }
     
     
-    // MARK: - Protocol Methods
+    // MARK: - PROTOCOL METHODS for UICollectionView
     
-    // Size for each cell
+    // Specify size of each cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var answerHeight = CGFloat(1)
-        let font = UIFont.systemFont(ofSize: 17)
-        let questionLabelHeight = DynamicLabelSize.height(text: questions[indexPath.row], font: font, width: 380)
-        
-        if let answers = answers[indexPath.row] {
-            answerHeight = answerViewHeight(for: answers)
-        } else {
-            answerHeight = 100
+        // Size of cell for questions and answers
+        if indexPath.row > 0 && indexPath.row <= questions.count {
+            
+            // Calculate height of text for the question
+            var answerHeight = CGFloat(1)
+            let font = UIFont.systemFont(ofSize: 17)
+            let questionLabelHeight = DynamicLabelSize.height(text: questions[indexPath.row - 1], font: font, width: 380)
+            
+            // Calculate height of answer UIView
+            if let answers = answers[indexPath.row - 1] {
+                // Height for multiple choice
+                answerHeight = answerViewHeight(for: answers)
+            } else {
+                // Height for answer box
+                answerHeight = 100
+            }
+            
+            // Set height of cell to total height of question and answer
+            let totalCellHeight = questionLabelHeight + answerHeight
+            return CGSize(width: 400, height: totalCellHeight)
         }
-        let totalCellHeight = questionLabelHeight + answerHeight
-        return CGSize(width: 400, height: totalCellHeight)
+        
+        // Size of cell for header: survey title and back button
+        if indexPath.row < 1 {
+            let titleHeight = DynamicLabelSize.height(text: surveyTitle, font: UIFont.systemFont(ofSize: 30), width: 400)
+            let headerHeight = 130 + titleHeight
+            return CGSize(width: 400, height: headerHeight)
+        }
+        
+        // Size of cell for footer: submit button and error UILabel
+        return CGSize(width: 400, height: 300)
     }
     
-    // Number of cells
+    // Specify the number of cells
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return questions.count
+        
+        // A cell for each question and 2 cells for the header and footer
+        return questions.count + 1 + 1
+        
     }
     
-    // Display for each cell
+    // Display the contents of each cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if let answers = answers[indexPath.row] {
-            // Multiple Choice
-            guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "multipleChoiceCell", for: indexPath) as? MultipleChoiceCollectionViewCell else {
-                return UICollectionViewCell()
-            }
+        // Display cells for questions and answers
+        if indexPath.row > 0 && indexPath.row <= questions.count {
             
-            cell.questionNumber = indexPath.row
-            cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
-            cell.questionLabel.text = "\(indexPath.row + 1). \(questions[indexPath.row])"
-            cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
-            
-            //cell.addButtons(for: sampleAnswers[indexPath.row])
-            cell.addButtons(for: answers)
-            if let qnum = cell.questionNumber {
-                if SurveyAnswers.answers[qnum] != nil {
-                    cell.radioButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
-                    print("Question: \(qnum + 1) Answer: \((SurveyAnswers.answers[qnum] as! Int) + 1)")
+            // Display multiple choice answers
+            if let answers = answers[indexPath.row - 1] {
+                
+                guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "multipleChoiceCell", for: indexPath) as? MultipleChoiceCollectionViewCell else {
+                    return UICollectionViewCell()
                 }
+                
+                cell.questionNumber = indexPath.row - 1
+                cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
+                cell.questionLabel.text = "\(indexPath.row). \(questions[indexPath.row - 1])"
+                cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
+                cell.addButtons(for: answers)
+                
+                if let qnum = cell.questionNumber {
+                    if SurveyAnswers.answers[qnum] != nil {
+                        cell.radioButtons[SurveyAnswers.answers[qnum] as! Int].isSelected = true
+                        print("Question: \(qnum + 1) Answer: \((SurveyAnswers.answers[qnum] as! Int) + 1)")
+                    }
+                }
+                return cell
             }
-            return cell
-        } else {
-            // Answer Box
+            
+            // Display fill-in-the-blank answers
             guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "answerBoxCell", for: indexPath) as? AnswerBoxCollectionViewCell else {
                 return UICollectionViewCell()
             }
             
-            cell.questionLabel.text = "\(indexPath.row + 1). \(questions[indexPath.row])"
+            cell.questionLabel.text = "\(indexPath.row). \(questions[indexPath.row - 1])"
             return cell
         }
+        
+        // Display cell for header: survey title and back button
+        if indexPath.row < 1 {
+            guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "surveyTitleCell", for: indexPath) as? SurveyTitleCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            
+            cell.surveyTitleLabel.text = surveyTitle
+            return cell
+        }
+        
+        // Display cell for footer: error label and submit button
+        guard let cell = surveyCollectionView.dequeueReusableCell(withReuseIdentifier: "submitCell", for: indexPath) as? SubmitCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        cell.saveAnswersDelegate = self
+        
+        for answers in SurveyAnswers.takerAnswers {
+            if answers == nil {
+                cell.submitButton.isEnabled = false
+                cell.submitButton.alpha = 0.5
+                return cell
+            }
+        }
+        cell.submitButton.isEnabled = true
+        cell.submitButton.alpha = 1
+        return cell
+    }
+    
+    // MARK: - PROTOCOL METHODS for EnableSubmitDelegate
+    
+    // If survey completely filled, enable submit button
+    func enableSubmitButtonIfSurveyComplete() {
+        
+        // Loop through visible cells (currently on display)
+        for cell in surveyCollectionView.visibleCells {
+            
+            if let cell = cell as? SubmitCollectionViewCell {
+                var isSurveyComplete = false
+
+                // If an answer is missing, do not enable submit button
+                for answers in SurveyAnswers.takerAnswers {
+                    if answers != nil {
+                        isSurveyComplete = true
+                    } else {
+                        isSurveyComplete = false
+                        break
+                    }
+                }
+                cell.submitButton.alpha = (isSurveyComplete) ? 1 : 0.5
+                cell.submitButton.isEnabled = (isSurveyComplete) ? true : false
+            }
+        }
+    }
+    
+    
+    // MARK: - PROTOCOL METHODS for saveSurveyAnswersDelegate
+    
+    func saveAnswersToFirestore() {
+        print("protocol save to firestore")
     }
 
     
 } // SurveyViewController
 
+
+
+// MARK: - EXTENSION UIView
 
 extension UIView {
     
