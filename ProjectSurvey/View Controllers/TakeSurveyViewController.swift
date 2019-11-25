@@ -106,9 +106,6 @@ class TakeSurveyViewController: UIViewController {
 
             surveyCodeDocRef.getDocument { (document, error) in
                 if let document = document, document.exists {
-//                    guard let surveyData = document.data() else {
-//                        return
-//                    }
                     
                     var surveyDocRef: DocumentReference!
                     surveyDocRef = document.get("survey") as? DocumentReference

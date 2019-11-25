@@ -88,6 +88,11 @@
 		5AAAFCCA23828036003305A9 /* CollectionViewCells */ = {
 			isa = PBXGroup;
 			children = (
+				5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */,
+				5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */,
+				5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */,
+				5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */,
+				5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -139,11 +144,6 @@
 		B901F2B5233081F5004ADE9E /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */,
-				5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */,
-				5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */,
-				5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */,
-				5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */,
 				B901F29F23307D2E004ADE9E /* ViewController.swift */,
 				B901F2AF233081D3004ADE9E /* SignUpViewController.swift */,
 				B901F2B1233081E0004ADE9E /* LogInViewController.swift */,
