@@ -59,7 +59,7 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
         // First Button
         let frame = CGRect(x: 50, y: 30, width: 262, height: 17);
         let firstRadioButton = createRadioButton(frame: frame, title: answers[0], color: UIColor.white, currentView: answerView);
-        var previousHeight = DynamicLabelSize.height(text: answers[0], font: UIFont.systemFont(ofSize: 14), width: 245)
+        var previousHeight = DynamicLabelSize.height(text: answers[0], font: UIFont.systemFont(ofSize: 20), width: 245)
 
         // Other Buttons
         var otherButtons: [DLRadioButton] = []
@@ -69,13 +69,13 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
                 let radioButton = createRadioButton(frame: frame, title: answers[i], color: UIColor.white, currentView: self.answerView)
                     otherButtons.append(radioButton)
                 
-                previousHeight += DynamicLabelSize.height(text: answers[i], font: UIFont.systemFont(ofSize: 14), width: 245)
+                previousHeight += DynamicLabelSize.height(text: answers[i], font: UIFont.systemFont(ofSize: 20), width: 245)
             } else {
                 let frame = CGRect(x: 50, y: 30 + 13 * CGFloat(i) + previousHeight, width: 262, height: 17)
                 let radioButton = createRadioButton(frame: frame, title: answers[i], color: UIColor.white, currentView: self.answerView)
                 otherButtons.append(radioButton)
                 
-                previousHeight += DynamicLabelSize.height(text: answers[i], font: UIFont.systemFont(ofSize: 14), width: 245)
+                previousHeight += DynamicLabelSize.height(text: answers[i], font: UIFont.systemFont(ofSize: 20), width: 245)
             }
         }
         // set other buttons for first radio button
@@ -87,7 +87,7 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
 
     func createRadioButton(frame : CGRect, title : String, color : UIColor, currentView: UIView) -> DLRadioButton {
         let radioButton = DLRadioButton(frame: frame)
-        radioButton.titleLabel!.font = UIFont.systemFont(ofSize: 14);
+        radioButton.titleLabel!.font = UIFont.systemFont(ofSize: 20);
         radioButton.titleLabel!.lineBreakMode = NSLineBreakMode.byWordWrapping
         radioButton.contentVerticalAlignment = UIControl.ContentVerticalAlignment.top
         radioButton.setTitle(title, for: [])

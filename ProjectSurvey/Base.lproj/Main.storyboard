@@ -168,12 +168,18 @@
                                                             <state key="normal" image="edit-pencil-icon-21">
                                                                 <color key="titleColor" red="0.4549019608" green="0.59607843140000005" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="editButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="6YV-BZ-mH6"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PG-pb-HVl">
                                                             <rect key="frame" x="65" y="0.0" width="50" height="50"/>
                                                             <state key="normal" image="garbage-can-recycle-bin-512">
                                                                 <color key="titleColor" red="0.4549019608" green="0.59607843140000005" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="deleteButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="J4W-T5-AUA"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -191,6 +197,8 @@
                                         <color key="backgroundColor" red="0.15294117647058825" green="0.20000000000000001" blue="0.21568627450980393" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <size key="customSize" width="414" height="115"/>
                                         <connections>
+                                            <outlet property="deleteButton" destination="8PG-pb-HVl" id="nQJ-Sd-bZa"/>
+                                            <outlet property="editButton" destination="xXm-Kt-OhS" id="nVM-EE-RWA"/>
                                             <outlet property="surveyContentView" destination="HlC-Xh-5PA" id="L4P-0b-VsN"/>
                                             <outlet property="surveyTitleLabel" destination="AdX-W4-NMf" id="dOV-LE-s0v"/>
                                         </connections>
@@ -217,6 +225,7 @@
                         <outlet property="logoutButton" destination="7ge-wW-u1z" id="Pec-Bf-lPJ"/>
                         <outlet property="newSurveyButton" destination="jqI-ea-Qei" id="dd1-LL-x4b"/>
                         <outlet property="surveySelectionCollectionView" destination="a8Z-aA-vTe" id="9Oc-HV-cwl"/>
+                        <segue destination="60J-oP-6GR" kind="show" identifier="editSegue" id="x9o-NT-wEE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GGR-wX-q8s" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1046,4 +1055,7 @@
         <image name="edit-pencil-icon-21" width="512" height="512"/>
         <image name="garbage-can-recycle-bin-512" width="512" height="512"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="x9o-NT-wEE"/>
+    </inferredMetricsTieBreakers>
 </document>

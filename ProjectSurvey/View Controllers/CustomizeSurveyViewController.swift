@@ -46,6 +46,7 @@ class CustomizeSurveyViewController: UIViewController {
     var answerIndex = 0
     var surveyTitleIsEmpty = true
     var overwrite = false
+    var editMode = false
     var surveyTitle = ""
     var surveyTitleExists = false {
         didSet {
@@ -89,7 +90,7 @@ class CustomizeSurveyViewController: UIViewController {
     }
     
     
-    // MARK: - viewDidLoad
+    // MARK: - OVERRIDES
     
     
     override func viewDidLoad() {
@@ -195,11 +196,12 @@ class CustomizeSurveyViewController: UIViewController {
     func setUpElements() {
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.4577064103, green: 0.7679830195, blue: 0.7317840817, alpha: 1), colorTwo: #colorLiteral(red: 0.1992263278, green: 0.3564087471, blue: 0.3380707983, alpha: 1))
         
-        textBoxRadioButton.isSelected = true
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
         hideMessage()
         AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.1755965177, green: 0.2536111532, blue: 0.2846746575, alpha: 1))
+        textBoxRadioButton.isSelected = true
+        initializeFieldsIfEditModeSelected()
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
         Utilities.styleTextField(surveyTitleTextfield)
@@ -270,12 +272,14 @@ class CustomizeSurveyViewController: UIViewController {
         var didDelete = false
                
         if isTextfieldEmpty(for: enterAnswerTextfield) {
+            
             // DELETE
             if isItemStored(at: answerIndex, for: answers) {
                 answers.remove(at: answerIndex)
                 didDelete = true
             }
         } else {
+            
            // ADD
             let answer = enterAnswerTextfield.text!
             if isItemStored(at: answerIndex, for: answers) {
@@ -305,6 +309,23 @@ class CustomizeSurveyViewController: UIViewController {
 
         // If answer exists at current index, display in textfield
         displayText(in: &enterAnswerTextfield, fromItemIn: answers, at: answerIndex, or: "Enter Answer")
+    }
+    
+    
+    // INITIALIZE FIELDS if in EDIT MODE
+    func initializeFieldsIfEditModeSelected() {
+        
+        if editMode {
+            surveyTitleTextfield.text = surveyTitle
+            
+            // If question exists at current index, display in textfield
+            displayText(in: &enterQuestionTextfield, fromItemIn: questions, at: questionIndex, or: "Enter Question")
+            if questionsAndAnswers[questions[questionIndex]] != nil {
+                multipleChoiceRadioButton.isSelected = true
+                AnswerStackView.isHidden = false
+                populateEnterAnswer()
+            }
+        }
     }
     
     // QUESTION - enable/disable left/right buttons
@@ -375,8 +396,9 @@ class CustomizeSurveyViewController: UIViewController {
         }
     }
     
+    // DISPLAY multiple choice answers for current question if it exists
     func populateEnterAnswer() {
-        // Display multiple choice answers for current question if it exists
+        
         answers.removeAll()
         answerIndex = 0
         if !isTextfieldEmpty(for: enterQuestionTextfield) {
@@ -396,6 +418,7 @@ class CustomizeSurveyViewController: UIViewController {
         AnswerStackView.isHidden = textBoxRadioButton.isSelected
     }
     
+    // DISPLAY string from array in textfield
     func displayText(in textfield: inout UITextField, fromItemIn array: [String], at index: Int, or placeholder: String) {
         if array.indices.contains(index) {
             textfield.text = array[index]
@@ -405,7 +428,7 @@ class CustomizeSurveyViewController: UIViewController {
         }
     }
     
-    // Check if array element exists at given index
+    // CHECK if array element exists at given index
     func isItemStored(at index: Int, for array: [String]) -> Bool {
         if array.indices.contains(index) {
             return true
@@ -413,7 +436,7 @@ class CustomizeSurveyViewController: UIViewController {
         return false
     }
     
-    // Check for blank fields
+    // CHECK for blank fields
     func isTextfieldEmpty(for textfield: UITextField) -> Bool {
         if (textfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""){
             return true
@@ -442,13 +465,13 @@ class CustomizeSurveyViewController: UIViewController {
         button.alpha = (enabled) ? 1 : 0.5
     }
     
-    // Show error message
+    // SHOW message
     func showMessage(_ message:String) {
         errorLabel.text = message
         errorLabel.alpha = 1
     }
     
-    // Hide error message
+    // HIDE message
     func hideMessage() {
         errorLabel.alpha = 0
     }

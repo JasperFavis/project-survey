@@ -10,25 +10,34 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, editSurveyDelegate {
+
+    // MARK: - IBOutlets
     
     @IBOutlet weak var newSurveyButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var surveyTitleLabel: UILabel!
-    
     @IBOutlet weak var surveySelectionCollectionView: UICollectionView!
     
+    
+    // MARK: - PROPERTIES
+    
     let db = Firestore.firestore()
+    var surveys: DocumentReference!
     var surveyTitles: [String] = [] {
-        didSet {
-            if !surveyTitles.isEmpty {
-                for item in surveyTitles {
-                    print(item)
-                }
-            }
-            surveySelectionCollectionView.reloadData()
-        }
+        didSet { surveySelectionCollectionView.reloadData() }
     }
+    var surveyTitle: String = ""
+    var questions: [String] = []
+    var questionsAndanswers: [String: [String]?] = [:] {
+        didSet { segueToEdit = true }
+    }
+    var segueToEdit = false {
+        didSet { self.performSegue(withIdentifier: "editSegue", sender: nil) }
+    }
+    
+    
+    // MARK: - OVERRIDES
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +45,18 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         setUpElements()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editSegue" {
+            let customizeVC = segue.destination as! CustomizeSurveyViewController
+            
+            customizeVC.surveyTitle = surveyTitle
+            customizeVC.questions = questions
+            customizeVC.questionsAndAnswers = questionsAndanswers
+            customizeVC.editMode = true
+        }
+    }
+    
+    // MARK: - IBActions
     
     @IBAction func logoutTapped(_ sender: UIButton) {
         let firebaseAuth = Auth.auth()
@@ -52,25 +73,32 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
+    // MARK: - FUNCTIONS
+    
+    // INITIAL SETUP
     func setUpElements() {
         
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
         Utilities.styleHollowButton(logoutButton)
         Utilities.styleFilledButton(newSurveyButton)
 
-        
         surveySelectionCollectionView.delegate = self
         surveySelectionCollectionView.dataSource = self
         
-        // test
         retrieveSurveyTitles()
     }
     
-    
+    // RETRIEVE survey titles to display in collection view
     func retrieveSurveyTitles() {
         
+        // Get user ID
         if let currUID = Auth.auth().currentUser?.uid {
+            
+            // Get reference to user's surveys
             let surveyTitlesDocRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
+            
+            surveys = surveyTitlesDocRef
+            
             surveyTitlesDocRef.getDocument { (document, error) in
                 if let document = document, document.exists {
                     guard let surveyTitlesDict = document.data() else {
@@ -87,6 +115,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
+    // MARK: - PROTOCOL METHODS for UICollectionView
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return surveyTitles.count
     }
@@ -94,6 +124,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
         
+        cell.surveyEditDelegate = self
         cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3725271624, green: 0.490415505, blue: 0.5328553082, alpha: 1), colorTwo: #colorLiteral(red: 0.2439439026, green: 0.3211413401, blue: 0.3489324176, alpha: 1))
         cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
         
@@ -101,11 +132,43 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: Show how the actual survey looks
         print("cell selected")
+    }
+    
+    // MARK: - PROTOCOL METHODS for editSurveyDelegate
+    
+    func selectedEdit(forSurvey title: String) {
+        
+        surveys.getDocument { (document, error) in
+            if let document = document, document.exists {
+                
+                var survey: DocumentReference!
+                survey = document.get(title) as? DocumentReference
+                
+                survey.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                    
+                        // Save survey title
+                        self.surveyTitle = document.get("title") as! String
+                        
+                        // Save questions
+                        self.questions = document.get("questions") as! [String]
+                        
+                        // Save questions and answers
+                        self.questionsAndanswers = document.get("questionsAndanswers") as! [String: [String]?]
+                    }
+                }
+            } else {
+                print("Document doesn't exist")
+            }
+        }
     }
     
 } // HomeViewControllers
 
+
+// MARK: - EXTENSION for UIView
 
 extension UIView {
     

@@ -63,7 +63,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     func answerViewHeight(for answers: [String]) -> CGFloat {
         var totalHeight = CGFloat(0)
         for answer in answers {
-            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 14), width: 245)
+            totalHeight += DynamicLabelSize.height(text: answer, font: UIFont.systemFont(ofSize: 20), width: 245)
         }
         return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
     }
