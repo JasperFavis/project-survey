@@ -26,9 +26,11 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - Properties
     
+    let db = Firestore.firestore()
     var questions: [String] = []
     var answers: [[String]?] = []
     var surveyTitle = ""
+    var surveyDocumentID = ""
     
     
     // MARK: - ViewDidLoad
@@ -66,6 +68,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         return totalHeight + 40 + 40 + 13 * CGFloat(answers.count)
     }
     
+    // GRAY OUT BUTTON
     func grayOutButton(for button: UIButton, ifNot enabled: Bool) {
         button.alpha = (enabled) ? 1 : 0.5
     }
@@ -107,7 +110,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
             
             // Calculate height of text for the question
             var answerHeight = CGFloat(1)
-            let font = UIFont.systemFont(ofSize: 17)
+            let font = UIFont.systemFont(ofSize: 20)
             let questionLabelHeight = DynamicLabelSize.height(text: questions[indexPath.row - 1], font: font, width: 380)
             
             // Calculate height of answer UIView
@@ -159,7 +162,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
                 cell.questionNumber = indexPath.row - 1
                 cell.answerView.subviews.forEach({ $0.removeFromSuperview() })
                 cell.questionLabel.text = "\(indexPath.row). \(questions[indexPath.row - 1])"
-                cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 17)
+                cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 20)
                 cell.addButtons(for: answers)
                 
                 if let qnum = cell.questionNumber {
@@ -176,7 +179,11 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
                 return UICollectionViewCell()
             }
             
+            cell.questionNumber = indexPath.row - 1
+            cell.addListenerToTextField()
             cell.questionLabel.text = "\(indexPath.row). \(questions[indexPath.row - 1])"
+            cell.questionLabel.font = UIFont.italicSystemFont(ofSize: 20)
+            
             return cell
         }
         
@@ -196,7 +203,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
         }
         cell.saveAnswersDelegate = self
         
-        for answers in SurveyAnswers.takerAnswers {
+        for answers in SurveyAnswers.respondentAnswers {
             if answers == nil {
                 cell.submitButton.isEnabled = false
                 cell.submitButton.alpha = 0.5
@@ -220,7 +227,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
                 var isSurveyComplete = false
 
                 // If an answer is missing, do not enable submit button
-                for answers in SurveyAnswers.takerAnswers {
+                for answers in SurveyAnswers.respondentAnswers {
                     if answers != nil {
                         isSurveyComplete = true
                     } else {
@@ -237,8 +244,20 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - PROTOCOL METHODS for saveSurveyAnswersDelegate
     
+    // Upload respondent's answers to firestore
     func saveAnswersToFirestore() {
         print("protocol save to firestore")
+        print("survey ID = \(surveyDocumentID)")
+        
+        dump(SurveyAnswers.respondentAnswers)
+        
+//        let surveyRef = db.collection("survyes").document(surveyDocumentID)
+//        
+//        surveyRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                
+//            }
+//        }
     }
 
     

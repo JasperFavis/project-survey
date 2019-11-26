@@ -58,11 +58,17 @@ class CustomizeSurveyViewController: UIViewController {
                     // document (Survey Titles) which holds references to all their surveys
                     let userSIDstorageRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
                     
+                    // Initialize respondentData
+                    // multiple choice answers -> 0
+                    // text box answers -> empty arrays
+                    initializeRespondentData()
+                    
                     // Add a document for the new survey information in Surveys
                     let surveyDocRef = db.collection("surveys").addDocument(data: [
                         "title" : surveyTitle,
                         "questions" : questions,
-                        "questionsAndanswers" : questionsAndAnswers])
+                        "questionsAndanswers" : questionsAndAnswers,
+                        "respondentData": self.respondentData])
                     
                     // Store reference to survey in user's document (Survey Titles)
                     userSIDstorageRef.setData([surveyTitle : surveyDocRef], merge: true)
@@ -192,7 +198,7 @@ class CustomizeSurveyViewController: UIViewController {
         textBoxRadioButton.isSelected = true
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
-        hideError()
+        hideMessage()
         AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.1755965177, green: 0.2536111532, blue: 0.2846746575, alpha: 1))
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         
@@ -353,9 +359,9 @@ class CustomizeSurveyViewController: UIViewController {
     func moveToPreviousItem(startingAt index: inout Int, in array: [String]) {
         if !array.isEmpty && index > 0 {
             index -= 1
-            hideError()
+            hideMessage()
         } else {
-            showError("Cannot move back")
+            showMessage("Cannot move back")
         }
     }
     
@@ -363,9 +369,9 @@ class CustomizeSurveyViewController: UIViewController {
     func moveToNextItem(startingAt index: inout Int, in array: [String]) {
         if !array.isEmpty && index < array.count {
             index += 1
-            hideError()
+            hideMessage()
         } else {
-            showError("Cannot move forward")
+            showMessage("Cannot move forward")
         }
     }
     
@@ -437,14 +443,25 @@ class CustomizeSurveyViewController: UIViewController {
     }
     
     // Show error message
-    func showError(_ message:String) {
+    func showMessage(_ message:String) {
         errorLabel.text = message
         errorLabel.alpha = 1
     }
     
     // Hide error message
-    func hideError() {
+    func hideMessage() {
         errorLabel.alpha = 0
+    }
+    
+    func initializeRespondentData() {
+        
+        for question in questions {
+            if questionsAndAnswers[question] != nil {
+                respondentData[question] = Array(repeating: 0, count: questionsAndAnswers.count)
+            } else {
+                respondentData[question] = []
+            }
+        }
     }
     
     //  ALERT - Display pop-up that asks user if they would like to overwrite
@@ -474,14 +491,21 @@ class CustomizeSurveyViewController: UIViewController {
                         tempRef = document.get(self.surveyTitle) as? DocumentReference
                         let docID = tempRef.documentID
                         
+                        // Initialize respondentData
+                        // multiple choice answers -> 0
+                        // text box answers -> empty arrays
+                        self.initializeRespondentData()
+                        
                         // Set new data for the survey
                         self.db.collection("surveys").document(docID).setData([
                              "title" : self.surveyTitle,
                              "questions" : self.questions,
-                             "questionsAndanswers" : self.questionsAndAnswers],
+                             "questionsAndanswers" : self.questionsAndAnswers,
+                             "respondentData": self.respondentData],
                             merge: false)
                     }
                 }
+                self.showMessage("Save successful")
                
             } else {
                print("No user signed in\n")

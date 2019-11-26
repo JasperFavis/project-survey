@@ -32,6 +32,7 @@ class TakeSurveyViewController: UIViewController {
         }
     }
     var surveyTitle = ""
+    var surveyDocumentID = ""
     
     var exit = false {
         didSet {
@@ -60,6 +61,7 @@ class TakeSurveyViewController: UIViewController {
             surveyVC.questions = questions
             surveyVC.answers = answers
             surveyVC.surveyTitle = surveyTitle
+            surveyVC.surveyDocumentID = surveyDocumentID
         }
     }
     
@@ -96,28 +98,36 @@ class TakeSurveyViewController: UIViewController {
         Utilities.styleFilledButton(takeSurveyButton)
     }
 
-    
+    // VERIFY - survey code
     func verifyCode() {
+        
         if isTextfieldEmpty(for: enterSurveyCodeTextField) {
             showError("Please enter a code")
         } else {
             let code = enterSurveyCodeTextField.text!
             let surveyCodeDocRef = db.collection("survey codes").document(code)
 
+            // Check if survey code is valid
             surveyCodeDocRef.getDocument { (document, error) in
                 if let document = document, document.exists {
                     
                     var surveyDocRef: DocumentReference!
                     surveyDocRef = document.get("survey") as? DocumentReference
+                    
+                    // Save survey ID
+                    self.surveyDocumentID = surveyDocRef.documentID
             
                     surveyDocRef.getDocument { (document, error) in
                         if let document = document, document.exists {
                             
+                            // Save survey title
                             self.surveyTitle = document.get("title") as! String
-            
+                            
+                            // Save survey questions
                             self.questions = document.get("questions") as! [String]
                             let questionsAndanswers = document.get("questionsAndanswers") as! [String: [String]?]
-            
+                            
+                            // Save survey answers
                             for index in 0..<self.questions.count {
                                 if let answers = questionsAndanswers[self.questions[index]] {
                                     self.answers.append(answers)

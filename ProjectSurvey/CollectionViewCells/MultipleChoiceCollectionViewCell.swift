@@ -32,15 +32,15 @@ class MultipleChoiceCollectionViewCell: UICollectionViewCell {
     @objc @IBAction private func logSelectedButton(radioButton : DLRadioButton) {
         if (radioButton.isMultipleSelectionEnabled) {
             for button in radioButton.selectedButtons() {
-                print(String(format: "%@ is selected.\n", button.titleLabel!.text!));
+                print(String(format: "%@ is selected.", button.titleLabel!.text!));
             }
         } else {
-            print(String(format: "%@ is selected.\n", radioButton.selected()!.titleLabel!.text!));
+            print(String(format: "%@ is selected.", radioButton.selected()!.titleLabel!.text!));
         }
         for index in 0..<radioButtons.count {
              if radioButtons[index].isSelected {
                 SurveyAnswers.answers[questionNumber!] = index
-                SurveyAnswers.takerAnswers[questionNumber!] = radioButtons[index].titleLabel!.text
+                SurveyAnswers.respondentAnswers[questionNumber!] = radioButtons[index].titleLabel!.text
                 break
              }
          }

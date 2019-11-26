@@ -15,7 +15,7 @@ class SurveyAnswers {
     static var submitDelegate: EnableSubmitDelegate!
     
     static var answers: [Any?] = []
-    static var takerAnswers: [String?] = [] {
+    static var respondentAnswers: [String?] = [] {
         didSet {
             // Every time an answer is saved, notify SurveyViewController to check if survey
             // has been answered completely
@@ -27,7 +27,7 @@ class SurveyAnswers {
     
     init(to questionCount: Int) {
         SurveyAnswers.answers = Array(repeatElement(nil, count: questionCount))
-        SurveyAnswers.takerAnswers = Array(repeating: nil, count: questionCount)
+        SurveyAnswers.respondentAnswers = Array(repeating: nil, count: questionCount)
     }
 
 }  // SurveyAnswers
