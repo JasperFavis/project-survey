@@ -32,6 +32,9 @@ class SurveyAnswers {
 
 }  // SurveyAnswers
 
+
+// MARK: - PROTOCOL EnableSubmitDelegate
+
 // Notify SurveyViewController to check if survey is completed
 protocol EnableSubmitDelegate {
     func enableSubmitButtonIfSurveyComplete()

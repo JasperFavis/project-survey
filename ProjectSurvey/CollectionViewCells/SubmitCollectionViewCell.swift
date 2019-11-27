@@ -26,6 +26,7 @@ class SubmitCollectionViewCell: UICollectionViewCell {
         print("Submit button tapped")
         
         saveAnswersDelegate.saveAnswersToFirestore()
+        dismissTopViewController()
     }
     
     
@@ -35,7 +36,22 @@ class SubmitCollectionViewCell: UICollectionViewCell {
         errorLabel.text = message
         errorLabel.alpha = 1
     }
-}
+    
+    func dismissTopViewController() {
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+
+            // topController should now be your topmost view controller
+            topController.dismiss(animated: true, completion: nil)
+        }
+        
+    }
+    
+    
+} // SubmitCollectionViewCell
 
 // MARK: - PROTOCOL
 

@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import FirebaseAuth
+import MessageUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, editSurveyDelegate {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MFMailComposeViewControllerDelegate, surveyOptionsDelegate {
 
     // MARK: - IBOutlets
     
@@ -35,7 +36,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var segueToEdit = false {
         didSet { self.performSegue(withIdentifier: "editSegue", sender: nil) }
     }
-    
+    var mail: MFMailComposeViewController?
     
     // MARK: - OVERRIDES
     
@@ -124,7 +125,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
         
-        cell.surveyEditDelegate = self
+        cell.optionsDelegate = self
         cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3725271624, green: 0.490415505, blue: 0.5328553082, alpha: 1), colorTwo: #colorLiteral(red: 0.2439439026, green: 0.3211413401, blue: 0.3489324176, alpha: 1))
         cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
         
@@ -136,8 +137,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         print("cell selected")
     }
     
+    
     // MARK: - PROTOCOL METHODS for editSurveyDelegate
     
+    // EDIT
     func selectedEdit(forSurvey title: String) {
         
         surveys.getDocument { (document, error) in
@@ -163,9 +166,60 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("Document doesn't exist")
             }
         }
+    } // SelectedEdit
+    
+    // INVITE
+    func selectedInvite(forSurvey title: String) {
+        print("Selected Invite")
+        
+        // MAKE canSendMail() return true FOR SIMULATOR:
+        // iPhone -> Settings -> Passwords & Accounts -> Add Account -> Add Mail Account
+        // For Gmail using IMAP:
+        // Incoming Mail Server: Host Name: imap.gmail.com
+        // Username and password: email you're adding and corresponding password
+        // Outgoing Mail Server: Host Name: smtp.gmail.com
+        guard MFMailComposeViewController.canSendMail() else {
+            print("Cannot send mail")
+            return
+        }
+        
+        mail = nil
+        mail = MFMailComposeViewController()
+        guard let mail = mail else {
+            return
+        }
+        mail.mailComposeDelegate = self
+        mail.setToRecipients(["favisjasper@gmail.com"])
+        mail.setSubject("Test Message")
+        mail.setMessageBody("What's up?", isHTML: false)
+        
+        present(mail, animated: true)
     }
     
+    // MARK: - PROTOCOL METHODS for MFMailComposeViewControllerDelegate
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+
+        if let _ = error {
+            controller.dismiss(animated: true, completion: nil)
+            return
+        }
+
+        switch result {
+        case .cancelled: print("cancelled")
+        case .failed: print("failed")
+        case .saved: print("saved")
+        case .sent: print("sent")
+        default: print("default")
+        }
+
+        controller.dismiss(animated: true, completion: nil)
+    }
+    
+    
 } // HomeViewControllers
+
+
 
 
 // MARK: - EXTENSION for UIView

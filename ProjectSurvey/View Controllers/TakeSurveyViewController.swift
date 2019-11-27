@@ -76,14 +76,6 @@ class TakeSurveyViewController: UIViewController {
     
     @IBAction func takeSurveyButtonTapped(_ sender: Any) {
         verifyCode()
-        
-//        if exit {
-//            self.enterSurveyCodeTextField.text = ""
-//            self.errorLabel.alpha = 0
-//            self.performSegue(withIdentifier: "displaySurveySegue", sender: nil)
-//        } else {
-//            self.showError("Code is invalid")
-//        }
     }
     
     
@@ -102,7 +94,7 @@ class TakeSurveyViewController: UIViewController {
     func verifyCode() {
         
         if isTextfieldEmpty(for: enterSurveyCodeTextField) {
-            showError("Please enter a code")
+            showMessage("Please enter a code")
         } else {
             let code = enterSurveyCodeTextField.text!
             let surveyCodeDocRef = db.collection("survey codes").document(code)
@@ -137,10 +129,8 @@ class TakeSurveyViewController: UIViewController {
                             }
                         }
                     }
-                    
-                    //self.exit = true
                 } else {
-                    self.showError("Code is invalid")
+                    self.showMessage("Code is invalid")
                 }
             }
         }
@@ -154,7 +144,7 @@ class TakeSurveyViewController: UIViewController {
         return false
     }
     
-    func showError(_ message:String) {
+    func showMessage(_ message:String) {
         errorLabel.text = message
         errorLabel.alpha = 1
     }

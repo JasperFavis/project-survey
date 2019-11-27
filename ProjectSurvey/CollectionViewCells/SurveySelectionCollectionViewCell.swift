@@ -14,18 +14,23 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var surveyTitleLabel: UILabel!
     @IBOutlet weak var surveyContentView: UIView!
+    @IBOutlet weak var inviteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
     
     // MARK: - PROPERTIES
     
-    var surveyEditDelegate: editSurveyDelegate!
+    var optionsDelegate: surveyOptionsDelegate!
     
     // MARK: - IBActions
     
+    @IBAction func inviteButtonTapped(_ sender: Any) {
+        optionsDelegate.selectedInvite(forSurvey: surveyTitleLabel.text!)
+    }
+    
     @IBAction func editButtonTapped(_ sender: Any) {
         
-        surveyEditDelegate.selectedEdit(forSurvey: surveyTitleLabel.text!)
+        optionsDelegate.selectedEdit(forSurvey: surveyTitleLabel.text!)
     }
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
@@ -33,6 +38,7 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
     
 }
 
-protocol editSurveyDelegate {
+protocol surveyOptionsDelegate {
     func selectedEdit(forSurvey title: String)
+    func selectedInvite(forSurvey title: String)
 }

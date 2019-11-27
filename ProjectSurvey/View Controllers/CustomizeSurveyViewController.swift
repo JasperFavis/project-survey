@@ -178,7 +178,6 @@ class CustomizeSurveyViewController: UIViewController {
                     let userDocData = document.data().map(String.init(describing:)) ?? "nil"
                     self.surveyTitleExists = (userDocData.contains(self.surveyTitle)) ? true : false
                 } else {
-                    print("document doesn't exist")
                     self.surveyTitleExists = false
                 }
             }
@@ -201,8 +200,8 @@ class CustomizeSurveyViewController: UIViewController {
         hideMessage()
         AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.1755965177, green: 0.2536111532, blue: 0.2846746575, alpha: 1))
         textBoxRadioButton.isSelected = true
-        initializeFieldsIfEditModeSelected()
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
+        initializeFieldsIfEditModeSelected()
         
         Utilities.styleTextField(surveyTitleTextfield)
         Utilities.styleTextField(enterQuestionTextfield)
@@ -317,9 +316,15 @@ class CustomizeSurveyViewController: UIViewController {
         
         if editMode {
             surveyTitleTextfield.text = surveyTitle
+            surveyTitleIsEmpty = false
             
             // If question exists at current index, display in textfield
             displayText(in: &enterQuestionTextfield, fromItemIn: questions, at: questionIndex, or: "Enter Question")
+            
+            // Enable save changes button
+            disableSaveButtonIfSurveyPartiallyFilled()
+            
+            // Display multiple choice answers if any for the first question
             if questionsAndAnswers[questions[questionIndex]] != nil {
                 multipleChoiceRadioButton.isSelected = true
                 AnswerStackView.isHidden = false
@@ -476,18 +481,20 @@ class CustomizeSurveyViewController: UIViewController {
         errorLabel.alpha = 0
     }
     
+    
+    // INITIALIZE RESPONDENT DATA to all zeroes for multiple choice answers and empty arrays for textbox answers
     func initializeRespondentData() {
         
         for question in questions {
-            if questionsAndAnswers[question] != nil {
-                respondentData[question] = Array(repeating: 0, count: questionsAndAnswers.count)
+            if  let MultChoiceAnswers = questionsAndAnswers[question] {
+                respondentData[question] = Array(repeating: 0, count: MultChoiceAnswers!.count)
             } else {
                 respondentData[question] = []
             }
         }
     }
     
-    //  ALERT - Display pop-up that asks user if they would like to overwrite
+    // ALERT - Display pop-up that asks user if they would like to overwrite
     // previously saved survey
     func createAlert(title: String, message: String) {
         

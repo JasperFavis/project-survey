@@ -246,18 +246,52 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // Upload respondent's answers to firestore
     func saveAnswersToFirestore() {
-        print("protocol save to firestore")
-        print("survey ID = \(surveyDocumentID)")
         
-        dump(SurveyAnswers.respondentAnswers)
+        let surveyRef = db.collection("surveys").document(surveyDocumentID)
         
-//        let surveyRef = db.collection("survyes").document(surveyDocumentID)
-//        
-//        surveyRef.getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                
-//            }
-//        }
+        surveyRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                
+                // Get respondentData from firestore
+                var respondentData = document.get("respondentData") as! [String: Any]
+                
+                // Go through all the answers for the current survey
+                for index in 0..<SurveyAnswers.respondentAnswers.count {
+                    
+                    // Get question and answer at current index
+                    let question = self.questions[index]
+                    guard let answer = SurveyAnswers.respondentAnswers[index] else {
+                        return
+                    }
+                    
+                    // If the answer to the current question is a multiple choice answer,
+                    // increment the answer by 1 in the respondent data
+                    // otherwise append the text answer
+                    if let MultChoiceAns = self.answers[index] {
+                        
+                        guard let aIndex = MultChoiceAns.firstIndex(of: answer) else {
+                            return
+                        }
+                        var respAnsData = respondentData[question] as! [Int]
+                        
+                        respAnsData[aIndex] += 1
+                        
+                        respondentData[question] = respAnsData
+                    } else {
+                        
+                        var respAnsData = respondentData[question] as! [String]
+                        respAnsData.append(answer)
+                        respondentData[question] = respAnsData
+                        
+                    }
+                    
+                    surveyRef.setData(["respondentData" : respondentData], merge: true)
+                }
+                
+            } else {
+                print("survey document doesn't exist")
+            }
+        }
     }
 
     

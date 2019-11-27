@@ -14,7 +14,6 @@
 		5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */; };
 		5AB31B36238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */; };
 		5AB31B38238B25BC00D612EA /* SubmitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */; };
-		5AE3815B2383C9C300F38025 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE3815A2383C9C300F38025 /* TestViewController.swift */; };
 		5AE429742384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */; };
 		5AEF63332388C64000B060F4 /* DynamicLabelSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */; };
 		5AEF63352388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */; };
@@ -42,7 +41,6 @@
 		5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		5AB31B35238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		5AB31B37238B25BC00D612EA /* SubmitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitCollectionViewCell.swift; sourceTree = "<group>"; };
-		5AE3815A2383C9C300F38025 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		5AE429732384D10B0009CA4E /* MultipleChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		5AEF63322388C64000B060F4 /* DynamicLabelSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicLabelSize.swift; sourceTree = "<group>"; };
 		5AEF63342388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerBoxCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -76,6 +74,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A097FEA238D038000BE258E /* Other files */ = {
+			isa = PBXGroup;
+			children = (
+				B93F2CCB2330984B00B4D7F7 /* GoogleService-Info.plist */,
+				B901F29D23307D2E004ADE9E /* AppDelegate.swift */,
+				B901F2A423307D30004ADE9E /* Assets.xcassets */,
+				B901F2A623307D30004ADE9E /* LaunchScreen.storyboard */,
+			);
+			path = "Other files";
+			sourceTree = "<group>";
+		};
 		5A7986F0237B4F3D0048CC51 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,15 +136,12 @@
 		B901F29C23307D2E004ADE9E /* ProjectSurvey */ = {
 			isa = PBXGroup;
 			children = (
-				B93F2CCB2330984B00B4D7F7 /* GoogleService-Info.plist */,
-				B901F29D23307D2E004ADE9E /* AppDelegate.swift */,
+				5A097FEA238D038000BE258E /* Other files */,
 				B93F2CCA23308F1400B4D7F7 /* Helpers */,
 				5A7986F0237B4F3D0048CC51 /* Model */,
 				5AAAFCCA23828036003305A9 /* CollectionViewCells */,
 				B901F2B5233081F5004ADE9E /* View Controllers */,
 				B901F2A123307D2E004ADE9E /* Main.storyboard */,
-				B901F2A423307D30004ADE9E /* Assets.xcassets */,
-				B901F2A623307D30004ADE9E /* LaunchScreen.storyboard */,
 				B901F2A923307D30004ADE9E /* Info.plist */,
 			);
 			path = ProjectSurvey;
@@ -151,7 +157,6 @@
 				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,
 				5AEF63362389E4FA00B060F4 /* TakeSurveyViewController.swift */,
 				5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */,
-				5AE3815A2383C9C300F38025 /* TestViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -307,7 +312,6 @@
 				5A76267E23888CCD00E0CBB8 /* SurveyAnswers.swift in Sources */,
 				B93F2CCE2330B70200B4D7F7 /* Constants.swift in Sources */,
 				B901F2A023307D2E004ADE9E /* ViewController.swift in Sources */,
-				5AE3815B2383C9C300F38025 /* TestViewController.swift in Sources */,
 				B901F29E23307D2E004ADE9E /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
