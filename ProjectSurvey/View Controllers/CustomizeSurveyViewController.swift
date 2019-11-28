@@ -193,7 +193,7 @@ class CustomizeSurveyViewController: UIViewController {
     
     // SETUP - Execute any intial setup
     func setUpElements() {
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.4577064103, green: 0.7679830195, blue: 0.7317840817, alpha: 1), colorTwo: #colorLiteral(red: 0.1992263278, green: 0.3564087471, blue: 0.3380707983, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
         
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()

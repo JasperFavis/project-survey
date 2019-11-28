@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A01F6B8238F5263003727AD /* AnalyticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A01F6B7238F5263003727AD /* AnalyticsViewController.swift */; };
 		5A52230E237E1CA80045A9BA /* CustomizeSurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */; };
 		5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */; };
 		5A76267E23888CCD00E0CBB8 /* SurveyAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A76267D23888CCD00E0CBB8 /* SurveyAnswers.swift */; };
@@ -34,6 +35,7 @@
 
 /* Begin PBXFileReference section */
 		43FFD0404FE13151DEB6301A /* Pods-ProjectSurvey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectSurvey.debug.xcconfig"; path = "Target Support Files/Pods-ProjectSurvey/Pods-ProjectSurvey.debug.xcconfig"; sourceTree = "<group>"; };
+		5A01F6B7238F5263003727AD /* AnalyticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsViewController.swift; sourceTree = "<group>"; };
 		5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizeSurveyViewController.swift; sourceTree = "<group>"; };
 		5A6ECDD02382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveySelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		5A76267D23888CCD00E0CBB8 /* SurveyAnswers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyAnswers.swift; sourceTree = "<group>"; };
@@ -83,6 +85,13 @@
 				B901F2A623307D30004ADE9E /* LaunchScreen.storyboard */,
 			);
 			path = "Other files";
+			sourceTree = "<group>";
+		};
+		5A0E4F54238E5A4E00DA75B6 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Custom Views";
 			sourceTree = "<group>";
 		};
 		5A7986F0237B4F3D0048CC51 /* Model */ = {
@@ -141,6 +150,7 @@
 				5A7986F0237B4F3D0048CC51 /* Model */,
 				5AAAFCCA23828036003305A9 /* CollectionViewCells */,
 				B901F2B5233081F5004ADE9E /* View Controllers */,
+				5A0E4F54238E5A4E00DA75B6 /* Custom Views */,
 				B901F2A123307D2E004ADE9E /* Main.storyboard */,
 				B901F2A923307D30004ADE9E /* Info.plist */,
 			);
@@ -157,6 +167,7 @@
 				5A52230D237E1CA80045A9BA /* CustomizeSurveyViewController.swift */,
 				5AEF63362389E4FA00B060F4 /* TakeSurveyViewController.swift */,
 				5AAAFCCB23832E30003305A9 /* SurveyViewController.swift */,
+				5A01F6B7238F5263003727AD /* AnalyticsViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -301,6 +312,7 @@
 				5AAAFCCC23832E30003305A9 /* SurveyViewController.swift in Sources */,
 				5A6ECDD12382383A00AA3B3C /* SurveySelectionCollectionViewCell.swift in Sources */,
 				5AEF63352388F77E00B060F4 /* AnswerBoxCollectionViewCell.swift in Sources */,
+				5A01F6B8238F5263003727AD /* AnalyticsViewController.swift in Sources */,
 				5AB31B36238AA4D900D612EA /* SurveyTitleCollectionViewCell.swift in Sources */,
 				5AEF63372389E4FA00B060F4 /* TakeSurveyViewController.swift in Sources */,
 				B93F2CC923308F0900B4D7F7 /* Utilities.swift in Sources */,

@@ -24,6 +24,10 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - IBActions
     
+    @IBAction func analyticsButtonTapped(_ sender: Any) {
+        optionsDelegate.selectedAnalytics(forSurvey: surveyTitleLabel.text!)
+    }
+    
     @IBAction func inviteButtonTapped(_ sender: Any) {
         optionsDelegate.selectedInvite(forSurvey: surveyTitleLabel.text!)
     }
@@ -41,4 +45,5 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
 protocol surveyOptionsDelegate {
     func selectedEdit(forSurvey title: String)
     func selectedInvite(forSurvey title: String)
+    func selectedAnalytics(forSurvey title: String)
 }

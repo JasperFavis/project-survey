@@ -31,11 +31,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var surveyTitle: String = ""
     var questions: [String] = []
     var questionsAndanswers: [String: [String]?] = [:] {
-        didSet { segueToEdit = true }
+        didSet {
+            //segueToEdit = true
+            if segueToEdit { self.performSegue(withIdentifier: "editSegue", sender: nil) }
+            if segueToAnalytics { self.performSegue(withIdentifier: "analyticsSegue", sender: nil) }
+        }
     }
-    var segueToEdit = false {
-        didSet { self.performSegue(withIdentifier: "editSegue", sender: nil) }
-    }
+    var segueToEdit = false
+    var segueToAnalytics = false
+//    {
+//        didSet { self.performSegue(withIdentifier: "editSegue", sender: nil) }
+//    }
     var mail: MFMailComposeViewController?
     
     // MARK: - OVERRIDES
@@ -47,6 +53,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        segueToEdit = false
+        segueToAnalytics = false
+        
         if segue.identifier == "editSegue" {
             let customizeVC = segue.destination as! CustomizeSurveyViewController
             
@@ -54,6 +64,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             customizeVC.questions = questions
             customizeVC.questionsAndAnswers = questionsAndanswers
             customizeVC.editMode = true
+        }
+        
+        if segue.identifier == "analyticsSegue" {
+            let analyticsVC = segue.destination as! AnalyticsViewController
         }
     }
     
@@ -79,9 +93,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // INITIAL SETUP
     func setUpElements() {
         
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
-        Utilities.styleHollowButton(logoutButton)
-        Utilities.styleFilledButton(newSurveyButton)
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        Utilities.styleHollowButton(logoutButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
 
         surveySelectionCollectionView.delegate = self
         surveySelectionCollectionView.dataSource = self
@@ -116,33 +130,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
-    // MARK: - PROTOCOL METHODS for UICollectionView
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return surveyTitles.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
-        
-        cell.optionsDelegate = self
-        cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3725271624, green: 0.490415505, blue: 0.5328553082, alpha: 1), colorTwo: #colorLiteral(red: 0.2439439026, green: 0.3211413401, blue: 0.3489324176, alpha: 1))
-        cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: Show how the actual survey looks
-        print("cell selected")
-    }
-    
-    
-    // MARK: - PROTOCOL METHODS for editSurveyDelegate
-    
-    // EDIT
-    func selectedEdit(forSurvey title: String) {
-        
+    func retrieveQuestionsAndAnswers(survey title: String) {
         surveys.getDocument { (document, error) in
             if let document = document, document.exists {
                 
@@ -166,6 +154,38 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("Document doesn't exist")
             }
         }
+    }
+    
+    // MARK: - PROTOCOL METHODS for UICollectionView
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return surveyTitles.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
+        
+        cell.optionsDelegate = self
+        cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3731940283, green: 0.3951466182, blue: 0.3951466182, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: Show how the actual survey looks
+        print("cell selected")
+    }
+    
+    
+    // MARK: - PROTOCOL METHODS for surveyOptionsDelegate
+    
+    // EDIT
+    func selectedEdit(forSurvey title: String) {
+        
+        segueToEdit = true
+        
+        retrieveQuestionsAndAnswers(survey: title)
     } // SelectedEdit
     
     // INVITE
@@ -195,6 +215,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         present(mail, animated: true)
     }
+    
+    
+    // ANALYTICS
+    func selectedAnalytics(forSurvey title: String) {
+        
+        segueToAnalytics = true
+        
+        retrieveQuestionsAndAnswers(survey: title)
+    }
+    
+    
     
     // MARK: - PROTOCOL METHODS for MFMailComposeViewControllerDelegate
     

@@ -17,5 +17,7 @@ pod 'Firebase/Auth'
 pod 'Firebase/Core'
 pod 'Firebase/Firestore'
 pod 'DLRadioButton', '~> 1.4'
+pod "Macaw", "0.9.5"
+pod 'SwiftCharts', '~> 0.6.5'
 
 end

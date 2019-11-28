@@ -31,6 +31,13 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     var answers: [[String]?] = []
     var surveyTitle = ""
     var surveyDocumentID = ""
+    var submit = false {
+        didSet {
+            if submit {
+                dismiss(animated: true, completion: nil)
+            }
+        }
+    }
     
     
     // MARK: - ViewDidLoad
@@ -54,7 +61,7 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpElements() {
         surveyCollectionView.delegate = self
         surveyCollectionView.dataSource = self
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.631372549, green: 0.8274509804, blue: 0.8980392157, alpha: 1), colorTwo: #colorLiteral(red: 0.3098039216, green: 0.4078431373, blue: 0.4431372549, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
         SurveyAnswers.submitDelegate = self
         SurveyAnswers(to: questions.count)
     }
@@ -71,6 +78,76 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     // GRAY OUT BUTTON
     func grayOutButton(for button: UIButton, ifNot enabled: Bool) {
         button.alpha = (enabled) ? 1 : 0.5
+    }
+    
+    func createSubmitAlert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+            self.saveAnswersToFirestore()
+            self.submit = true
+        }))
+
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+            print("Do not save survey answers to Firestore")
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // Upload respondent's answers to firestore
+    func saveAnswersToFirestore() {
+                
+        let surveyRef = db.collection("surveys").document(surveyDocumentID)
+        
+        surveyRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                
+                // Get respondentData from firestore
+                var respondentData = document.get("respondentData") as! [String: Any]
+                
+                // Go through all the answers for the current survey
+                for index in 0..<SurveyAnswers.respondentAnswers.count {
+                    
+                    // Get question and answer at current index
+                    let question = self.questions[index]
+                    guard let answer = SurveyAnswers.respondentAnswers[index] else {
+                        return
+                    }
+                    
+                    // If the answer to the current question is a multiple choice answer,
+                    // increment the answer by 1 in the respondent data
+                    // otherwise append the text answer
+                    if let MultChoiceAns = self.answers[index] {
+                        
+                        guard let aIndex = MultChoiceAns.firstIndex(of: answer) else {
+                            return
+                        }
+                        var respAnsData = respondentData[question] as! [Int]
+                        
+                        respAnsData[aIndex] += 1
+                        
+                        respondentData[question] = respAnsData
+                    } else {
+                        
+                        var respAnsData = respondentData[question] as! [String]
+                        respAnsData.append(answer)
+                        respondentData[question] = respAnsData
+                       }
+                    
+                    surveyRef.setData(["respondentData" : respondentData], merge: true)
+                }
+                
+            } else {
+                print("survey document doesn't exist")
+            }
+        }
+        
     }
     
     // Testing Purposes
@@ -244,55 +321,12 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     
     // MARK: - PROTOCOL METHODS for saveSurveyAnswersDelegate
     
-    // Upload respondent's answers to firestore
-    func saveAnswersToFirestore() {
+    
+    func confirmSave() {
         
-        let surveyRef = db.collection("surveys").document(surveyDocumentID)
-        
-        surveyRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                
-                // Get respondentData from firestore
-                var respondentData = document.get("respondentData") as! [String: Any]
-                
-                // Go through all the answers for the current survey
-                for index in 0..<SurveyAnswers.respondentAnswers.count {
-                    
-                    // Get question and answer at current index
-                    let question = self.questions[index]
-                    guard let answer = SurveyAnswers.respondentAnswers[index] else {
-                        return
-                    }
-                    
-                    // If the answer to the current question is a multiple choice answer,
-                    // increment the answer by 1 in the respondent data
-                    // otherwise append the text answer
-                    if let MultChoiceAns = self.answers[index] {
-                        
-                        guard let aIndex = MultChoiceAns.firstIndex(of: answer) else {
-                            return
-                        }
-                        var respAnsData = respondentData[question] as! [Int]
-                        
-                        respAnsData[aIndex] += 1
-                        
-                        respondentData[question] = respAnsData
-                    } else {
-                        
-                        var respAnsData = respondentData[question] as! [String]
-                        respAnsData.append(answer)
-                        respondentData[question] = respAnsData
-                        
-                    }
-                    
-                    surveyRef.setData(["respondentData" : respondentData], merge: true)
-                }
-                
-            } else {
-                print("survey document doesn't exist")
-            }
-        }
+        createSubmitAlert(title: "Are you sure you want to submit survey?", message: "You wont be able to retake this survey.")
     }
+    
 
     
 } // SurveyViewController
