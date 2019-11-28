@@ -32,16 +32,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var questions: [String] = []
     var questionsAndanswers: [String: [String]?] = [:] {
         didSet {
-            //segueToEdit = true
             if segueToEdit { self.performSegue(withIdentifier: "editSegue", sender: nil) }
+        }
+    }
+    var respondentData: [String: Any] = [:] {
+        didSet {
             if segueToAnalytics { self.performSegue(withIdentifier: "analyticsSegue", sender: nil) }
         }
     }
-    var segueToEdit = false
+    var segueToEdit      = false
     var segueToAnalytics = false
-//    {
-//        didSet { self.performSegue(withIdentifier: "editSegue", sender: nil) }
-//    }
+
     var mail: MFMailComposeViewController?
     
     // MARK: - OVERRIDES
@@ -54,20 +55,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        segueToEdit = false
+        segueToEdit      = false
         segueToAnalytics = false
         
         if segue.identifier == "editSegue" {
             let customizeVC = segue.destination as! CustomizeSurveyViewController
             
-            customizeVC.surveyTitle = surveyTitle
-            customizeVC.questions = questions
+            customizeVC.surveyTitle         = surveyTitle
+            customizeVC.questions           = questions
             customizeVC.questionsAndAnswers = questionsAndanswers
-            customizeVC.editMode = true
+            customizeVC.editMode            = true
         }
         
         if segue.identifier == "analyticsSegue" {
             let analyticsVC = segue.destination as! AnalyticsViewController
+            
+            analyticsVC.surveyTitle         = surveyTitle
+            analyticsVC.questions           = questions
+            analyticsVC.questionsAndanswers = questionsAndanswers
+            analyticsVC.respondentData      = respondentData
         }
     }
     
@@ -129,7 +135,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-    
+    // RETRIEVE QUESTIONS AND ANSWERS
     func retrieveQuestionsAndAnswers(survey title: String) {
         surveys.getDocument { (document, error) in
             if let document = document, document.exists {
@@ -152,6 +158,28 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             } else {
                 print("Document doesn't exist")
+            }
+        }
+    }
+    
+    
+    // RETRIEVE respondent data
+    func retrieveRespondentData(survey title: String) {
+           surveys.getDocument { (document, error) in
+        if let document = document, document.exists {
+           
+               var survey: DocumentReference!
+               survey = document.get(title) as? DocumentReference
+               
+               survey.getDocument { (document, error) in
+                   if let document = document, document.exists {
+                    
+                    self.respondentData = document.get("respondentData") as! [String: Any]
+                    
+                   }
+               }
+            } else {
+               print("Document doesn't exist")
             }
         }
     }
@@ -223,6 +251,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         segueToAnalytics = true
         
         retrieveQuestionsAndAnswers(survey: title)
+        retrieveRespondentData(survey: title)
+        
     }
     
     

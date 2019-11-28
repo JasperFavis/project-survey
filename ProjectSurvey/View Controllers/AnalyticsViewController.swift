@@ -20,9 +20,11 @@ class AnalyticsViewController: UIViewController {
     
     // MARK: - PROPERTIES
     
-    var surveyTitle: String = ""
-    var questions: [String] = []
+    var surveyTitle: String                      = ""
+    var questions: [String]                      = []
     var questionsAndanswers: [String: [String]?] = [:]
+    var respondentData: [String: Any]            = [:]
+    var index                                    = 0
     
     var chartView: BarsChart!
     
@@ -32,7 +34,6 @@ class AnalyticsViewController: UIViewController {
         [300,45,324,123,290],
         [123,45,23,123,234,98,74]
     ]
-    var index = 0
     
     
     // MARK: - OVERRIDES
@@ -41,43 +42,54 @@ class AnalyticsViewController: UIViewController {
         super.viewDidLoad()
 
         setupElements()
+        
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {}
     
     // MARK: - IBACTIONS
     
-    
-    
     @IBAction func backButtonTapped(_ sender: Any) {
-        
         dismiss(animated: true, completion: nil)
     }
-    
     
     @IBAction func newData(_ sender: Any) {
         
         index = (index + 1) % data.count
         
         clearChart()
-        createChart(data[index])
+        displayData()
     }
     
     
     // MARK: - FUNCTIONS
     
     func setupElements() {
-        createChart(data[index])
+        displayData()
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+    }
+    
+    
+    func displayData() {
+        
+        let question = questions[index]
+        
+        if let multChoiceAns = questionsAndanswers[question] {
+            
+            let multChoiceData = respondentData[question] as! [Int]
+            createChart(multChoiceData)
+        } else {
+            createChart(data[index])
+        }
     }
 
     func createChart(_ array: [Int]) {
         
         var data: [(index: String, value: Double)] = []
         
-        let numberOfLines: Double = 6
         let maxValue: Double      = Double(array.max() ?? 100)
-        let interval              = Int(maxValue / numberOfLines)
+        let numberOfLines: Double = 6
+        let interval              = (maxValue < 6) ? 1 : Int(maxValue / numberOfLines)
         let maxTick: Double       = maxValue + Double(interval)
         
         for i in 0..<array.count {
