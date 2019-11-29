@@ -346,23 +346,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 extension UIView {
     
     func setGradientBackground(colorOne: UIColor, colorTwo: UIColor) {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = bounds
-        gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
-        gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        layer.insertSublayer(gradientLayer, at: 0)
+        setGradient(background: true, colorOne: colorOne, colorTwo: colorTwo)
     }
     
     func setHorizontalGradient(colorOne: UIColor, colorTwo: UIColor) {
+        setGradient(background: false, colorOne: colorOne, colorTwo: colorTwo)
+    }
+    
+    func setGradient(background: Bool, colorOne: UIColor, colorTwo: UIColor){
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = bounds
         gradientLayer.colors = [colorOne.cgColor, colorTwo.cgColor]
         gradientLayer.locations = [0.0, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        if background {
+            gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+            gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+        }else{
+            gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+            gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        }
         layer.insertSublayer(gradientLayer, at: 0)
     }
-    
 }
