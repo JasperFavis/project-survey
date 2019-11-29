@@ -13,6 +13,8 @@ import MessageUI
 
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MFMailComposeViewControllerDelegate, surveyOptionsDelegate {
 
+    
+
     // MARK: - IBOutlets
     
     @IBOutlet weak var newSurveyButton: UIButton!
@@ -42,6 +44,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     var segueToEdit      = false
     var segueToAnalytics = false
+    var titleToDelete    = ""
+    var docID            = "" {
+        didSet {
+            if docID != "" {
+                // Delete survey document in Firestore
+                self.db.collection("surveys").document(docID).delete() { err in
+                    if let err = err {
+                        print("Error removing document: \(err)")
+                    } else {
+                        print("Document successfully removed!")
+                    }
+                }
+                removeReferenceToSurvey(survey: titleToDelete)
+                retrieveSurveyTitles()
+                surveySelectionCollectionView.reloadData()
+            }
+        }
+    }
     
     let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
 
@@ -105,7 +125,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
 
-        surveySelectionCollectionView.delegate = self
+        surveySelectionCollectionView.delegate   = self
         surveySelectionCollectionView.dataSource = self
         
         retrieveSurveyTitles()
@@ -185,6 +205,36 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
+
+    func deleteSurvey(survey title: String) {
+        
+        titleToDelete = title
+        surveys.getDocument { (document, error) in
+            if let document = document, document.exists {
+               
+                var survey: DocumentReference!
+                survey = document.get(title) as? DocumentReference
+
+                self.docID = survey.documentID
+                
+            } else {
+               print("Document doesn't exist")
+            }
+        }
+    }
+    
+    func removeReferenceToSurvey(survey title: String) {
+        
+        surveys.updateData([
+            title: FieldValue.delete(),
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
     
     // MARK: - PROTOCOL METHODS for UICollectionView
     
@@ -256,6 +306,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         retrieveQuestionsAndAnswers(survey: title)
         retrieveRespondentData(survey: title)
         
+    }
+    
+    func selectedDelete(forSurvey title: String) {
+        
+        deleteSurvey(survey: title)
     }
     
     

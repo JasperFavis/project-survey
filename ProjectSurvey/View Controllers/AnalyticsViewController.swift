@@ -95,7 +95,7 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         
         let question = questions[index]
         
-        questionLabel.text = "\(index + 1) \(question)"
+        questionLabel.text = "\(index + 1). \(question)"
         
         if let multChoiceAns = questionsAndanswers[question] {
             

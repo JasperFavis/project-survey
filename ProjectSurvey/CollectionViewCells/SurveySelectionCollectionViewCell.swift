@@ -38,6 +38,7 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func deleteButtonTapped(_ sender: Any) {
+        optionsDelegate.selectedDelete(forSurvey: surveyTitleLabel.text!)
     }
     
 }
@@ -46,4 +47,5 @@ protocol surveyOptionsDelegate {
     func selectedEdit(forSurvey title: String)
     func selectedInvite(forSurvey title: String)
     func selectedAnalytics(forSurvey title: String)
+    func selectedDelete(forSurvey title: String)
 }
