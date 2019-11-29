@@ -103,7 +103,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         //view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
         
-        Utilities.styleRectHollowButton(logoutButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
         Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
 
         surveySelectionCollectionView.delegate = self

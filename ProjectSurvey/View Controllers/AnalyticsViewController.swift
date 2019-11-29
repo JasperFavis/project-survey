@@ -14,6 +14,7 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
 
     // MARK: - IBOUTLETS
     
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var chartContainer: UIView!
@@ -61,7 +62,15 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func newData(_ sender: Any) {
+    
+    @IBAction func prevButtonTapped(_ sender: Any) {
+        index = (index - 1 + data.count) % data.count
+        
+        clearChart()
+        displayData()
+    }
+    
+    @IBAction func nextButtonTapped(_ sender: Any) {
         
         index = (index + 1) % data.count
         
@@ -69,12 +78,12 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         displayData()
     }
     
-    
     // MARK: - FUNCTIONS
     
     func setupElements() {
         displayData()
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        headerView.setGradientBackground(colorOne: #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), colorTwo: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
         
         titleLabel.text                      = surveyTitle
         textAnswersCollectionView.delegate   = self
