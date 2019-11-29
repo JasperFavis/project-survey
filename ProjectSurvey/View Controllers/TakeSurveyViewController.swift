@@ -94,7 +94,7 @@ class TakeSurveyViewController: UIViewController {
     // VERIFY - survey code
     func verifyCode() {
         
-        if isTextfieldEmpty(for: enterSurveyCodeTextField) {
+        if Utilities.cleanTextCheck(field: enterSurveyCodeTextField) {
             showMessage("Please enter a code")
         } else {
             let code = enterSurveyCodeTextField.text!
@@ -135,14 +135,6 @@ class TakeSurveyViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    // Check for blank fields
-    func isTextfieldEmpty(for textfield: UITextField) -> Bool {
-        if (textfield.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""){
-            return true
-        }
-        return false
     }
     
     func showMessage(_ message:String) {

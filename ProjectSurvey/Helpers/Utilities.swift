@@ -85,4 +85,12 @@ class Utilities {
         return passwordTest.evaluate(with: password)
     }
     
+    static func cleanText(field: UITextField!) -> String{
+        return field.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    
+    static func cleanTextCheck(field: UITextField!) -> Bool{
+        return field.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""
+    }
+    
 }

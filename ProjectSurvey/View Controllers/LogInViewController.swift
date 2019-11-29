@@ -44,8 +44,8 @@ class LogInViewController: UIViewController {
         }
         else {
             // Omit spacing and newlines from the textfields
-            let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let email = Utilities.cleanText(field: emailTextField)
+            let password = Utilities.cleanText(field: passwordTextField)
             
             // Sign user in
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
@@ -83,13 +83,13 @@ class LogInViewController: UIViewController {
     func validateFields() -> String? {
         
         // Check that all fields are filed in
-        if emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        if Utilities.cleanTextCheck(field: emailTextField) || Utilities.cleanTextCheck(field: passwordTextField) {
             
             return "Please fill in all fields"
         }
         
         // Check if the password is secure
-        let cleanPassword = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        let cleanPassword = Utilities.cleanText(field: passwordTextField)
         
         if !Utilities.isPasswordValid(cleanPassword) {
             // Password isn't secure enough

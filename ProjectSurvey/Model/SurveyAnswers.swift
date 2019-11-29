@@ -30,6 +30,11 @@ class SurveyAnswers {
         SurveyAnswers.respondentAnswers = Array(repeating: nil, count: questionCount)
     }
 
+    
+    static func initializeStaticFields(to questionCount: Int){
+        SurveyAnswers.answers = Array(repeatElement(nil, count: questionCount))
+        SurveyAnswers.respondentAnswers = Array(repeating: nil, count: questionCount)
+    }
 }  // SurveyAnswers
 
 

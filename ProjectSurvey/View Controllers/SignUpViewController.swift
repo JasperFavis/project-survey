@@ -46,10 +46,10 @@ class SignUpViewController: UIViewController {
         else {
             
             // Create cleaned versions of the data
-            let firstname = firstNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let lastName = lastNameTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let email = emailTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
-            let password = passwordTextField.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+            let firstname = Utilities.cleanText(field: firstNameTextField)
+            let lastName = Utilities.cleanText(field: lastNameTextField)
+            let email = Utilities.cleanText(field: emailTextField)
+            let password = Utilities.cleanText(field: passwordTextField)
             
             // Create the user
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
@@ -100,7 +100,7 @@ class SignUpViewController: UIViewController {
     func validateFields() -> String? {
         
         // Check that all fields are filled in
-        if firstNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || lastNameTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || emailTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" || passwordTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+        if Utilities.cleanTextCheck(field: firstNameTextField) || Utilities.cleanTextCheck(field: lastNameTextField) || Utilities.cleanTextCheck(field: emailTextField) || Utilities.cleanTextCheck(field: passwordTextField) {
             
             return "Please fill in all fields."
         }
@@ -130,5 +130,4 @@ class SignUpViewController: UIViewController {
         Utilities.styleTextField(passwordTextField)
         Utilities.styleHollowButton(signUpButton, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
     }
-
 }
