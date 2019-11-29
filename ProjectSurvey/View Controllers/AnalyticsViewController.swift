@@ -9,14 +9,17 @@
 import UIKit
 import SwiftCharts
 
-class AnalyticsViewController: UIViewController {
+class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
 
     // MARK: - IBOUTLETS
     
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var chartContainer: UIView!
+ 
+    @IBOutlet weak var textAnswersCollectionView: UICollectionView!
     
-
     
     // MARK: - PROPERTIES
     
@@ -25,6 +28,9 @@ class AnalyticsViewController: UIViewController {
     var questionsAndanswers: [String: [String]?] = [:]
     var respondentData: [String: Any]            = [:]
     var index                                    = 0
+    var numberOfAnswers                          = 0
+    var textAnswers: [String]                    = []
+    let cellColors                               = [#colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
     
     var chartView: BarsChart!
     
@@ -38,6 +44,7 @@ class AnalyticsViewController: UIViewController {
     
     // MARK: - OVERRIDES
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,6 +53,7 @@ class AnalyticsViewController: UIViewController {
     }
     
 //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {}
+    
     
     // MARK: - IBACTIONS
     
@@ -66,7 +74,11 @@ class AnalyticsViewController: UIViewController {
     
     func setupElements() {
         displayData()
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        
+        titleLabel.text                      = surveyTitle
+        textAnswersCollectionView.delegate   = self
+        textAnswersCollectionView.dataSource = self
     }
     
     
@@ -74,12 +86,22 @@ class AnalyticsViewController: UIViewController {
         
         let question = questions[index]
         
+        questionLabel.text = "\(index + 1) \(question)"
+        
         if let multChoiceAns = questionsAndanswers[question] {
             
+            chartContainer.isHidden            = false
+            textAnswersCollectionView.isHidden = true
             let multChoiceData = respondentData[question] as! [Int]
             createChart(multChoiceData)
         } else {
-            createChart(data[index])
+            // createChart(data[index])
+            chartContainer.isHidden            = true
+            textAnswers.removeAll()
+            textAnswers = respondentData[question] as! [String]
+            numberOfAnswers = textAnswers.count
+            textAnswersCollectionView.isHidden = false
+            textAnswersCollectionView.reloadData()
         }
     }
 
@@ -112,5 +134,28 @@ class AnalyticsViewController: UIViewController {
         chartView = nil
         chartContainer.subviews.forEach({ $0.removeFromSuperview() })
     }
+    
+    
+    // MARK: - PROTOCOL METHODS FOR COLLECTION VIEW
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let answerheight = 25 + DynamicLabelSize.height(text: textAnswers[indexPath.row], font: UIFont.systemFont(ofSize: 20), width: textAnswersCollectionView.frame.width - 40)
+        
+        return CGSize(width: textAnswersCollectionView.frame.width, height: answerheight)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return numberOfAnswers
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = textAnswersCollectionView.dequeueReusableCell(withReuseIdentifier: "textAnswer", for: indexPath) as! TextAnswerCollectionViewCell
+        
+        cell.textAnswerLabel.text = textAnswers[indexPath.row]
+        cell.backgroundColor = cellColors[indexPath.row % cellColors.count]
+        
+        return cell
+    }
 
-}
+} // ANALYTICS VIEW CONTROLLER

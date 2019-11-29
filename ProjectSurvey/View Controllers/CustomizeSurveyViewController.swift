@@ -193,12 +193,13 @@ class CustomizeSurveyViewController: UIViewController {
     
     // SETUP - Execute any intial setup
     func setUpElements() {
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        
         
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
         hideMessage()
-        AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.1755965177, green: 0.2536111532, blue: 0.2846746575, alpha: 1))
+        AnswerStackView.addBackgroundColor(color: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
         textBoxRadioButton.isSelected = true
         surveyTitleTextfield.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         initializeFieldsIfEditModeSelected()

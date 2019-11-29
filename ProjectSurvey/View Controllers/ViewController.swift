@@ -20,23 +20,20 @@ class ViewController: UIViewController {
     @IBOutlet weak var signUpButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var takeASurvey: UIButton!
+    @IBOutlet weak var logoView: UIView!
     
     func setUpElements() {
         
-        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.6308100139, green: 0.8265786389, blue: 0.8972728646, alpha: 1), colorTwo: #colorLiteral(red: 0.1712521061, green: 0.2243993114, blue: 0.2435913577, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        logoView.setGradientBackground(colorOne: #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), colorTwo: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
         
-        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.1001027038, green: 0.2335729754, blue: 0.3114306339, alpha: 1), colorTwo: #colorLiteral(red: 0.01830938337, green: 0.04272189453, blue: 0.05696252605, alpha: 1))
         
-        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.2156862745, green: 0.1450980392, blue: 0.168627451, alpha: 1), colorTwo: #colorLiteral(red: 0.04913990104, green: 0.1146597691, blue: 0.1528796921, alpha: 1))
-        
-        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.2657718909, green: 0.1152075535, blue: 0.165395666, alpha: 1), colorTwo: #colorLiteral(red: 0.04913990104, green: 0.1146597691, blue: 0.1528796921, alpha: 1))
-        
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
 
         Utilities.styleHollowButton(signUpButton, with: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         Utilities.styleHollowButton(loginButton, with: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1))
         //Utilities.styleHollowButton(takeASurvey, with: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1))
-        Utilities.styleFilledButton(takeASurvey, with: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        Utilities.styleFilledButton(takeASurvey, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
     }
 
     

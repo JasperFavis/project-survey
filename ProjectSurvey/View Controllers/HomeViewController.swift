@@ -42,6 +42,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     var segueToEdit      = false
     var segueToAnalytics = false
+    
+    let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
 
     var mail: MFMailComposeViewController?
     
@@ -99,9 +101,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // INITIAL SETUP
     func setUpElements() {
         
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
-        Utilities.styleHollowButton(logoutButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
-        Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        
+        Utilities.styleRectHollowButton(logoutButton, with: #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0))
+        Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
 
         surveySelectionCollectionView.delegate = self
         surveySelectionCollectionView.dataSource = self
@@ -194,7 +197,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SurveyCell", for: indexPath) as! SurveySelectionCollectionViewCell
         
         cell.optionsDelegate = self
-        cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3731940283, green: 0.3951466182, blue: 0.3951466182, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        cell.backgroundColor = cellColors[indexPath.row % cellColors.count]
+        //cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3731940283, green: 0.3951466182, blue: 0.3951466182, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
         cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
         
         return cell

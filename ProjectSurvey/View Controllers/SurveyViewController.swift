@@ -61,7 +61,8 @@ class SurveyViewController: UIViewController, UICollectionViewDelegate, UICollec
     func setUpElements() {
         surveyCollectionView.delegate = self
         surveyCollectionView.dataSource = self
-        view.setGradientBackground(colorOne: #colorLiteral(red: 0.7170763175, green: 0.7592572774, blue: 0.7592572774, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
+        view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
+        
         SurveyAnswers.submitDelegate = self
         SurveyAnswers(to: questions.count)
     }
