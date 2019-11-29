@@ -394,7 +394,7 @@ class CustomizeSurveyViewController: UIViewController {
     
     // MOVE TO NEXT
     func moveToNextItem(startingAt index: inout Int, in array: [String]) {
-        if !array.isEmpty && index < array.count {
+        if !array.isEmpty && index < array.count - 1 {
             index += 1
             hideMessage()
         } else {
