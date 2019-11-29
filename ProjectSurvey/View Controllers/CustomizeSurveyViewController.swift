@@ -47,6 +47,7 @@ class CustomizeSurveyViewController: UIViewController {
     var surveyTitleIsEmpty = true
     var overwrite = false
     var editMode = false
+    var modalDelegate: modalHandler!
     var surveyTitle = ""
     var surveyTitleExists = false {
         didSet {
@@ -78,6 +79,8 @@ class CustomizeSurveyViewController: UIViewController {
                     let userInfoRef = db.collection("users").document(currUID)
                     userInfoRef.setData(["SIDstorageRef" : userSIDstorageRef], merge: true)
                     
+                    showMessage("Save successful")
+                    
                 } else {
                     print("No user signed in\n")
                 }
@@ -105,6 +108,11 @@ class CustomizeSurveyViewController: UIViewController {
     // BACK BUTTON
     @IBAction func backButtonClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        
+        // TODO: Reload survey titles in collection view when coming back customize survey
+//        self.dismiss(animated: true) {
+//            self.modalDelegate.modalDismissed()
+//        }
     }
     
     // QUESTION: PREV BUTTON - save or delete question
@@ -568,3 +576,8 @@ extension UIStackView {
         insertSubview(subView, at: 0)
     }
 }
+
+protocol modalHandler {
+    func modalDismissed()
+}
+

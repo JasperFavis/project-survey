@@ -11,8 +11,12 @@ import Firebase
 import FirebaseAuth
 import MessageUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MFMailComposeViewControllerDelegate, surveyOptionsDelegate {
-
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MFMailComposeViewControllerDelegate, surveyOptionsDelegate, modalHandler {
+    func modalDismissed() {
+        retrieveSurveyTitles()
+        surveySelectionCollectionView.reloadData()
+    }
+    
     
 
     // MARK: - IBOutlets
@@ -62,6 +66,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
         }
     }
+
     
     let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
 
@@ -87,6 +92,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             customizeVC.questions           = questions
             customizeVC.questionsAndAnswers = questionsAndanswers
             customizeVC.editMode            = true
+            customizeVC.modalDelegate       = self
+ 
         }
         
         if segue.identifier == "analyticsSegue" {
@@ -236,6 +243,25 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    func createDeleteAlert(title: String, message: String, survey: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+            self.deleteSurvey(survey: survey)
+        }))
+
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+            print("Do not delete survey")
+        }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - PROTOCOL METHODS for UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -310,7 +336,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func selectedDelete(forSurvey title: String) {
         
-        deleteSurvey(survey: title)
+        createDeleteAlert(title: "Are you sure you want to delete \"\(title)\"?", message: "", survey: title)
     }
     
     
@@ -334,6 +360,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
         controller.dismiss(animated: true, completion: nil)
     }
+    
     
     
 } // HomeViewControllers

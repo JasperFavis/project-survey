@@ -36,11 +36,11 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
     var chartView: BarsChart!
     
     // TEST DATA
-    var data = [
-        [20,45,87,100,12],
-        [300,45,324,123,290],
-        [123,45,23,123,234,98,74]
-    ]
+//    var data = [
+//        [20,45,87,100,12],
+//        [300,45,324,123,290],
+//        [123,45,23,123,234,98,74]
+//    ]
     
     
     // MARK: - OVERRIDES
@@ -64,7 +64,7 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     
     @IBAction func prevButtonTapped(_ sender: Any) {
-        index = (index - 1 + data.count) % data.count
+        index = (index - 1 + questions.count) % questions.count
         
         clearChart()
         displayData()
@@ -72,7 +72,7 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
     
     @IBAction func nextButtonTapped(_ sender: Any) {
         
-        index = (index + 1) % data.count
+        index = (index + 1) % questions.count
         
         clearChart()
         displayData()
