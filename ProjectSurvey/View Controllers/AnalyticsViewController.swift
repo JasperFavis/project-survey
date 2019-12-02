@@ -14,11 +14,14 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
 
     // MARK: - IBOUTLETS
     
-    @IBOutlet weak var headerView: UIView!
+
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var multipleChoiceLabel: UILabel!
     @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var chartContainer: UIView!
  
+    @IBOutlet weak var multipleChoiceLegendStackView: UIStackView!
     @IBOutlet weak var textAnswersCollectionView: UICollectionView!
     
     
@@ -28,19 +31,14 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
     var questions: [String]                      = []
     var questionsAndanswers: [String: [String]?] = [:]
     var respondentData: [String: Any]            = [:]
+    var multChoiceAns: [String]                  = []
     var index                                    = 0
+    var legendIndex                              = 0
     var numberOfAnswers                          = 0
     var textAnswers: [String]                    = []
-    let cellColors                               = [#colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
+    let cellColors                               = [#colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.321678908, green: 0.3854077483, blue: 0.3338177347, alpha: 1)]
     
     var chartView: BarsChart!
-    
-    // TEST DATA
-//    var data = [
-//        [20,45,87,100,12],
-//        [300,45,324,123,290],
-//        [123,45,23,123,234,98,74]
-//    ]
     
     
     // MARK: - OVERRIDES
@@ -52,8 +50,6 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         setupElements()
         
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {}
     
     
     // MARK: - IBACTIONS
@@ -78,6 +74,17 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         displayData()
     }
     
+    @IBAction func legendPrevButtonTapped(_ sender: Any) {
+        legendIndex = (legendIndex - 1 + multChoiceAns.count) % multChoiceAns.count
+        displayMultChoiceAnswer()
+    }
+    
+    @IBAction func legendNextButtonTapped(_ sender: Any) {
+        legendIndex = (legendIndex + 1) % multChoiceAns.count
+        displayMultChoiceAnswer()
+    }
+    
+    
     // MARK: - FUNCTIONS
     
     func setupElements() {
@@ -99,18 +106,25 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
         
         if let multChoiceAns = questionsAndanswers[question] {
             
-            chartContainer.isHidden            = false
-            textAnswersCollectionView.isHidden = true
-            let multChoiceData = respondentData[question] as! [Int]
+            legendIndex                            = 0
+            self.multChoiceAns = multChoiceAns!
+            displayMultChoiceAnswer()
+            chartContainer.isHidden                = false
+            multipleChoiceLegendStackView.isHidden = false
+            textAnswersCollectionView.isHidden     = true
+            let multChoiceData                     = respondentData[question] as! [Int]
             createChart(multChoiceData)
+            
         } else {
-            // createChart(data[index])
-            chartContainer.isHidden            = true
+
+            chartContainer.isHidden                = true
+            hideStackView()
             textAnswers.removeAll()
-            textAnswers = respondentData[question] as! [String]
-            numberOfAnswers = textAnswers.count
-            textAnswersCollectionView.isHidden = false
+            textAnswers                            = respondentData[question] as! [String]
+            numberOfAnswers                        = textAnswers.count
+            textAnswersCollectionView.isHidden     = false
             textAnswersCollectionView.reloadData()
+            
         }
     }
 
@@ -142,6 +156,16 @@ class AnalyticsViewController: UIViewController, UICollectionViewDelegate, UICol
     func clearChart() {
         chartView = nil
         chartContainer.subviews.forEach({ $0.removeFromSuperview() })
+    }
+    
+    func hideStackView() {
+        if !multipleChoiceLegendStackView.isHidden {
+            multipleChoiceLegendStackView.isHidden = true
+        }
+    }
+    
+    func displayMultChoiceAnswer() {
+        multipleChoiceLabel.text = "\(legendIndex + 1). \(multChoiceAns[legendIndex])"
     }
     
     

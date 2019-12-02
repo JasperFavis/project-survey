@@ -15,6 +15,7 @@ class CustomizeSurveyViewController: UIViewController {
     // MARK: - IBOutlets
     
     /********Labels********/
+    @IBOutlet weak var customizeModeLabel: UILabel!
     @IBOutlet weak var errorLabel: UILabel!
     
     /********Textfields******/
@@ -109,7 +110,7 @@ class CustomizeSurveyViewController: UIViewController {
     @IBAction func backButtonClicked(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
         
-        // TODO: Reload survey titles in collection view when coming back customize survey
+        // TODO: Reload survey titles in collection view when coming back from customize survey
 //        self.dismiss(animated: true) {
 //            self.modalDelegate.modalDismissed()
 //        }
@@ -203,7 +204,7 @@ class CustomizeSurveyViewController: UIViewController {
     func setUpElements() {
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
         
-        
+        customizeModeLabel.text = (editMode) ? "EDIT SURVEY" : " NEW SURVEY"
         disableSaveButtonIfSurveyPartiallyFilled()
         hideStackView()
         hideMessage()

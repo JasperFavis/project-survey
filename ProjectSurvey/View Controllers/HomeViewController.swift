@@ -23,6 +23,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     @IBOutlet weak var newSurveyButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
+    @IBOutlet weak var userGreetingLabel: UILabel!
     @IBOutlet weak var surveyTitleLabel: UILabel!
     @IBOutlet weak var surveySelectionCollectionView: UICollectionView!
     
@@ -38,7 +39,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var questions: [String] = []
     var questionsAndanswers: [String: [String]?] = [:] {
         didSet {
-            if segueToEdit { self.performSegue(withIdentifier: "editSegue", sender: nil) }
+            if segueToEdit {
+                self.performSegue(withIdentifier: "editSegue", sender: nil)
+                
+            }
+            if segueToPreview {
+                retrieveAnswers()
+                segueToPreview = false
+            }
         }
     }
     var respondentData: [String: Any] = [:] {
@@ -48,6 +56,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     var segueToEdit      = false
     var segueToAnalytics = false
+    var segueToPreview   = false
+    var surveyDocumentID = ""
     var titleToDelete    = ""
     var docID            = "" {
         didSet {
@@ -63,6 +73,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 removeReferenceToSurvey(survey: titleToDelete)
                 retrieveSurveyTitles()
                 surveySelectionCollectionView.reloadData()
+            }
+        }
+    }
+    var answers: [[String]?] = [] {
+        didSet {
+            if answers.count == questions.count {
+                self.performSegue(withIdentifier: "previewSurveySegue", sender: nil)
             }
         }
     }
@@ -104,6 +121,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             analyticsVC.questionsAndanswers = questionsAndanswers
             analyticsVC.respondentData      = respondentData
         }
+        
+        if segue.identifier == "previewSurveySegue" {
+            let surveyVC = segue.destination as! SurveyViewController
+            
+            surveyVC.surveyTitle            = surveyTitle
+            surveyVC.questions              = questions
+            surveyVC.answers                = answers
+            surveyVC.surveyDocumentID       = surveyDocumentID
+        }
     }
     
     // MARK: - IBActions
@@ -128,8 +154,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // INITIAL SETUP
     func setUpElements() {
         
-        //view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
-        
         Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
 
         surveySelectionCollectionView.delegate   = self
@@ -143,6 +167,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         // Get user ID
         if let currUID = Auth.auth().currentUser?.uid {
+            
+            
+            let userDocRef = db.collection("users").document(currUID)
+            
+            userDocRef.getDocument { (document, error) in
+                if let document = document, document.exists {
+                    let name = (document.get("firstname") as? String)?.capitalizingFirstLetter()
+                    
+                    self.userGreetingLabel.text = "Hi, \(name ?? "User")"
+                }
+            }
             
             // Get reference to user's surveys
             let surveyTitlesDocRef = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
@@ -171,6 +206,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 var survey: DocumentReference!
                 survey = document.get(title) as? DocumentReference
+                
+                self.surveyDocumentID = survey.documentID
                 
                 survey.getDocument { (document, error) in
                     if let document = document, document.exists {
@@ -262,6 +299,33 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         present(alert, animated: true, completion: nil)
     }
     
+    func getSurveyDoc() {
+        
+        // Get user ID
+        if let currUID = Auth.auth().currentUser?.uid {
+            
+            // Get reference to user's surveys
+            surveys = db.collection("users").document(currUID).collection("SID storage").document("Survey Titles")
+            
+        } else {
+            print("User doesn't exist.")
+        }
+    }
+    
+    func retrieveAnswers() {
+        
+        answers.removeAll()
+        // Save survey answers
+         for index in 0..<self.questions.count {
+             if let answers = questionsAndanswers[self.questions[index]] {
+                 self.answers.append(answers)
+             } else {
+                 self.answers.append(nil)
+             }
+         }
+    }
+    
+    
     // MARK: - PROTOCOL METHODS for UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -273,15 +337,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.optionsDelegate = self
         cell.backgroundColor = cellColors[indexPath.row % cellColors.count]
-        //cell.setGradientBackground(colorOne: #colorLiteral(red: 0.3731940283, green: 0.3951466182, blue: 0.3951466182, alpha: 1), colorTwo: #colorLiteral(red: 0.2, green: 0.2117647059, blue: 0.2117647059, alpha: 1))
         cell.surveyTitleLabel.text = surveyTitles[indexPath.row]
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
         // TODO: Show how the actual survey looks
-        print("cell selected")
+        
+        guard let cell = surveySelectionCollectionView!.cellForItem(at: indexPath) as? SurveySelectionCollectionViewCell else {
+            return
+        }
+        let title = cell.surveyTitleLabel.text!
+        segueToPreview = true
+        print("Cell selected with title \"\(title)\"")
+        getSurveyDoc()
+        retrieveQuestionsAndAnswers(survey: title)
+        
     }
     
     
@@ -368,7 +441,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 
 
 
-// MARK: - EXTENSION for UIView
+// MARK: - EXTENSION FOR UIView
 
 extension UIView {
     
@@ -392,4 +465,16 @@ extension UIView {
         layer.insertSublayer(gradientLayer, at: 0)
     }
     
+}
+
+// MARK: - EXTENSION FOR String
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
