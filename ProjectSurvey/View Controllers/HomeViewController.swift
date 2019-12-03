@@ -89,7 +89,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     
-    let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4278790328, green: 0.5126475205, blue: 0.4440254114, alpha: 1), #colorLiteral(red: 0.3547958688, green: 0.4250856164, blue: 0.3681843922, alpha: 1)]
+    let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4278790328, green: 0.5126475205, blue: 0.4440254114, alpha: 1), #colorLiteral(red: 0.3529411765, green: 0.4235294118, blue: 0.368627451, alpha: 1)]
 
     var mail: MFMailComposeViewController?
     
@@ -360,8 +360,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        // TODO: Show how the actual survey looks
         
         guard let cell = surveySelectionCollectionView!.cellForItem(at: indexPath) as? SurveySelectionCollectionViewCell else {
             return

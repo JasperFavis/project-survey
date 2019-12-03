@@ -218,7 +218,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SURVEY TITLE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AdX-W4-NMf">
-                                                    <rect key="frame" x="34" y="25" width="345" height="60"/>
+                                                    <rect key="frame" x="34" y="25" width="345" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="345" id="xkd-EH-6yU"/>
                                                     </constraints>
@@ -227,47 +227,84 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="T2M-F4-k4l" userLabel="OptionsStackView">
-                                                    <rect key="frame" x="134" y="110" width="245" height="50"/>
+                                                    <rect key="frame" x="54" y="90" width="325" height="70"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PsN-Ar-bY6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <inset key="contentEdgeInsets" minX="2" minY="2" maxX="2" maxY="2"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="contentEdgeInsets" minX="6" minY="9" maxX="6" maxY="7"/>
                                                             <state key="normal" image="bar graph rounded">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                                    <integer key="value" value="1"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="15"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="analyticsButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="KbY-o2-NV8"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COL-Z2-Dsg">
-                                                            <rect key="frame" x="65" y="0.0" width="50" height="50"/>
-                                                            <inset key="contentEdgeInsets" minX="2" minY="0.0" maxX="2" maxY="0.0"/>
+                                                            <rect key="frame" x="85" y="0.0" width="70" height="70"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="contentEdgeInsets" minX="8" minY="2" maxX="8" maxY="2"/>
                                                             <state key="normal" image="email-icon">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                                    <integer key="value" value="1"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="15"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="inviteButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="TFC-zT-o1d"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xXm-Kt-OhS">
-                                                            <rect key="frame" x="130" y="0.0" width="50" height="50"/>
+                                                            <rect key="frame" x="170" y="0.0" width="70" height="70"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" constant="50" id="RFi-3T-3to"/>
-                                                                <constraint firstAttribute="width" constant="50" id="dal-Nr-nnJ"/>
+                                                                <constraint firstAttribute="height" constant="70" id="RFi-3T-3to"/>
+                                                                <constraint firstAttribute="width" constant="70" id="dal-Nr-nnJ"/>
                                                             </constraints>
-                                                            <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                                            <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                                             <state key="normal" image="edit-pencil-icon-21">
                                                                 <color key="titleColor" red="0.4549019608" green="0.59607843140000005" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="15"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                                    <integer key="value" value="1"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="editButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="6YV-BZ-mH6"/>
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8PG-pb-HVl">
-                                                            <rect key="frame" x="195" y="0.0" width="50" height="50"/>
+                                                            <rect key="frame" x="255" y="0.0" width="70" height="70"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <inset key="contentEdgeInsets" minX="3" minY="5" maxX="3" maxY="5"/>
                                                             <state key="normal" image="garbage-can-recycle-bin-512">
                                                                 <color key="titleColor" red="0.4549019608" green="0.59607843140000005" blue="0.64705882349999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="imageView.contentMode">
+                                                                    <integer key="value" value="1"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="15"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                             <connections>
                                                                 <action selector="deleteButtonTapped:" destination="nlA-uW-pHJ" eventType="touchUpInside" id="J4W-T5-AUA"/>
                                                             </connections>
@@ -293,6 +330,7 @@
                                         <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <size key="customSize" width="414" height="200"/>
                                         <connections>
+                                            <outlet property="analyticsButton" destination="PsN-Ar-bY6" id="3ik-0j-c6L"/>
                                             <outlet property="deleteButton" destination="8PG-pb-HVl" id="nQJ-Sd-bZa"/>
                                             <outlet property="editButton" destination="xXm-Kt-OhS" id="nVM-EE-RWA"/>
                                             <outlet property="inviteButton" destination="COL-Z2-Dsg" id="dBh-ZH-iMZ"/>

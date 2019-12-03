@@ -15,8 +15,6 @@ class SignUpViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
         setUpElements()
     }
 
@@ -61,7 +59,6 @@ class SignUpViewController: UIViewController {
                 else {
                     // User was created successfully, now store the first name and last name
                     let db = Firestore.firestore()
-//                    db.collection("users").addDocument(data: ["firstname": firstname, "lastname": lastName, "uid": result!.user.uid])
                     db.collection("users").document(result!.user.uid).setData([
                         "firstname": firstname,
                         "lastname": lastName,
@@ -77,11 +74,7 @@ class SignUpViewController: UIViewController {
                     self.transitionToHome()
                 }
             }
-            
-            // Transition to the home screen
         }
-        
-
     }
     
     func showError(_ message:String) {
@@ -112,13 +105,11 @@ class SignUpViewController: UIViewController {
             // Password isn't secure enough
             return "Please make sure your password is at least 8 characters, contains a special character and a number."
         }
-        
         return nil
     }
     
     func setUpElements() {
         view.setGradientBackground(colorOne: #colorLiteral(red: 0.9333333333, green: 0.9607843137, blue: 0.8588235294, alpha: 1), colorTwo: #colorLiteral(red: 0.3451896811, green: 0.3553423188, blue: 0.3176325218, alpha: 1))
-        
         
         // Hide the error label
         errorLabel.alpha = 0

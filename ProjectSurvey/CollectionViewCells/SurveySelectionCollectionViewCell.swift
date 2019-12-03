@@ -17,6 +17,7 @@ class SurveySelectionCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var inviteButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var deleteButton: UIButton!
+    @IBOutlet weak var analyticsButton: UIButton!
     
     // MARK: - PROPERTIES
     
