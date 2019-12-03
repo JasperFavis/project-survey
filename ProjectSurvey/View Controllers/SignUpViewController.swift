@@ -128,7 +128,7 @@ class SignUpViewController: UIViewController {
         Utilities.styleTextField(lastNameTextField)
         Utilities.styleTextField(emailTextField)
         Utilities.styleTextField(passwordTextField)
-        Utilities.styleHollowButton(signUpButton, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
+        Utilities.styleFilledButton(signUpButton, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
     }
 
 }

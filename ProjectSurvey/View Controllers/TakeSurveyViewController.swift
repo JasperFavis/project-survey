@@ -87,7 +87,7 @@ class TakeSurveyViewController: UIViewController {
         errorLabel.alpha = 0
         
         Utilities.styleTextField(enterSurveyCodeTextField)
-        Utilities.styleRectHollowButton(takeSurveyButton, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
+        Utilities.styleFilledButton(takeSurveyButton, with: #colorLiteral(red: 0.2343357426, green: 0.2807607482, blue: 0.2431786008, alpha: 1))
     }
 
     // VERIFY - survey code

@@ -11,7 +11,7 @@ import Firebase
 import FirebaseAuth
 import MessageUI
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, MFMailComposeViewControllerDelegate, surveyOptionsDelegate, modalHandler {
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, MFMailComposeViewControllerDelegate, surveyOptionsDelegate, modalHandler {
     func modalDismissed() {
         retrieveSurveyTitles()
         surveySelectionCollectionView.reloadData()
@@ -22,9 +22,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // MARK: - IBOutlets
     
     @IBOutlet weak var newSurveyButton: UIButton!
+    @IBOutlet weak var refreshButton: UIButton!
     @IBOutlet weak var logoutButton: UIButton!
     @IBOutlet weak var userGreetingLabel: UILabel!
-    @IBOutlet weak var surveyTitleLabel: UILabel!
+    //@IBOutlet weak var surveyTitleLabel: UILabel!
     @IBOutlet weak var surveySelectionCollectionView: UICollectionView!
     
     
@@ -33,7 +34,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     let db = Firestore.firestore()
     var surveys: DocumentReference!
     var surveyTitles: [String] = [] {
-        didSet { surveySelectionCollectionView.reloadData() }
+        didSet {
+            surveyTitles = surveyTitles.sorted()
+            surveySelectionCollectionView.reloadData()
+        }
     }
     var surveyTitle: String = ""
     var questions: [String] = []
@@ -85,7 +89,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
 
     
-    let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4156862745, green: 0.4980392157, blue: 0.431372549, alpha: 1), #colorLiteral(red: 0.2503311738, green: 0.2999250856, blue: 0.2597776332, alpha: 1)]
+    let cellColors = [#colorLiteral(red: 0.5452957422, green: 0.6533260308, blue: 0.56587294, alpha: 1), #colorLiteral(red: 0.4278790328, green: 0.5126475205, blue: 0.4440254114, alpha: 1), #colorLiteral(red: 0.3547958688, green: 0.4250856164, blue: 0.3681843922, alpha: 1)]
 
     var mail: MFMailComposeViewController?
     
@@ -132,7 +136,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    
     // MARK: - IBActions
+    
     
     @IBAction func logoutTapped(_ sender: UIButton) {
         let firebaseAuth = Auth.auth()
@@ -148,14 +154,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         view.window?.makeKeyAndVisible()
     }
     
+    // REFRESH list of surveys
+    @IBAction func refreshButtonTapped(_ sender: Any) {
+        retrieveSurveyTitles()
+    }
+    
     
     // MARK: - FUNCTIONS
+    
     
     // INITIAL SETUP
     func setUpElements() {
         
-        Utilities.styleHollowButton(newSurveyButton, with: #colorLiteral(red: 0.2352941176, green: 0.2823529412, blue: 0.2431372549, alpha: 1))
-
+        newSurveyButton.layer.cornerRadius       = 15
+        refreshButton.layer.cornerRadius         = 15
         surveySelectionCollectionView.delegate   = self
         surveySelectionCollectionView.dataSource = self
         
@@ -191,7 +203,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                     self.surveyTitles = Array(surveyTitlesDict.keys)
                 } else {
-                    print("document doesn't exist")
+                    print("Document doesn't exist")
                 }
             }
         } else {
@@ -250,6 +262,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
 
+    // DELETE survey
     func deleteSurvey(survey title: String) {
         
         titleToDelete = title
@@ -267,6 +280,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    // REMOVE user's reference to survey
     func removeReferenceToSurvey(survey title: String) {
         
         surveys.updateData([
@@ -314,7 +328,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func retrieveAnswers() {
         
+        // Clear answers first
         answers.removeAll()
+        
         // Save survey answers
          for index in 0..<self.questions.count {
              if let answers = questionsAndanswers[self.questions[index]] {
@@ -327,6 +343,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     // MARK: - PROTOCOL METHODS for UICollectionView
+    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return surveyTitles.count
@@ -351,7 +368,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         let title = cell.surveyTitleLabel.text!
         segueToPreview = true
-        print("Cell selected with title \"\(title)\"")
         getSurveyDoc()
         retrieveQuestionsAndAnswers(survey: title)
         
